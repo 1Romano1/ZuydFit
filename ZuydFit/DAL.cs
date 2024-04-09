@@ -8,7 +8,9 @@ namespace ZuydFit
 {
     public class DAL
     {
+        public DAL() 
+        {
         
-
+        }
     }
 }
