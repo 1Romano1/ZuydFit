@@ -6,8 +6,20 @@ using System.Threading.Tasks;
 
 namespace ZuydFit
 {
-    abstract class User
+    public class User
     {
         public int Id { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public int PersonalNumber { get; set; }
+
+
+        public User(int id, string firstName, string lastName, int personalNumber)
+        {
+            Id = id;
+            FirstName = firstName;
+            LastName = lastName;
+            PersonalNumber = personalNumber;
+        }
     }
 }
