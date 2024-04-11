@@ -1,6 +1,11 @@
-﻿// See https://aka.ms/new-console-template for more information
-using System.Xml;
-
-Console.WriteLine("Hello, World!");
-Console.WriteLine("test");
-
+﻿namespace ZuydFit
+{
+    public class Program
+    {
+        static void Main(string[] args)
+        {
+            Location location = new Location();
+            location.CreateLocation();
+        }
+    }
+}
