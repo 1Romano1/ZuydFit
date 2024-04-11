@@ -1,6 +1,14 @@
-﻿// See https://aka.ms/new-console-template for more information
-using System.Xml;
+﻿using System;
+using System.Linq;
+using ZuydFit.ZuydFit;
 
-Console.WriteLine("Hello, World!");
-Console.WriteLine("test");
+class Program
+{
+    static void Main(string[] args)
+    {
+        User user = new User();
+        // Roep de EmployeeLogin-methode aan
+        user.EmployeeLogin();
+    }
+}
 
