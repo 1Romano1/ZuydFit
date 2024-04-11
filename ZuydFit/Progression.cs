@@ -12,9 +12,8 @@ namespace ZuydFit
         public List<Goal> Goals { get; set; }
         public string Description { get; set; }
 
-        public Progression(int id, List<Goal> goals, string description)
+        public Progression(List<Goal> goals, string description)
         {
-            Id = id;
             Goals = goals;
             Description = description;
         }
