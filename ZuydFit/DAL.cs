@@ -13,14 +13,14 @@ namespace ZuydFit
     {
         public List <Activity> activities = new List <Activity> ();
        
-        public string connectionString = "Data Source=.;Initial Catalog=ZuydFit;Integrated Security=True;Trust Server Certificate=True";
+        public static string connectionString = "Data Source=.;Initial Catalog=ZuydFit;Integrated Security=True";
         
         
         public DAL()
         {
         }
 
-        public void CreateActivity(Activity activity)
+        public static void CreateActivity(Activity activity)
         {
             try
             {
@@ -41,10 +41,10 @@ namespace ZuydFit
             }
             catch (Exception ex) 
             {
-                throw new Exception("test", ex);
+
             }
         }
-        public void ReadActivity(List<Activity> activities)
+        public static void ReadActivity(List<Activity> activities)
         {
 
             using (SqlConnection connection = new SqlConnection())
@@ -67,7 +67,7 @@ namespace ZuydFit
                 }
             }
         }
-        public void UpdateItem(Activity activity)
+        public void UpdateActivity(Activity activity)
         {
             try
             {
@@ -89,15 +89,15 @@ namespace ZuydFit
             }
             catch (Exception ex) { throw ex; }
         }
-        public void DeleteActivity(int Id)
+        public static void DeleteActivity(string Name)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                string sql = "DELETE FROM Activity WHERE Id = @Id";
+                string sql = "DELETE FROM Activity WHERE Name = @Name";
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
-                    command.Parameters.AddWithValue("@Id", Id);
+                    command.Parameters.AddWithValue("@Name", Name);
                     command.ExecuteNonQuery();
                 }
             }

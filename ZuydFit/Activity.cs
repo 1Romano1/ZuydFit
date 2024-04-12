@@ -42,12 +42,28 @@ namespace ZuydFit
 
             Activity activity = new Activity(name, description, duration, sets);
             DAL.CreateActivity(activity);
-            
+
+            Console.Clear();
+            Console.WriteLine("De volgende activiteit is toegevoegd:");
+            Console.WriteLine("Naam: " + activity.Name);
+            Console.WriteLine("Omschrijving: " + activity.Description);
+            Console.WriteLine("Duur per set (in minuten): " + activity.Duration);
+            Console.WriteLine("Aantal sets: " + activity.Sets);
+
         }
 
         public void ReadActivity()
         {
+            List<Activity> activities = new List<Activity>();
+            DAL.ReadActivity(activities);
 
+            Console.WriteLine("Activiteit:");
+            Console.WriteLine("Naam:\t Beschrijving:\tTijdsduur:\tSet:");
+            foreach (Activity activity in activities)
+            {
+                Console.WriteLine(activity.Name + "\t" + activity.Description + "\t" + activity.Duration + "\t" + activity.Sets +"\t");
+            }
+            Console.WriteLine();
         }
 
         public void UpdateActivity()
@@ -58,9 +74,8 @@ namespace ZuydFit
         public void DeleteActivity()
         {
             Console.WriteLine("Voer de naam in van de oefening dat u wilt verwijderen:");
-            int Id = int.Parse(Console.ReadLine());
-
-            DAL.DeleteActivity(Id);
+            string Name = Console.ReadLine();
+            DAL.DeleteActivity(Name);
         }
     } 
 }
