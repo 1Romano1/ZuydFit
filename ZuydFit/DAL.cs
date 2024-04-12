@@ -10,11 +10,11 @@ namespace ZuydFit
     public class DAL
     {
 
-        public List <Activity> activities = new List <Activity> ();
-       
+        public List<Activity> activities = new List<Activity>();
+
         public static string connectionString = "Data Source=.;Initial Catalog=ZuydFit;Integrated Security=True";
-        
-        
+
+
         public DAL()
         {
         }
@@ -38,7 +38,7 @@ namespace ZuydFit
                     }
                 }
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
 
             }
@@ -102,9 +102,6 @@ namespace ZuydFit
             }
         }
 
-        
-
-
         /*public void ReadItem(List<Item> items)
         {
 
@@ -165,87 +162,86 @@ namespace ZuydFit
                 }
             }
         }*/
-      
-          public void CreateAdvice(Advice advice)
-    {
-        try
+
+        public void CreateAdvice(Advice advice)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            try
             {
-                connection.Open();
-                string sql = "INSERT INTO Advice (Id, Description) " +
-                    "VALUES (@Id, @Description) ";
-                using (SqlCommand command = new SqlCommand(sql, connection))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    command.Parameters.AddWithValue("Id", @advice.Id);
-                    command.Parameters.AddWithValue("Description", @advice.Description);
-                    command.ExecuteNonQuery();
-                }
-            }
-        }
-        catch (Exception ex) { throw ex; }
-    }
-    public void ReadAdvice(Advice advice)
-    {
-        try { 
-        using (SqlConnection connection = new SqlConnection())
-        {
-            using (SqlCommand command = new SqlCommand())
-            {
-                connection.ConnectionString = connectionString;
-                connection.Open();
-                command.Connection = connection;
-                command.CommandText = "SELECT Id, Description " +
-                    "FROM Advice ORDER BY ID ";
-                using (SqlDataReader reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
+                    connection.Open();
+                    string sql = "INSERT INTO Advice (Id, Description) " +
+                        "VALUES (@Id, @Description) ";
+                    using (SqlCommand command = new SqlCommand(sql, connection))
                     {
-                        Advices.Add(new Advice (reader[0].ToString(), reader[1].ToString(), reader[2].ToString()));
+                        command.Parameters.AddWithValue("Id", @advice.Id);
+                        command.Parameters.AddWithValue("Description", @advice.Description);
+                        command.ExecuteNonQuery();
                     }
                 }
             }
+            catch (Exception ex) { throw ex; }
         }
-    }
-    catch (Exception ex) { throw ex ; }
-}
-    public void UpdateAdvice(Advice advice)
-    {
-        try
+        public void ReadAdvice(Advice advice)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            try
             {
-                connection.Open();
-                string sql = "UPDATE Advice SET Id = @Id, Description = @description, " +
-                    "WHERE Id = @id";
-                using (SqlCommand command = new SqlCommand(sql, connection))
+                using (SqlConnection connection = new SqlConnection())
                 {
-                    command.Parameters.AddWithValue("Id", advice.Id);
-                    command.Parameters.AddWithValue("Description", advice.Description);
-                    command.ExecuteNonQuery();
+                    using (SqlCommand command = new SqlCommand())
+                    {
+                        connection.ConnectionString = connectionString;
+                        connection.Open();
+                        command.Connection = connection;
+                        command.CommandText = "SELECT Id, Description " +
+                            "FROM Advice ORDER BY ID ";
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                Advices.Add(new Advice(reader[0].ToString(), reader[1].ToString(), reader[2].ToString()));
+                            }
+                        }
+                    }
                 }
             }
+            catch (Exception ex) { throw ex; }
         }
-        catch (Exception ex) { throw ex; }
-    }
-    public void DeleteAdvice(Advice advice)
-    {
-        try { 
-            using (SqlConnection connection = new SqlConnection(connectionString))
+        public void UpdateAdvice(Advice advice)
+        {
+            try
             {
-                connection.Open();
-                string sql = "DELETE FROM Advice WHERE Id = @Id";
-                using (SqlCommand command = new SqlCommand(sql, connection))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    command.Parameters.AddWithValue("@Id", advice.Id);
-                    command.ExecuteNonQuery();
+                    connection.Open();
+                    string sql = "UPDATE Advice SET Id = @Id, Description = @description, " +
+                        "WHERE Id = @id";
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        command.Parameters.AddWithValue("Id", advice.Id);
+                        command.Parameters.AddWithValue("Description", advice.Description);
+                        command.ExecuteNonQuery();
+                    }
                 }
             }
+            catch (Exception ex) { throw ex; }
         }
-        catch (Exception ex) { throw ex; }
-}
-
-
-
+        public void DeleteAdvice(Advice advice)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    string sql = "DELETE FROM Advice WHERE Id = @Id";
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        command.Parameters.AddWithValue("@Id", advice.Id);
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
     }
 }
