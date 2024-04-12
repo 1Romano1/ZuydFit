@@ -9,125 +9,87 @@ namespace ZuydFit
 {
     public class DAL
     {
-        public string connectionString = "Data Source=.;Initial Catalog=HierKomtDeDatabase!!!!;Integrated Security=True";
+        public List<Advice> Advices { get; set; }
+        public string connectionString = "Data Source=.;Initial Catalog=ZuydFit;Integrated Security=True;Encrypt=False";
 
-        public DAL() 
-        {
 
-            public void ReadItem(Item item)
+            public void CreateAdvice(Advice advice)
             {
-                Items.Clear();
                 try
                 {
                     using (SqlConnection connection = new SqlConnection(connectionString))
                     {
                         connection.Open();
-                        string sql = "SELECT * FROM Item, Product";
+                        string sql = "INSERT INTO Advice (Id, Description) " +
+                            "VALUES (@Id, @Description) ";
                         using (SqlCommand command = new SqlCommand(sql, connection))
                         {
-                            using (SqlDataReader reader = command.ExecuteReader())
-                            {
-                                while (reader.Read())
-                                {
+                            command.Parameters.AddWithValue("Id", @advice.Id);
+                            command.Parameters.AddWithValue("Description", @advice.Description);
+                            command.ExecuteNonQuery();
+                        }
+                    }
+                }
+                catch (Exception ex) { throw ex; }
+            }
+            public void ReadAdvice(Advice advice)
+            {
 
-                                    Items.Add(new Item(reader[2].ToString(),
-                                                       Convert.ToDouble(reader[3].ToString()),
-                                                       reader[4].ToString()
-                                                       ));
-                                }
+                using (SqlConnection connection = new SqlConnection())
+                {
+                    using (SqlCommand command = new SqlCommand())
+                    {
+                        connection.ConnectionString = connectionString;
+                        connection.Open();
+                        command.Connection = connection;
+                        command.CommandText = "SELECT Id, Description " +
+                            "FROM Advice ORDER BY ID ";
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                //de uitroeptekens staan ervoor omdat de copiler denkt dat het een null waarde kan hebben terwijl dat zeker niet zo is.
+                                Advices.Add(new Advice (Convert.ToInt32(reader[0].ToString ()), reader[1].ToString(), reader[2].ToString(), reader[3].ToString(), reader[4].ToString()));
                             }
                         }
                     }
-
-
                 }
-                catch (Exception ex)
-                {
-                    throw (ex);
-                }
-
             }
-            public void CreateItem(Item item)
+            public void UpdateAdvice(Advice advice)
             {
                 try
                 {
                     using (SqlConnection connection = new SqlConnection(connectionString))
                     {
                         connection.Open();
-                        string sql = "INSERT INTO Product (Name, price) VALUES (@Name, @Price)";
-
+                        string sql = "UPDATE Advice SET Id = @Id, Description = @description, " +
+                            "WHERE Id = @id";
                         using (SqlCommand command = new SqlCommand(sql, connection))
                         {
-                            command.Parameters.AddWithValue("@Name", item.Name);
-                            command.Parameters.AddWithValue("@Price", item.Price);
-                            command.ExecuteNonQuery();
-                        }
-
-                        string sql2 = "INSERT INTO Item (description) VALUES (@Description)";
-
-                        using (SqlCommand command = new SqlCommand(sql, connection))
-                        {
-                            command.Parameters.AddWithValue("@Description", item.Description);
+                            command.Parameters.AddWithValue("Id", advice.Id);
+                            command.Parameters.AddWithValue("Description", advice.Description);
                             command.ExecuteNonQuery();
                         }
                     }
                 }
-                catch (Exception ex)
-                {
-                    throw (ex);
-                }
+                catch (Exception ex) { throw ex; }
             }
-            public void UpdateItem(Item item)
+            public void DeleteAdvice(Advice advice)
             {
-                try
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    using (SqlConnection connection = new SqlConnection(connectionString))
+                    connection.Open();
+                    string sql = "DELETE FROM Advice WHERE Id = @Id";
+                    using (SqlCommand command = new SqlCommand(sql, connection))
                     {
-                        connection.Open();
-                        string sql = "UPDATE Item SET itemName = @ItemName, price = @Price, description = @Description ";
-
-                        using (SqlCommand command = new SqlCommand(sql, connection))
-                        {
-                            command.Parameters.AddWithValue("@ItemName", item.Name);
-                            command.Parameters.AddWithValue("@Price", item.Price);
-                            command.Parameters.AddWithValue("@Description", item.Description);
-                            command.ExecuteNonQuery();
-                        }
+                        command.Parameters.AddWithValue("@Id", advice.Id);
+                        command.ExecuteNonQuery();
                     }
                 }
-                catch (Exception ex)
-                {
-                    throw (ex);
-                }
-
             }
-            public void DeleteItem(Item item)
-            {
-                try
-                {
-                    using (SqlConnection connection = new SqlConnection(connectionString))
-                    {
-                        connection.Open();
-                        string sql = "DELETE Item WHERE ItemId = @Id";
-                        using (SqlCommand command = new SqlCommand(sql, connection))
-                        {
-                            command.Parameters.AddWithValue("@Id", item.ItemId);
-                            command.ExecuteNonQuery();
-                        }
-
-
-                    }
-
-                }
-                catch (Exception ex)
-                {
-                    throw (ex);
-                }
 
 
 
-
-            }
-        }
+        
     }
 }
