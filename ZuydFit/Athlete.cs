@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace ZuydFit
 {
-    public class Athlete 
+    public class Athlete : User 
     { 
         public List<Goal> Goals { get; set; }
         public List<Advice> Advices { get; set; }
 
 
-        public Athlete(List<Goal> goals, List<Advice> advices) 
+        public Athlete(int id, string firstName, string lastName, int personalNumber, List<Goal> goals, List<Advice> advices) : base(id, firstName, lastName, personalNumber)
         {
             Goals = goals;
             Advices = advices;
