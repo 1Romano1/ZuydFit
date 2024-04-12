@@ -12,14 +12,36 @@ namespace ZuydFit
         public string Description { get; set; }
         public string Trainer { get; set; }
         public string Athlete { get; set; }
+        public DAL DAL { get; set; }
 
-        public Advice(string description, string trainer, string athlete) 
-
+        public Advice(string description) 
         {
             Description = description;
-            Trainer = trainer;
-            Athlete = athlete;
+            DAL = new DAL();
+        }
+
+        public Advice() { }
+
+        public static void AddAdvice()
+        {
+            Console.WriteLine("Wat is het advies dat je wilt geven?");
+            string Description = Console.ReadLine();
+            Advice advice = new Advice(Description);
+            DAL.CreateAdvice(advice);
             
         }
+        public void ReadAdvice() 
+        {
+        
+        }
+        public void UpdateAdvice()
+        {
+
+        }
+        public void DeleteAdvice() 
+        {
+        
+        }
+
     }
 }

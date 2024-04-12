@@ -12,14 +12,8 @@ namespace ZuydFit
 
         public List <Activity> activities = new List <Activity> ();
         public List<Advice> Advices { get; set; }
-        public string connectionString = "Data Source=.;Initial Catalog=ZuydFit;Integrated Security=True;Encrypt=False";
+        public static string connectionString = "Data Source=.;Initial Catalog=ZuydFit;Integrated Security=True;Encrypt=False";
 
-
-
-
-
-        
-        
         public DAL()
         {
         }
@@ -111,18 +105,17 @@ namespace ZuydFit
             }
         }*/
       
-          public void CreateAdvice(Advice advice)
+          public static void CreateAdvice(Advice advice)
     {
         try
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                string sql = "INSERT INTO Advice (Id, Description) " +
-                    "VALUES (@Id, @Description) ";
+                string sql = "INSERT INTO Advice (Description) " +
+                    "VALUES (@Description) ";
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
-                    command.Parameters.AddWithValue("Id", @advice.Id);
                     command.Parameters.AddWithValue("Description", @advice.Description);
                     command.ExecuteNonQuery();
                 }
@@ -146,7 +139,7 @@ namespace ZuydFit
                 {
                     while (reader.Read())
                     {
-                        Advices.Add(new Advice (reader[0].ToString(), reader[1].ToString(), reader[2].ToString(), reader[3].ToString()));
+                        Advices.Add(new Advice (reader[0].ToString()));
                     }
                 }
             }

@@ -1,6 +1,12 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using System.Xml;
+using System.Xml.Linq;
+using ZuydFit;
 
-Console.WriteLine("Hello, World!");
-Console.WriteLine("test");
-
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        Advice.AddAdvice();
+    }
+}
