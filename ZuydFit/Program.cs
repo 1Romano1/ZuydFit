@@ -1,6 +1,6 @@
 ﻿namespace ZuydFit
 {
-    public class Program
+    class Program
     {
         static void Main(string[] args)
         {
@@ -9,5 +9,6 @@
             Location location = new Location();
             location.ReadLocation();
         }
+
     }
 }
