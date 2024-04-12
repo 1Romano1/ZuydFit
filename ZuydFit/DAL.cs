@@ -41,8 +41,53 @@ namespace ZuydFit
             }
             catch (Exception ex) 
             {
-                throw new Exception("Error creating activity.", ex);
+                throw new Exception("test", ex);
             }
+        }
+        public void ReadActivity(List<Activity> activities)
+        {
+
+            using (SqlConnection connection = new SqlConnection())
+            {
+                using (SqlCommand command = new SqlCommand())
+                {
+                    connection.ConnectionString = connectionString;
+                    connection.Open();
+                    command.Connection = connection;
+                    command.CommandText = "SELECT Name, Description, Duration, Sets " +
+                        "FROM Activity ORDER BY ID ";
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            activities.Add(new Activity(reader[0].ToString(), reader[1].ToString(),
+                                decimal.Parse(reader[2].ToString()), int.Parse(reader[3].ToString())));
+                        }
+                    }
+                }
+            }
+        }
+        public void UpdateItem(Activity activity)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    string sql = "UPDATE Activity SET name = @name, Description = @description, Duration = @Duration," +
+                        " Sets = @Sets WHERE Id = @id";
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        //command.Parameters.AddWithValue("Id", activity.Id);
+                        command.Parameters.AddWithValue("Name", activity.Name);
+                        command.Parameters.AddWithValue("Description", activity.Description);
+                        command.Parameters.AddWithValue("Duration", activity.Duration);
+                        command.Parameters.AddWithValue("Sets", activity.Sets);
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex) { throw ex; }
         }
         public void DeleteActivity(int Id)
         {
@@ -57,6 +102,8 @@ namespace ZuydFit
                 }
             }
         }
+
+        
 
 
         /*public void ReadItem(List<Item> items)

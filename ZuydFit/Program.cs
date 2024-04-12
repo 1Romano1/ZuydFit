@@ -11,6 +11,6 @@ public class Program
         Console.WriteLine("test");
 
         Activity activity = new Activity();
-        activity.AddActivity();
+        activity.DeleteActivity();
     }
 }
