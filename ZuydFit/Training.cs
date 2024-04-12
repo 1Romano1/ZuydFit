@@ -9,14 +9,11 @@ namespace ZuydFit
     public class Training
     {
         public int Id { get; set; }
-        public int TimeDuration { get; set; }
         public List<Activity> Activities { get; set; }
-        public List<Location> Locations { get; set; }
-        public Training(int timeDuration, List<Activity> activities, List<Location> locations) 
+        public Training(int Id, List<Activity> activities) 
         {
-            TimeDuration = timeDuration;
+            Id = Id;
             Activities = activities;
-            Locations  = locations;
         }
        
 

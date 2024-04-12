@@ -14,8 +14,9 @@ namespace ZuydFit
         public int PersonalNumber { get; set; }
 
 
-        public User(string firstName, string lastName, int personalNumber)
+        public User(int id, string firstName, string lastName, int personalNumber)
         {
+            Id = id;
             FirstName = firstName;
             LastName = lastName;
             PersonalNumber = personalNumber;

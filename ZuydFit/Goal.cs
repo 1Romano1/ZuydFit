@@ -9,13 +9,12 @@ namespace ZuydFit
     public class Goal
     {
         public int Id { get; set; }
-        public string Name { get; set; }
         public string Description { get; set; }
         public string Progression { get; set; }
 
-        public Goal(string name, string description, string progression)
+        public Goal(int id, string description, string progression)
         {
-            Name = name;
+            Id = id;
             Description = description;
             Progression = progression;
         }
