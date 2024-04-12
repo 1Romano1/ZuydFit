@@ -11,21 +11,15 @@ namespace ZuydFit
     {
 
         public List <Activity> activities = new List <Activity> ();
-        public List<Advice> Advices { get; set; }
-        public string connectionString = "Data Source=.;Initial Catalog=ZuydFit;Integrated Security=True;Encrypt=False";
-
-
-
-
-
+       
+        public static string connectionString = "Data Source=.;Initial Catalog=ZuydFit;Integrated Security=True";
         
         
         public DAL()
         {
         }
 
-        
-        public void CreateActivity(Activity activity)
+        public static void CreateActivity(Activity activity)
         {
             try
             {
@@ -46,10 +40,71 @@ namespace ZuydFit
             }
             catch (Exception ex) 
             {
-                throw new Exception("Error creating activity.", ex);
+
             }
         }
-      
+        public static void ReadActivity(List<Activity> activities)
+        {
+
+            using (SqlConnection connection = new SqlConnection())
+            {
+                using (SqlCommand command = new SqlCommand())
+                {
+                    connection.ConnectionString = connectionString;
+                    connection.Open();
+                    command.Connection = connection;
+                    command.CommandText = "SELECT Name, Description, Duration, Sets " +
+                        "FROM Activity ORDER BY ID ";
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            activities.Add(new Activity(reader[0].ToString(), reader[1].ToString(),
+                                decimal.Parse(reader[2].ToString()), int.Parse(reader[3].ToString())));
+                        }
+                    }
+                }
+            }
+        }
+        public void UpdateActivity(Activity activity)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    string sql = "UPDATE Activity SET name = @name, Description = @description, Duration = @Duration," +
+                        " Sets = @Sets WHERE Id = @id";
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        //command.Parameters.AddWithValue("Id", activity.Id);
+                        command.Parameters.AddWithValue("Name", activity.Name);
+                        command.Parameters.AddWithValue("Description", activity.Description);
+                        command.Parameters.AddWithValue("Duration", activity.Duration);
+                        command.Parameters.AddWithValue("Sets", activity.Sets);
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
+        public static void DeleteActivity(string Name)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                string sql = "DELETE FROM Activity WHERE Name = @Name";
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@Name", Name);
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        
+
+
         /*public void ReadItem(List<Item> items)
         {
 
