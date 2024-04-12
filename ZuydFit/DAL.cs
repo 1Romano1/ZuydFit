@@ -9,10 +9,17 @@ namespace ZuydFit
 {
     public class DAL
     {
+        public DAL()
+        {
+        }
 
         public List<Location> loactions = new List<Location>();
+        public List<Activity> activities = new List<Activity>();
 
-        public static string connectionString = "Data Source=LAPPIEMELLIE;Initial Catalog=ZuydFit;Integrated Security=True";
+
+        //public static string connectionString = "Data Source=LAPPIEMELLIE;Initial Catalog=ZuydFit;Integrated Security=True";
+        public static string connectionString = "Data Source=.;Initial Catalog=ZuydFit;Integrated Security=True";
+
 
         public static void CreateLocation(Location location)
         {
@@ -39,7 +46,6 @@ namespace ZuydFit
                 throw ex;
             }
         }
-
         public static void ReadLocation(List<Location> locations)
         {
 
@@ -63,35 +69,20 @@ namespace ZuydFit
                 }
             }
         }
-
         public static void DeleteLocation(string Classroom)
-       {
-           using (SqlConnection connection = new SqlConnection(connectionString))
-           {
-               connection.Open();
-               string sql = "DELETE FROM Location WHERE Classroom = @Classroom";
-               using (SqlCommand command = new SqlCommand(sql, connection))
-               {
-                   command.Parameters.AddWithValue("@Classroom", Classroom);
-                   command.ExecuteNonQuery();
-               }
-           }
-       }
-
-
-
-
-
-
-
-        public List<Activity> activities = new List<Activity>();
-
-        public static string connectionString = "Data Source=.;Initial Catalog=ZuydFit;Integrated Security=True";
-
-
-        public DAL()
         {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                string sql = "DELETE FROM Location WHERE Classroom = @Classroom";
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@Classroom", Classroom);
+                    command.ExecuteNonQuery();
+                }
+            }
         }
+
 
         public static void CreateActivity(Activity activity)
         {
@@ -260,63 +251,7 @@ namespace ZuydFit
                 }
             }
         }*/
-            using (SqlConnection connection = new SqlConnection())
-            {
-                using (SqlCommand command = new SqlCommand())
-                {
-                    connection.ConnectionString = connectionString;
-                    connection.Open();
-                    command.Connection = connection;
-                    command.CommandText = "SELECT Name, Description, Price, ProductCode, Brand " +
-                        "FROM Product ORDER BY ID ";
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            //de uitroeptekens staan ervoor omdat de copiler denkt dat het een null waarde kan hebben terwijl dat zeker niet zo is.
-                            items?.Add(new Item(reader[0].ToString(), reader[1].ToString(),
-                                decimal.Parse(reader[2].ToString()!), reader[3]?.ToString()));
-                        }
-                    }
-                }
-            }
-        }*/
-        /*public void UpdateItem(Item item)
-        {
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    connection.Open();
-                    string sql = "UPDATE Product SET name = @name, Description = @description, Price = @price," +
-                        " ProductCode = @productCode, Brand = @brand WHERE Id = @id";
-                    using (SqlCommand command = new SqlCommand(sql, connection))
-                    {
-                        command.Parameters.AddWithValue("Id", @item.Id);
-                        command.Parameters.AddWithValue("Name", @item.Name);
-                        command.Parameters.AddWithValue("Description", item.Description);
-                        command.Parameters.AddWithValue("Price", @item.Price);
-                        command.Parameters.AddWithValue("ProductCode", @item.ProductCode);
-                        command.Parameters.AddWithValue("Brand", @item.Brand);
-                        command.ExecuteNonQuery();
-                    }
-                }
-            }
-            catch (Exception ex) { throw ex; }
-        }*/
-        /*public void DeleteItem(int ProductCode)
-        {
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                connection.Open();
-                string sql = "DELETE FROM Product WHERE ProductCode = @ProductCode";
-                using (SqlCommand command = new SqlCommand(sql, connection))
-                {
-                    command.Parameters.AddWithValue("@ProductCode", ProductCode);
-                    command.ExecuteNonQuery();
-                }
-            }
-        }*/
+
 
         public void CreateAdvice(Advice advice)
         {
