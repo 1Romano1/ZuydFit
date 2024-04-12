@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,13 +9,13 @@ namespace ZuydFit
     public class Activity
     {
         public int Id { get; set; }
-        public string Name { get; set; }
         public string Description { get; set; }
+        public string Name { get; set; }
         public decimal Duration { get; set; }
-        public int Sets { get; set; }
-        public DAL DAL { get; set; }
 
-        public Activity(string name, string description, decimal duration, int sets)
+        public int Sets { get; set; }
+
+        public Activity(int id, string description, string name, decimal duration, int sets) 
         {
             this.Name = name;
             this.Description = description;

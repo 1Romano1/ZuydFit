@@ -12,8 +12,9 @@ namespace ZuydFit
         public DateTime DateTime { get; set; }
         public string Activity { get; set; }
 
-        public Planning(DateTime dateTime, string activity)
+        public Planning(int id, DateTime dateTime, string activity)
         {
+            Id = id;
             DateTime = dateTime;
             Activity = activity;
         }
