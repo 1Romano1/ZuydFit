@@ -1,6 +1,21 @@
-﻿// See https://aka.ms/new-console-template for more information
-using System.Xml;
+﻿namespace ZuydFit
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            List<Activity> activities = new List<Activity>();
+            Activity activity = new Activity();
+            activity.ReadActivity();
 
-Console.WriteLine("Hello, World!");
-Console.WriteLine("test");
 
+
+
+
+
+
+
+        }
+
+    }
+}
