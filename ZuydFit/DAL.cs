@@ -182,7 +182,7 @@ namespace ZuydFit
             }
             catch (Exception ex) { throw ex; }
         }
-        public void ReadAdvice(Advice advice)
+        public void ReadAdvice(List<Advice> advices)
         {
             try
             {
@@ -199,7 +199,7 @@ namespace ZuydFit
                         {
                             while (reader.Read())
                             {
-                                Advices.Add(new Advice(reader[0].ToString(), reader[1].ToString(), reader[2].ToString()));
+                                advices.Add(new Advice(reader[0].ToString(), reader[1].ToString(), reader[2].ToString()));
                             }
                         }
                     }
