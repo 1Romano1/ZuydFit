@@ -44,6 +44,19 @@ namespace ZuydFit
                 throw new Exception("Error creating activity.", ex);
             }
         }
+        public void DeleteActivity(int Id)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                string sql = "DELETE FROM Activity WHERE Id = @Id";
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@Id", Id);
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
 
 
         /*public void ReadItem(List<Item> items)

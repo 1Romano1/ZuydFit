@@ -58,7 +58,9 @@ namespace ZuydFit
         public void DeleteActivity()
         {
             Console.WriteLine("Voer de naam in van de oefening dat u wilt verwijderen:");
-            string name = Console.ReadLine();
+            int Id = int.Parse(Console.ReadLine());
+
+            DAL.DeleteActivity(Id);
         }
     } 
 }
