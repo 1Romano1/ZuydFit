@@ -146,7 +146,7 @@ namespace ZuydFit
                 {
                     while (reader.Read())
                     {
-                        Advices.Add(new Advice (reader[0].ToString(), reader[1].ToString(), reader[2].ToString(), reader[3].ToString()));
+                        Advices.Add(new Advice (reader[0].ToString(), reader[1].ToString(), reader[2].ToString()));
                     }
                 }
             }
