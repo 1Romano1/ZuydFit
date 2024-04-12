@@ -13,9 +13,8 @@ namespace ZuydFit
         public string Trainer { get; set; }
         public string Athlete { get; set; }
 
-        public Advice(int id, string description, string owner, string trainer, string athlete ) 
+        public Advice(string description, string owner, string trainer, string athlete ) 
         {
-            Id = id;
             Description = description;
             Trainer = trainer;
             Athlete = athlete;

@@ -34,7 +34,7 @@ namespace ZuydFit
             }
             public void ReadAdvice(Advice advice)
             {
-
+                try { 
                 using (SqlConnection connection = new SqlConnection())
                 {
                     using (SqlCommand command = new SqlCommand())
@@ -48,13 +48,14 @@ namespace ZuydFit
                         {
                             while (reader.Read())
                             {
-                                //de uitroeptekens staan ervoor omdat de copiler denkt dat het een null waarde kan hebben terwijl dat zeker niet zo is.
-                                Advices.Add(new Advice (Convert.ToInt32(reader[0].ToString ()), reader[1].ToString(), reader[2].ToString(), reader[3].ToString(), reader[4].ToString()));
+                                Advices.Add(new Advice (reader[0].ToString(), reader[1].ToString(), reader[2].ToString(), reader[3].ToString()));
                             }
                         }
                     }
                 }
             }
+            catch (Exception ex) { throw ex ; }
+        }
             public void UpdateAdvice(Advice advice)
             {
                 try
@@ -76,17 +77,20 @@ namespace ZuydFit
             }
             public void DeleteAdvice(Advice advice)
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    connection.Open();
-                    string sql = "DELETE FROM Advice WHERE Id = @Id";
-                    using (SqlCommand command = new SqlCommand(sql, connection))
+                try { 
+                    using (SqlConnection connection = new SqlConnection(connectionString))
                     {
-                        command.Parameters.AddWithValue("@Id", advice.Id);
-                        command.ExecuteNonQuery();
+                        connection.Open();
+                        string sql = "DELETE FROM Advice WHERE Id = @Id";
+                        using (SqlCommand command = new SqlCommand(sql, connection))
+                        {
+                            command.Parameters.AddWithValue("@Id", advice.Id);
+                            command.ExecuteNonQuery();
+                        }
                     }
                 }
-            }
+                catch (Exception ex) { throw ex; }
+        }
 
 
 
