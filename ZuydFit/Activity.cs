@@ -12,10 +12,10 @@ namespace ZuydFit
         public string Description { get; set; }
         public string Name { get; set; }
         public decimal Duration { get; set; }
-
         public int Sets { get; set; }
+        public DAL DAL { get; set; }
 
-        public Activity(int id, string description, string name, decimal duration, int sets) 
+        public Activity(string description, string name, decimal duration, int sets) 
         {
             this.Name = name;
             this.Description = description;
