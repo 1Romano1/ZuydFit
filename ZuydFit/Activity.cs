@@ -40,7 +40,7 @@ namespace ZuydFit
             Console.WriteLine("Hoeveel sets van " + name + " wilt u gaan doen?");
             int sets = int.Parse(Console.ReadLine());
 
-            Activity activity = new Activity(description, name, duration, sets);
+            Activity activity = new Activity(name, description, duration, sets);
             DAL.CreateActivity(activity);
             
         }
