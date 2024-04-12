@@ -5,8 +5,19 @@ using ZuydFit;
 
 public class Program
 {
-    public static void Main(string[] args)
+    public void Main(string[] args)
     {
-        Advice.AddAdvice();
+        Console.WriteLine("wat is de titel van je advies");
+        string Title = Console.ReadLine();
+
+        Console.WriteLine("Wat is het advies dat je wilt geven?");
+        string Description = Console.ReadLine();
+
+        Advice advice = new Advice(Title, Description);
+        advice.AddAdvice(advice);
+
+        Console.WriteLine("Welk advies wil je verwijderen voer de titel in");
+
+        
     }
 }
