@@ -18,9 +18,6 @@ namespace ZuydFit
         public static string connectionString = "Data Source=.;Initial Catalog=ZuydFit;Integrated Security=True;Encrypt=False";
 
 
-        //public static string connectionString = "Data Source=LAPPIEMELLIE;Initial Catalog=ZuydFit;Integrated Security=True";
-        public static string connectionString = "Data Source=.;Initial Catalog=ZuydFit;Integrated Security=True";
-
 
         public static void CreateLocation(Location location)
         {
@@ -273,7 +270,7 @@ namespace ZuydFit
             }
             catch (Exception ex) { throw ex; }
         }
-        public void ReadAdvice(List<Advice> advices)
+        public void ReadAdvice()
         {
             try
             {
@@ -284,14 +281,40 @@ namespace ZuydFit
                         connection.ConnectionString = connectionString;
                         connection.Open();
                         command.Connection = connection;
-                        command.CommandText = "SELECT Id, Description " +
-                            "FROM Advice ORDER BY ID ";
+                        command.CommandText = "SELECT Title, Description FROM Advice ORDER BY ID ";
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
-                                advices.Add(new Advice(reader[0].ToString(), reader[1].ToString(), reader[2].ToString()));
+                                Advices.Add(new Advice(reader[0].ToString(), reader[1].ToString()));
                             }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
+        public Advice GetAdviceByTitle(string title)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection())
+                {
+                    using (SqlCommand command = new SqlCommand())
+                    {
+                        connection.ConnectionString = connectionString;
+                        connection.Open();
+                        command.Connection = connection;
+                        command.CommandText = "SELECT Id, Title, Description " +
+                            "FROM Advice WHERE Title = @Title";
+                        command.Parameters.AddWithValue("@Title", title);
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                return (new Advice(Int32.Parse(reader[0].ToString()), reader[1].ToString(), reader[2].ToString()));
+                            }
+                            return null;
                         }
                     }
                 }
