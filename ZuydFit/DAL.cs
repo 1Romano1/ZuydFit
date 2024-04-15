@@ -184,12 +184,14 @@ namespace ZuydFit
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = "UPDATE Advice SET Id = @Id, Description = @description, " +
+                    string sql = "UPDATE Advice SET Id = @Id, Title = @Title, Description = @description, " +
                         "WHERE Id = @id";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         command.Parameters.AddWithValue("Id", advice.Id);
+                        command.Parameters.AddWithValue("Title", advice.Title);
                         command.Parameters.AddWithValue("Description", advice.Description);
+                        
                         command.ExecuteNonQuery();
                     }
                 }
