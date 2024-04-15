@@ -31,7 +31,7 @@ public class Program
         advice.GetAdviceByTitle(title);
         advice.DeleteAdvice();
 
-        */
+        
         Advice advice3 = new Advice();
         List<Advice> Advices = advice3.ReadAdvice();
         foreach (var ad in Advices)
@@ -51,7 +51,7 @@ public class Program
         advice3.Description = Console.ReadLine();
 
         advice3.UpdateAdvice();
-
+        */
 
 
     }
