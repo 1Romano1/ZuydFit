@@ -5,19 +5,33 @@ using ZuydFit;
 
 public class Program
 {
-    public void Main(string[] args)
+    static void Main(string[] args)
     {
-        Console.WriteLine("wat is de titel van je advies");
-        string Title = Console.ReadLine();
+        /*Console.WriteLine("wat is de titel van je advies");
+        string title = Console.ReadLine();
 
         Console.WriteLine("Wat is het advies dat je wilt geven?");
-        string Description = Console.ReadLine();
+        string description = Console.ReadLine();
 
-        Advice advice = new Advice(Title, Description);
-        advice.AddAdvice(advice);
+        Advice advice2 = new Advice(Title, Description);
+        advice2.AddAdvice(advice);*/
 
-        Console.WriteLine("Welk advies wil je verwijderen voer de titel in");
+        Advice advice1 = new Advice();
+        List<Advice> advices = advice1.ReadAdvice();
+        foreach (var adv in advices)
+        {
+            Console.WriteLine(adv.Title);
+        }
 
-        
+        Console.WriteLine("Welk advies wil je verwijderen voer de Id in");
+        string title = Console.ReadLine();
+
+        Advice advice = new Advice();
+        advice.GetAdviceByTitle(title);
+        advice.DeleteAdvice();
+
+
+
+
     }
 }

@@ -10,15 +10,15 @@ namespace ZuydFit
     public class DAL
     {
 
-        public List <Activity> activities = new List <Activity> ();
-        public List<Advice> Advices { get; set; }
-        public string connectionString = "Data Source=.;Initial Catalog=ZuydFit;Integrated Security=True;Encrypt=False";
+        public List<Activity> activities = new List<Activity>();
+        public List<Advice> Advices { get; set; } = new List<Advice>();
+        public static string connectionString = "Data Source=.;Initial Catalog=ZuydFit;Integrated Security=True;Encrypt=False";
 
         public DAL()
         {
         }
 
-        
+
         public void CreateActivity(Activity activity)
         {
             try
@@ -38,12 +38,12 @@ namespace ZuydFit
                     }
                 }
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 throw new Exception("Error creating activity.", ex);
             }
         }
-      
+
         /*public void ReadItem(List<Item> items)
         {
 
@@ -104,29 +104,29 @@ namespace ZuydFit
                 }
             }
         }*/
-      
-              public void CreateAdvice(Advice advice)
-              {
-                try
+
+        public static void CreateAdvice(Advice advice)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    using (SqlConnection connection = new SqlConnection(connectionString))
+                    connection.Open();
+                    string sql = "INSERT INTO Advice (Description, Title) " +
+                        "VALUES (@Description, @Title) ";
+                    using (SqlCommand command = new SqlCommand(sql, connection))
                     {
-                        connection.Open();
-                        string sql = "INSERT INTO Advice (Title, Description) " +
-                            "VALUES (@Title, @Description) ";
-                        using (SqlCommand command = new SqlCommand(sql, connection))
-                        {
-                            command.Parameters.AddWithValue("Description", @advice.Description);
-                            command.Parameters.AddWithValue("Title", @advice.Title);
-                            command.ExecuteNonQuery();
-                        }
+                        command.Parameters.AddWithValue("Description", @advice.Description);
+                        command.Parameters.AddWithValue("Title", @advice.Title);
+                        command.ExecuteNonQuery();
                     }
                 }
-                catch (Exception ex) { throw ex; }
-              }
-            public void ReadAdvice(Advice advice)
-            {
-                try { 
+            }
+            catch (Exception ex) { throw ex; }
+        }
+        public void ReadAdvice()
+        {
+            try {
                 using (SqlConnection connection = new SqlConnection())
                 {
                     using (SqlCommand command = new SqlCommand())
@@ -134,57 +134,84 @@ namespace ZuydFit
                         connection.ConnectionString = connectionString;
                         connection.Open();
                         command.Connection = connection;
-                        command.CommandText = "SELECT Id, Description " +
-                            "FROM Advice ORDER BY ID ";
+                        command.CommandText = "SELECT Title, Description FROM Advice ORDER BY ID ";
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
-                                Advices.Add(new Advice (reader[0].ToString(), reader[1].ToString()));
+                                Advices.Add(new Advice(reader[0].ToString(), reader[1].ToString()));
                             }
                         }
                     }
+                }
             }
-                }
-                catch (Exception ex) { throw ex ; }
-                }
-            public void UpdateAdvice(Advice advice)
+            catch (Exception ex) { throw ex; }
+        }
+
+        public Advice GetAdviceByTitle(string title)
+        {
+            try
             {
-                try
+                using (SqlConnection connection = new SqlConnection())
                 {
-                    using (SqlConnection connection = new SqlConnection(connectionString))
+                    using (SqlCommand command = new SqlCommand())
                     {
+                        connection.ConnectionString = connectionString;
                         connection.Open();
-                        string sql = "UPDATE Advice SET Id = @Id, Description = @description, " +
-                            "WHERE Id = @id";
-                        using (SqlCommand command = new SqlCommand(sql, connection))
+                        command.Connection = connection;
+                        command.CommandText = "SELECT Id, Title, Description " +
+                            "FROM Advice WHERE Title = @Title";
+                        command.Parameters.AddWithValue("@Title", title);
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
-                            command.Parameters.AddWithValue("Id", advice.Id);
-                            command.Parameters.AddWithValue("Description", advice.Description);
-                            command.ExecuteNonQuery();
+                            while (reader.Read())
+                            {
+                                return (new Advice(Int32.Parse(reader[0].ToString()), reader[1].ToString(), reader[2].ToString()));
+                            }
+                            return null;
                         }
                     }
                 }
-                catch (Exception ex) { throw ex; }
             }
-            public void DeleteAdvice(Advice advice)
+            catch (Exception ex) { throw ex; }
+        }
+
+
+        public void UpdateAdvice(Advice advice)
+        {
+            try
             {
-                try { 
-                    using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    string sql = "UPDATE Advice SET Id = @Id, Description = @description, " +
+                        "WHERE Id = @id";
+                    using (SqlCommand command = new SqlCommand(sql, connection))
                     {
-                        connection.Open();
-                        string sql = "DELETE FROM Advice WHERE Title = @Title";
-                        using (SqlCommand command = new SqlCommand(sql, connection))
-                        {
-                            command.Parameters.AddWithValue("@Title", advice.Title);
-                            command.ExecuteNonQuery();
-                        }
+                        command.Parameters.AddWithValue("Id", advice.Id);
+                        command.Parameters.AddWithValue("Description", advice.Description);
+                        command.ExecuteNonQuery();
                     }
                 }
-                catch (Exception ex) { throw ex; }
             }
-
-
-
+            catch (Exception ex) { throw ex; }
+        }
+        public void DeleteAdvice(Advice advice)
+        {
+            try {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    string sql = "DELETE FROM Advice WHERE Id= @Id";
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        command.Parameters.AddWithValue("@Id", advice.Id);
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
     }
 }
+

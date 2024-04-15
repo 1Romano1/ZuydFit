@@ -16,30 +16,54 @@ namespace ZuydFit
         public string Athlete { get; set; }
         public DAL DAL { get; set; }
 
-        public Advice(string title,string description) 
+        public Advice()
+        {
+            Title = "";
+            Description = "";
+        }
+
+        public Advice(string title, string description)
         {
             Title = title;
             Description = description;
+        }
+        public Advice(int id, string title, string description)
+        {
+            Id = id;
+            Title = title;
+            Description = description;
+        }
+
+        public void AddAdvice()
+        {
             DAL = new DAL();
+            DAL.CreateAdvice(this);
+        }
+        public List<Advice> ReadAdvice()
+        {
+            DAL = new DAL();
+            DAL.ReadAdvice();
+            return DAL.Advices;
         }
 
-        public Advice() { }
+        public void GetAdviceByTitle(string title)
+        {
+            DAL = new DAL();
+            Advice advice = DAL.GetAdviceByTitle(title);
+            this.Id = advice.Id;
+            this.Title = advice.Title;
+            this.Description = advice.Description;
+        }
 
-        public void AddAdvice(Advice advice)
-        {
-            DAL.CreateAdvice(advice);  
-        }
-        public void ReadAdvice() 
-        {
-            
-        }
         public void UpdateAdvice()
         {
-
+            DAL = new DAL();
+            DAL.UpdateAdvice(this);
         }
-        public void DeleteAdvice(Advice  advice) 
+        public void DeleteAdvice() 
         {
-            DAL.DeleteAdvice(advice);
+            DAL = new DAL();
+            DAL.DeleteAdvice(this);
         }
 
     }
