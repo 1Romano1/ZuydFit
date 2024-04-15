@@ -131,7 +131,7 @@ namespace ZuydFit
                 }
             }
         }
-        public void UpdateActivity(Activity activity)
+        public static void UpdateActivity(Activity activity)
         {
             try
             {
@@ -142,7 +142,7 @@ namespace ZuydFit
                         " Sets = @Sets WHERE Id = @id";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
-                        //command.Parameters.AddWithValue("Id", activity.Id);
+                        command.Parameters.AddWithValue("Id", activity.Id);
                         command.Parameters.AddWithValue("Name", activity.Name);
                         command.Parameters.AddWithValue("Description", activity.Description);
                         command.Parameters.AddWithValue("Duration", activity.Duration);

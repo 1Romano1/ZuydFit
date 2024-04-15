@@ -4,10 +4,10 @@
     {
         static void Main(string[] args)
         {
-            List<Location> locations = new List<Location>();
+            Activity activity = new Activity();
 
-            Location location = new Location();
-            location.ReadLocation();
+            activity.ActivityMenu();
+
         }
 
     }

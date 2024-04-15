@@ -15,7 +15,7 @@ namespace ZuydFit
         public int Sets { get; set; }
         public DAL DAL { get; set; }
 
-        public Activity(string description, string name, decimal duration, int sets) 
+        public Activity(string description, string name, decimal duration, int sets)
         {
             this.Name = name;
             this.Description = description;
@@ -60,14 +60,52 @@ namespace ZuydFit
             Console.WriteLine("Naam:\t Beschrijving:\tTijdsduur:\tSet:");
             foreach (Activity activity in activities)
             {
-                Console.WriteLine(activity.Name + "\t" + activity.Description + "\t" + activity.Duration + "\t" + activity.Sets +"\t");
+                Console.WriteLine(activity.Name + "\t" + activity.Description + "\t" + activity.Duration + "\t" + activity.Sets + "\t");
             }
             Console.WriteLine();
         }
 
         public void UpdateActivity()
         {
+            Console.WriteLine("Voer de id van de activiteit in die u wilt gaan bijwerken:");
+            int id;
+            if (!int.TryParse(Console.ReadLine(), out id))
+            {
+                return;
+            }
 
+            Console.WriteLine("Voer de nieuwe naam in:");
+            string name = Console.ReadLine();
+
+            Console.WriteLine("Voer de nieuwe beschrijving in:");
+            string description = Console.ReadLine();
+
+            Console.WriteLine("Voer de nieuwe tijdsduur in minuten:");
+            decimal duration;
+            if (!decimal.TryParse(Console.ReadLine(), out duration))
+            {
+                return;
+            }
+
+            Console.WriteLine("Voer de nieuwe hoeveelheid sets in:");
+            int sets;
+            if (!int.TryParse(Console.ReadLine(), out sets))
+            {
+                return;
+            }
+
+            Activity activity = new Activity
+            {
+                Id = id,
+                Name = name,
+                Description = description,
+                Duration = duration,
+                Sets = sets
+            };
+
+            DAL.UpdateActivity(activity);
+
+            Console.WriteLine("De activiteit met id '" + id + "' is succesvol bijgewerkt.");
         }
 
         public void DeleteActivity()
@@ -76,5 +114,47 @@ namespace ZuydFit
             string Name = Console.ReadLine();
             DAL.DeleteActivity(Name);
         }
-    } 
+
+        public void ActivityMenu()
+        {
+            bool exit = false;
+            string userInput;
+
+            while (!exit)
+            {
+                Console.WriteLine("Wat wil je gaan doen?");
+                Console.WriteLine("1. Een activiteit toevoegen");
+                Console.WriteLine("2. Activiteiten bekijken");
+                Console.WriteLine("3. Een activiteit bijwerken");
+                Console.WriteLine("4. Een activiteit verwijderen");
+                Console.WriteLine("5. Terug naar hoofdmenu");
+
+                userInput = Console.ReadLine();
+
+                if (userInput == "1")
+                    AddActivity();
+                else if (userInput == "2")
+                    ReadActivity();
+                else if (userInput == "3")
+                    UpdateActivity();
+                else if (userInput == "4")
+                    DeleteActivity();
+                else if (userInput == "5")
+                    exit = true;
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("Ongeldige keuze. Probeer opnieuw.");
+                    continue;
+                }
+
+                // Extra regel om de interface duidelijk te houden na het uitvoeren van een actie
+                Console.WriteLine("Druk op Enter om door te gaan...");
+                Console.ReadLine();
+                Console.Clear();
+            }
+        }
+
+
+    }
 }
