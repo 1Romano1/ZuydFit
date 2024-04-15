@@ -270,7 +270,7 @@ namespace ZuydFit
             }
             catch (Exception ex) { throw ex; }
         }
-        public void ReadAdvice(List<Advice> advices)
+        public void ReadAdvice()
         {
             try
             {
@@ -281,13 +281,12 @@ namespace ZuydFit
                         connection.ConnectionString = connectionString;
                         connection.Open();
                         command.Connection = connection;
-                        command.CommandText = "SELECT Id, Description " +
-                            "FROM Advice ORDER BY ID ";
+                        command.CommandText = "SELECT Title, Description FROM Advice ORDER BY ID ";
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
-                                advices.Add(new Advice(Int32.Parse(reader[0].ToString()), reader[1].ToString(), reader[2].ToString()));
+                                Advices.Add(new Advice(reader[0].ToString(), reader[1].ToString()));
                             }
                         }
                     }
