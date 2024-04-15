@@ -18,9 +18,6 @@ namespace ZuydFit
         public static string connectionString = "Data Source=.;Initial Catalog=ZuydFit;Integrated Security=True;Encrypt=False";
 
 
-        //public static string connectionString = "Data Source=LAPPIEMELLIE;Initial Catalog=ZuydFit;Integrated Security=True";
-        public static string connectionString = "Data Source=.;Initial Catalog=ZuydFit;Integrated Security=True";
-
 
         public static void CreateLocation(Location location)
         {
@@ -290,7 +287,7 @@ namespace ZuydFit
                         {
                             while (reader.Read())
                             {
-                                advices.Add(new Advice(reader[0].ToString(), reader[1].ToString(), reader[2].ToString()));
+                                advices.Add(new Advice(Int32.Parse(reader[0].ToString()), reader[1].ToString(), reader[2].ToString()));
                             }
                         }
                     }
