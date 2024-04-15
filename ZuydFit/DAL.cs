@@ -295,6 +295,33 @@ namespace ZuydFit
             }
             catch (Exception ex) { throw ex; }
         }
+        public Advice GetAdviceByTitle(string title)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection())
+                {
+                    using (SqlCommand command = new SqlCommand())
+                    {
+                        connection.ConnectionString = connectionString;
+                        connection.Open();
+                        command.Connection = connection;
+                        command.CommandText = "SELECT Id, Title, Description " +
+                            "FROM Advice WHERE Title = @Title";
+                        command.Parameters.AddWithValue("@Title", title);
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                return (new Advice(Int32.Parse(reader[0].ToString()), reader[1].ToString(), reader[2].ToString()));
+                            }
+                            return null;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
         public void UpdateAdvice(Advice advice)
         {
             try
