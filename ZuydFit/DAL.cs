@@ -15,8 +15,9 @@ namespace ZuydFit
 
         public List<Activity> activities = new List<Activity>();
         public List<Advice> Advices { get; set; } = new List<Advice>();
-        public static string connectionString = "Data Source=.;Initial Catalog=ZuydFit;Integrated Security=True;Encrypt=False";
 
+        //public static string connectionString = "Data Source=LAPPIEMELLIE;Initial Catalog=ZuydFit;Integrated Security=True";
+        public static string connectionString = "Data Source=.;Initial Catalog=ZuydFit;Integrated Security=True";
 
 
         public static void CreateLocation(Location location)
