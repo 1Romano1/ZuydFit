@@ -249,8 +249,50 @@ namespace ZuydFit
                 }
             }
         }*/
-
-
+        public void CreateGoal(Goal goal)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    string sql = "INSERT INTO Goal (Id, Name, Description) " +
+                        "VALUES (@Id, @name, @Description) ";
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        command.Parameters.AddWithValue("Id", goal.Id);
+                        command.Parameters.AddWithValue("Name", goal.Name);
+                        command.Parameters.AddWithValue("Description", goal.Description);
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
+        public void ReadGoal()
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection())
+                {
+                    using (SqlCommand command = new SqlCommand())
+                    {
+                        connection.ConnectionString = connectionString;
+                        connection.Open();
+                        command.Connection = connection;
+                        command.CommandText = "SELECT Name, Description FROM Goal ORDER BY ID ";
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                Advices.Add(new Advice(reader[0].ToString(), reader[1].ToString()));
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
         public void CreateAdvice(Advice advice)
         {
             try
