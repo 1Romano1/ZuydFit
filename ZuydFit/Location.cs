@@ -36,6 +36,8 @@ namespace ZuydFit
 
         public Location() { }
 
+
+
         public void Add()
         {
 
@@ -43,32 +45,22 @@ namespace ZuydFit
             DAL.CreateLocation(this);
 
         }
-
-
         public List<Location> Read()
         {
             DAL = new DAL();
             DAL.ReadLocation(locations);
             return locations;
         }
-        
-         
-
         public void Delete()
         {
             DAL = new DAL();
-            DAL.DeleteLocation(this);
-
+            DAL.DeleteLocation(this)
         }
-        
         public void Update()
         {
-
             DAL = new DAL();
             DAL.UpdateLocation(this);
         }
-
-
     }
 }
 

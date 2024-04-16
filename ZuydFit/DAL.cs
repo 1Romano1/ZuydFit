@@ -16,8 +16,6 @@ namespace ZuydFit
         public List<Goal> Goals { get; set; } = new List<Goal>();
         List<Planning> plannings = new List<Planning>();
 
-        public static string connectionString = "Data Source=LAPPIEMELLIE;Initial Catalog=ZuydFit;Integrated Security=True";
-
         //public static string connectionString = "Data Source=LAPPIEMELLIE;Initial Catalog=ZuydFit;Integrated Security=True";
         public string connectionString = "Data Source=.;Initial Catalog=ZuydFit;Integrated Security=True";
 
@@ -47,7 +45,6 @@ namespace ZuydFit
                 throw ex;
             }
         }
-
         public void ReadLocation(List<Location> locations)
         {
 
@@ -71,7 +68,6 @@ namespace ZuydFit
                 }
             }
         }
-
         public void DeleteLocation(int Id)
         {
            using (SqlConnection connection = new SqlConnection(connectionString))
