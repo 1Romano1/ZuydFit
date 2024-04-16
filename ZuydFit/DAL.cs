@@ -4,7 +4,6 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ZuydFit.ZuydFit;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ZuydFit
@@ -15,6 +14,8 @@ namespace ZuydFit
         public List<Activity> activities = new List<Activity>();
         public List<Advice> Advices { get; set; } = new List<Advice>();
         public List<Goal> Goals { get; set; } = new List<Goal>();
+        List<Planning> plannings = new List<Planning>();
+
 
         //public static string connectionString = "Data Source=LAPPIEMELLIE;Initial Catalog=ZuydFit;Integrated Security=True";
         public string connectionString = "Data Source=.;Initial Catalog=ZuydFit;Integrated Security=True";
@@ -185,8 +186,10 @@ namespace ZuydFit
                     }
                 }
             }
-            catch (Exception ex) { 
-                throw ex; }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         public Goal GetGoalByName(string name)
         {
@@ -231,7 +234,7 @@ namespace ZuydFit
                         {
                             while (reader.Read())
                             {
-                                Goals.Add(new (reader[0].ToString(), reader[1].ToString(), reader[2].ToString()));
+                                Goals.Add(new(reader[0].ToString(), reader[1].ToString(), reader[2].ToString()));
                             }
                         }
                     }
@@ -385,10 +388,9 @@ namespace ZuydFit
             }
             catch (Exception ex) { throw ex; }
         }
-    }
-}
 
-        List<Planning> plannings = new List<Planning>();
+
+
         public void CreatePlanning(Planning planning)
         {
             try
@@ -477,8 +479,7 @@ namespace ZuydFit
                 }
             }
         }
-
     }
 }
-           
+
 
