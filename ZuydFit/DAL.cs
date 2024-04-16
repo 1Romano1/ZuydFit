@@ -4,15 +4,23 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ZuydFit
 {
     public class DAL
     {
 
-        public List<Location> loactions = new List<Location>();
+        public List<Activity> activities = new List<Activity>();
+        public List<Advice> Advices { get; set; } = new List<Advice>();
+        public List<Goal> Goals { get; set; } = new List<Goal>();
+        List<Planning> plannings = new List<Planning>();
 
-        public string connectionString = "Data Source=LAPPIEMELLIE;Initial Catalog=ZuydFit;Integrated Security=True";
+        public static string connectionString = "Data Source=LAPPIEMELLIE;Initial Catalog=ZuydFit;Integrated Security=True";
+
+        //public static string connectionString = "Data Source=LAPPIEMELLIE;Initial Catalog=ZuydFit;Integrated Security=True";
+        public string connectionString = "Data Source=.;Initial Catalog=ZuydFit;Integrated Security=True";
+
 
         public void CreateLocation(Location location)
         {
@@ -79,21 +87,7 @@ namespace ZuydFit
         }
 
 
-
-
-
-
-
-        public List<Activity> activities = new List<Activity>();
-
-        public static string connectionString = "Data Source=.;Initial Catalog=ZuydFit;Integrated Security=True";
-
-
-        public DAL()
-        {
-        }
-
-        public static void CreateActivity(Activity activity)
+        public void CreateActivity(Activity activity)
         {
             try
             {
@@ -117,7 +111,7 @@ namespace ZuydFit
 
             }
         }
-        public static void ReadActivity(List<Activity> activities)
+        public void ReadActivity(List<Activity> activities)
         {
 
             using (SqlConnection connection = new SqlConnection())
@@ -151,7 +145,7 @@ namespace ZuydFit
                         " Sets = @Sets WHERE Id = @id";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
-                        //command.Parameters.AddWithValue("Id", activity.Id);
+                        command.Parameters.AddWithValue("Id", activity.Id);
                         command.Parameters.AddWithValue("Name", activity.Name);
                         command.Parameters.AddWithValue("Description", activity.Description);
                         command.Parameters.AddWithValue("Duration", activity.Duration);
@@ -162,7 +156,7 @@ namespace ZuydFit
             }
             catch (Exception ex) { throw ex; }
         }
-        public static void DeleteActivity(string Name)
+        public void DeleteActivity(string Name)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -176,48 +170,113 @@ namespace ZuydFit
             }
         }
 
-        /*public void ReadItem(List<Item> items)
-        {
-        /*public void CreateItem(Item item)
-           {
-               try
-               {
-                   using (SqlConnection connection = new SqlConnection(connectionString))
-                   {
-                       connection.Open();
-                       string sql = "INSERT INTO Product (Name, Description, Price, ProductCode, Brand) " +
-                           "VALUES (@Name, @Description, @price, @ProductCode, @Brand) ";
-                       using (SqlCommand command = new SqlCommand(sql, connection))
-                       {
-                           command.Parameters.AddWithValue("Name", @item.Name);
-                           command.Parameters.AddWithValue("Description", @item.Description);
-                           command.Parameters.AddWithValue("Price", @item.Price);
-                           command.Parameters.AddWithValue("ProductCode", item.ProductCode);
-                           command.Parameters.AddWithValue("Brand", item.Brand);
-                           command.ExecuteNonQuery();
-                       }
-                   }
-               }
-               catch (Exception ex) { throw ex; }
-           }*/
-        /*public void ReadItem(List<Item> items)
-        {
-        public void UpdateLocation(Location location)
+
+        public void CreateGoal(Goal goal)
         {
             try
             {
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = "UPDATE Location SET Classroom = @classroom, Address = @address, Zipcode = @zipcode," +
-                        " City = @city WHERE Id = @id";
+                    string sql = "INSERT INTO Goal ( Name, Description, ProgressionId) " +
+                        "VALUES ( @name, @Description, @ProgressionId) ";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
-                        command.Parameters.AddWithValue("Id", location.Id);
-                        command.Parameters.AddWithValue("Classroom", location.Classroom);
-                        command.Parameters.AddWithValue("Address", location.Address);
-                        command.Parameters.AddWithValue("Zipcode", location.Zipcode);
-                        command.Parameters.AddWithValue("City", location.City);
+                        command.Parameters.AddWithValue("Name", goal.Name);
+                        command.Parameters.AddWithValue("Description", goal.Description);
+                        command.Parameters.AddWithValue("ProgressionId", goal.Progression);
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public Goal GetGoalByName(string name)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection())
+                {
+                    using (SqlCommand command = new SqlCommand())
+                    {
+                        connection.ConnectionString = connectionString;
+                        connection.Open();
+                        command.Connection = connection;
+                        command.CommandText = "SELECT Id, Name, Description " +
+                            "FROM Goal WHERE Name = @Name";
+                        command.Parameters.AddWithValue("@Name", name);
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                return (new Goal(Int32.Parse(reader[0].ToString()), reader[1].ToString(), reader[2].ToString()));
+                            }
+                            return null;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
+        public void ReadGoal()
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection())
+                {
+                    using (SqlCommand command = new SqlCommand())
+                    {
+                        connection.ConnectionString = connectionString;
+                        connection.Open();
+                        command.Connection = connection;
+                        command.CommandText = "SELECT Name, Description, ProgressionId FROM Goal ORDER BY ID ";
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                Goals.Add(new(reader[0].ToString(), reader[1].ToString(), reader[2].ToString()));
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
+        public void UpdateGoal(Goal goal)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    string sql = "UPDATE Goal SET Name = @Name, Description = @description, ProgressionId = @ProgressionId " +
+                        "WHERE Id = @Id";
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        command.Parameters.AddWithValue("Id", goal.Id);
+                        command.Parameters.AddWithValue("Name", goal.Name);
+                        command.Parameters.AddWithValue("Description", goal.Description);
+                        command.Parameters.AddWithValue("ProgressionId", goal.Progression);
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
+        public void DeleteGoal(Goal goal)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    string sql = "DELETE FROM dbo.Goal WHERE Id = @Id";
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        command.Parameters.AddWithValue("@Id", goal.Id);
                         command.ExecuteNonQuery();
                     }
                 }
@@ -225,120 +284,6 @@ namespace ZuydFit
             catch (Exception ex) { throw ex; }
         }
 
-            using (SqlConnection connection = new SqlConnection())
-            {
-                using (SqlCommand command = new SqlCommand())
-                {
-                    connection.ConnectionString = connectionString;
-                    connection.Open();
-                    command.Connection = connection;
-                    command.CommandText = "SELECT Name, Description, Price, ProductCode, Brand " +
-                        "FROM Product ORDER BY ID ";
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            //de uitroeptekens staan ervoor omdat de copiler denkt dat het een null waarde kan hebben terwijl dat zeker niet zo is.
-                            items?.Add(new Item(reader[0].ToString(), reader[1].ToString(),
-                                decimal.Parse(reader[2].ToString()!), reader[3]?.ToString()));
-                        }
-                    }
-                }
-            }
-        }*/
-        /*public void UpdateItem(Item item)
-        {
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    connection.Open();
-                    string sql = "UPDATE Product SET name = @name, Description = @description, Price = @price," +
-                        " ProductCode = @productCode, Brand = @brand WHERE Id = @id";
-                    using (SqlCommand command = new SqlCommand(sql, connection))
-                    {
-                        command.Parameters.AddWithValue("Id", @item.Id);
-                        command.Parameters.AddWithValue("Name", @item.Name);
-                        command.Parameters.AddWithValue("Description", item.Description);
-                        command.Parameters.AddWithValue("Price", @item.Price);
-                        command.Parameters.AddWithValue("ProductCode", @item.ProductCode);
-                        command.Parameters.AddWithValue("Brand", @item.Brand);
-                        command.ExecuteNonQuery();
-                    }
-                }
-            }
-            catch (Exception ex) { throw ex; }
-        }*/
-        /*public void DeleteItem(int ProductCode)
-        {
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                connection.Open();
-                string sql = "DELETE FROM Product WHERE ProductCode = @ProductCode";
-                using (SqlCommand command = new SqlCommand(sql, connection))
-                {
-                    command.Parameters.AddWithValue("@ProductCode", ProductCode);
-                    command.ExecuteNonQuery();
-                }
-            }
-        }*/
-            using (SqlConnection connection = new SqlConnection())
-            {
-                using (SqlCommand command = new SqlCommand())
-                {
-                    connection.ConnectionString = connectionString;
-                    connection.Open();
-                    command.Connection = connection;
-                    command.CommandText = "SELECT Name, Description, Price, ProductCode, Brand " +
-                        "FROM Product ORDER BY ID ";
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            //de uitroeptekens staan ervoor omdat de copiler denkt dat het een null waarde kan hebben terwijl dat zeker niet zo is.
-                            items?.Add(new Item(reader[0].ToString(), reader[1].ToString(),
-                                decimal.Parse(reader[2].ToString()!), reader[3]?.ToString()));
-                        }
-                    }
-                }
-            }
-        }*/
-        /*public void UpdateItem(Item item)
-        {
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    connection.Open();
-                    string sql = "UPDATE Product SET name = @name, Description = @description, Price = @price," +
-                        " ProductCode = @productCode, Brand = @brand WHERE Id = @id";
-                    using (SqlCommand command = new SqlCommand(sql, connection))
-                    {
-                        command.Parameters.AddWithValue("Id", @item.Id);
-                        command.Parameters.AddWithValue("Name", @item.Name);
-                        command.Parameters.AddWithValue("Description", item.Description);
-                        command.Parameters.AddWithValue("Price", @item.Price);
-                        command.Parameters.AddWithValue("ProductCode", @item.ProductCode);
-                        command.Parameters.AddWithValue("Brand", @item.Brand);
-                        command.ExecuteNonQuery();
-                    }
-                }
-            }
-            catch (Exception ex) { throw ex; }
-        }*/
-        /*public void DeleteItem(int ProductCode)
-        {
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                connection.Open();
-                string sql = "DELETE FROM Product WHERE ProductCode = @ProductCode";
-                using (SqlCommand command = new SqlCommand(sql, connection))
-                {
-                    command.Parameters.AddWithValue("@ProductCode", ProductCode);
-                    command.ExecuteNonQuery();
-                }
-            }
-        }*/
 
         public void CreateAdvice(Advice advice)
         {
@@ -359,7 +304,7 @@ namespace ZuydFit
             }
             catch (Exception ex) { throw ex; }
         }
-        public void ReadAdvice(List<Advice> advices)
+        public void ReadAdvice()
         {
             try
             {
@@ -370,14 +315,40 @@ namespace ZuydFit
                         connection.ConnectionString = connectionString;
                         connection.Open();
                         command.Connection = connection;
-                        command.CommandText = "SELECT Id, Description " +
-                            "FROM Advice ORDER BY ID ";
+                        command.CommandText = "SELECT Title, Description FROM Advice ORDER BY ID ";
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
-                                advices.Add(new Advice(reader[0].ToString(), reader[1].ToString(), reader[2].ToString()));
+                                Advices.Add(new Advice(reader[0].ToString(), reader[1].ToString()));
                             }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
+        public Advice GetAdviceByTitle(string title)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection())
+                {
+                    using (SqlCommand command = new SqlCommand())
+                    {
+                        connection.ConnectionString = connectionString;
+                        connection.Open();
+                        command.Connection = connection;
+                        command.CommandText = "SELECT Id, Title, Description " +
+                            "FROM Advice WHERE Title = @Title";
+                        command.Parameters.AddWithValue("@Title", title);
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                return (new Advice(Int32.Parse(reader[0].ToString()), reader[1].ToString(), reader[2].ToString()));
+                            }
+                            return null;
                         }
                     }
                 }
@@ -420,5 +391,98 @@ namespace ZuydFit
             }
             catch (Exception ex) { throw ex; }
         }
+
+
+
+        public void CreatePlanning(Planning planning)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    string sql = "INSERT INTO Planning (DateTime, ActivityId) VALUES (@DateTime, @ActivityId) ";
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        command.Parameters.AddWithValue("DateTime", @planning.DateTime);
+                        command.Parameters.AddWithValue("Activity", @planning.ActivityId);
+
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
+        public void ReadPlanning(List<Planning> plannings)
+        {
+            using (SqlConnection connection = new SqlConnection())
+            {
+                using (SqlCommand command = new SqlCommand())
+                {
+                    connection.ConnectionString = connectionString;
+                    connection.Open();
+                    command.Connection = connection;
+                    command.CommandText = "SELECT DateTime, Activity FROM Planning ORDER BY ID";
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            string dateTimeString = reader[0].ToString();
+                            int activityId = int.Parse(reader[1].ToString());
+
+                            try
+                            {
+                                DateTime dateTime = DateTime.Parse(dateTimeString);
+                                plannings?.Add(new Planning(dateTime, activityId));
+                            }
+                            catch (FormatException ex)
+                            {
+
+                                Console.WriteLine($"Failed to parse DateTime string: {dateTimeString}. Error: {ex.Message}");
+                            }
+                        }
+                    }
+                }
+
+
+            }
+        }
+        public void UpdatePlanning(Planning planning)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    string sql = "UPDATE Planning SET DateTime = @DateTime, ActivityId = @ActivityId WHERE Id = @Id";
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        command.Parameters.AddWithValue("@Id", planning.Id);
+                        command.Parameters.AddWithValue("@DateTime", planning.DateTime);
+                        command.Parameters.AddWithValue("@ActivityId", planning.ActivityId);
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public void DeletePlanning(Planning planning)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                string sql = "DELETE FROM Planning WHERE Id = @Id";
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@Id", planning.Id);
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
     }
 }
+
+
