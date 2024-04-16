@@ -15,6 +15,7 @@ namespace ZuydFit
 
         public List<Activity> activities = new List<Activity>();
         public List<Advice> Advices { get; set; } = new List<Advice>();
+        public List<Goal> Goals { get; set; } = new List<Goal>();
         public static string connectionString = "Data Source=.;Initial Catalog=ZuydFit;Integrated Security=True;Encrypt=False";
 
 
@@ -269,6 +270,33 @@ namespace ZuydFit
             }
             catch (Exception ex) { throw ex; }
         }
+        public Goal GetGoalByName(string name)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection())
+                {
+                    using (SqlCommand command = new SqlCommand())
+                    {
+                        connection.ConnectionString = connectionString;
+                        connection.Open();
+                        command.Connection = connection;
+                        command.CommandText = "SELECT Id, Name, Description " +
+                            "FROM Goal WHERE Name = @Name";
+                        command.Parameters.AddWithValue("@Name", name);
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                return (new Goal(reader[0].ToString(), reader[1].ToString(), reader[2].ToString()));
+                            }
+                            return null;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
         public void ReadGoal()
         {
             try
@@ -285,9 +313,46 @@ namespace ZuydFit
                         {
                             while (reader.Read())
                             {
-                                Advices.Add(new Advice(reader[0].ToString(), reader[1].ToString()));
+                                Goals.Add(new (reader[0].ToString(), reader[1].ToString(), reader[2].ToString()));
                             }
                         }
+                    }
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
+        public void UpdateGoal(Goal goal)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    string sql = "UPDATE Goal SET Id = @Id, Name = @Name, Description = @description, " +
+                        "WHERE Id = @id";
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        command.Parameters.AddWithValue("Id", goal.Id);
+                        command.Parameters.AddWithValue("Name", goal.Name);
+                        command.Parameters.AddWithValue("Description", goal.Description);
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
+        public void DeleteGoal(Goal goal)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    string sql = "DELETE FROM Goal WHERE Id = @Id";
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        command.Parameters.AddWithValue("@Id", goal.Id);
+                        command.ExecuteNonQuery();
                     }
                 }
             }

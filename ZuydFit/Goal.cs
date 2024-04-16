@@ -12,14 +12,20 @@ namespace ZuydFit
         public string Name { get; set; }
         public string Description { get; set; }
         public string Progression { get; set; }
+        public List<Goal> Goals { get; set; } = new List<Goal>();
 
         public Goal() 
         {
             Name = "";
             Description = "";
-            Progression = "";
+            Progression = "";   
+        }
 
-        
+        public Goal(string name, string description, string progression) 
+        {
+            Name=name;
+            Description=description;
+            Progression=progression;
         }
         public Goal(int id, string name, string description, string progression)
         {
