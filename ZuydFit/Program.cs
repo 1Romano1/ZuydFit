@@ -182,55 +182,56 @@ public class Program
 
 
 
-            //hieronder staan de functies van goal
-            /*Console.WriteLine("Schrijf de titel van je Goal");
-            string name = Console.ReadLine();
-
-            Console.WriteLine("Geef een beschrijving van je Goal");
-            string description1 = Console.ReadLine();
-
-            Console.WriteLine("Hoeveel progressie heb je gemaakt aan deze goal?");
-            string progression = Console.ReadLine();
-
-            Goal goal = new Goal(name, description1, progression);
-            goal.AddGoal();
-
-            Goal goal1 = new Goal();
-            foreach (var goal in goal1.GetGoals())
-            {
-                Console.WriteLine(goal.Id);
-                Console.WriteLine(goal.Name);
-                Console.WriteLine(goal.Description);
-            }
-            Console.WriteLine("Welke goal wil je verwijderen voer de naam in");
-            string name1 = Console.ReadLine();
-
-            Goal goal2 = new Goal();
-            goal2.GetGoalByName(name1);
-            goal2.DeleteGoal();
-            Goal goal3 = new Goal();
-            foreach (var go in goal3.GetGoals())
-            {
-                Console.WriteLine(go.Name);
-            }
-            Console.WriteLine("Welk advies wilt u aanpassen? Type de naam");
-            string name2 = Console.ReadLine();
-
-            Console.WriteLine(name2);
-            goal3.GetGoalByName(name2);
-
-            Console.WriteLine("wat is de naam van je goal");
-            goal3.Name = Console.ReadLine();
-
-            Console.WriteLine("Wat is het goal dat je wilt behalen?");
-            goal3.Description = Console.ReadLine();
-
-            Console.WriteLine("Wat is het progressieid");
-            goal3.Progression = Console.ReadLine();
-
-            userInput = Console.ReadLine();
-            goal3.UpdateGoals();*/
-
+           
         }
     }
+
+    //hieronder staan de functies van goal.
+    /*Console.WriteLine("Schrijf de titel van je Goal");
+    string name = Console.ReadLine();
+
+    Console.WriteLine("Geef een beschrijving van je Goal");
+    string description1 = Console.ReadLine();
+
+    Console.WriteLine("Hoeveel progressie heb je gemaakt aan deze goal?");
+    string progression = Console.ReadLine();
+
+    Goal goal = new Goal(name, description1, progression);
+    goal.AddGoal();
+
+    Goal goal1 = new Goal();
+    foreach (var goal in goal1.GetGoals())
+    {
+        Console.WriteLine(goal.Id);
+        Console.WriteLine(goal.Name);
+        Console.WriteLine(goal.Description);
+    }
+    Console.WriteLine("Welke goal wil je verwijderen voer de naam in");
+    string name1 = Console.ReadLine();
+
+    Goal goal2 = new Goal();
+    goal2.GetGoalByName(name1);
+    goal2.DeleteGoal();
+    Goal goal3 = new Goal();
+    foreach (var go in goal3.GetGoals())
+    {
+        Console.WriteLine(go.Name);
+    }
+    Console.WriteLine("Welk advies wilt u aanpassen? Type de naam");
+    string name2 = Console.ReadLine();
+
+    Console.WriteLine(name2);
+    goal3.GetGoalByName(name2);
+
+    Console.WriteLine("wat is de naam van je goal");
+    goal3.Name = Console.ReadLine();
+
+    Console.WriteLine("Wat is het goal dat je wilt behalen?");
+    goal3.Description = Console.ReadLine();
+
+    Console.WriteLine("Wat is het progressieid");
+    goal3.Progression = Console.ReadLine();
+
+    userInput = Console.ReadLine();
+    goal3.UpdateGoals();*/
 }
