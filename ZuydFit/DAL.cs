@@ -9,9 +9,6 @@ namespace ZuydFit
 {
     public class DAL
     {
-        public DAL()
-        {
-        }
 
         public List<Activity> activities = new List<Activity>();
         public List<Advice> Advices { get; set; } = new List<Advice>();
@@ -19,10 +16,10 @@ namespace ZuydFit
         public static string connectionString = "Data Source=.;Initial Catalog=ZuydFit;Integrated Security=True;Encrypt=False";
 
         //public static string connectionString = "Data Source=LAPPIEMELLIE;Initial Catalog=ZuydFit;Integrated Security=True";
-        public static string connectionString = "Data Source=.;Initial Catalog=ZuydFit;Integrated Security=True";
+        public string connectionString = "Data Source=.;Initial Catalog=ZuydFit;Integrated Security=True";
 
 
-        public static void CreateLocation(Location location)
+        public void CreateLocation(Location location)
         {
             try
             {
@@ -47,7 +44,7 @@ namespace ZuydFit
                 throw ex;
             }
         }
-        public static void ReadLocation(List<Location> locations)
+        public void ReadLocation(List<Location> locations)
         {
 
             using (SqlConnection connection = new SqlConnection())
@@ -70,7 +67,7 @@ namespace ZuydFit
                 }
             }
         }
-        public static void DeleteLocation(string Classroom)
+        public void DeleteLocation(string Classroom)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -85,7 +82,7 @@ namespace ZuydFit
         }
 
 
-        public static void CreateActivity(Activity activity)
+        public void CreateActivity(Activity activity)
         {
             try
             {
@@ -109,7 +106,7 @@ namespace ZuydFit
 
             }
         }
-        public static void ReadActivity(List<Activity> activities)
+        public void ReadActivity(List<Activity> activities)
         {
 
             using (SqlConnection connection = new SqlConnection())
@@ -132,7 +129,7 @@ namespace ZuydFit
                 }
             }
         }
-        public static void UpdateActivity(Activity activity)
+        public void UpdateActivity(Activity activity)
         {
             try
             {
@@ -154,7 +151,7 @@ namespace ZuydFit
             }
             catch (Exception ex) { throw ex; }
         }
-        public static void DeleteActivity(string Name)
+        public void DeleteActivity(string Name)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
