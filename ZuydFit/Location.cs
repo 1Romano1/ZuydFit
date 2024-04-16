@@ -31,63 +31,41 @@ namespace ZuydFit
             Zipcode = zipcode;
             City = city;
             //Trainings = trainings;
-            DAL = new DAL();
+       
         }
 
         public Location() { }
 
-        public void AddLocation()
+        public void Add()
         {
 
-            Console.WriteLine("In Welk lokaal heb je de training?");
-            string classroom = Console.ReadLine();
-
-            Console.WriteLine("wat is het adres van de locatie?");
-            string address = Console.ReadLine();
-
-            Console.WriteLine("wat is de postcode van de locatie?");
-            string zipcode = Console.ReadLine();
-
-            Console.WriteLine("in welke stad is de locatie?");
-            string city = Console.ReadLine();
-
-
-            Location location = new Location(classroom, address, zipcode, city);
-            DAL.CreateLocation(location);
-
-           
+            DAL = new DAL();
+            DAL.CreateLocation(this);
 
         }
 
-    
-        public void ReadLocation()
-        {
-            List<Location> locations = new List<Location>();
-            DAL.ReadLocation(locations);
-            
-            Console.WriteLine("Locaties");
 
-            foreach (Location location in locations)
-            {
-                
-                Console.WriteLine($"Classroom: {location.Classroom} \tAddress: {location.Address} \tZipcode: {location.Zipcode} \tCity: {location.City}");
-            }
-            
+        public List<Location> Read()
+        {
+            DAL = new DAL();
+            DAL.ReadLocation(locations);
+            return locations;
         }
         
          
 
-        public void DeleteLocation()
+        public void Delete()
         {
-            Console.WriteLine("Welke locatie wilt u verwijderen?");
-            string Classroom = Console.ReadLine();
-            DAL.DeleteLocation(Classroom);
+            DAL = new DAL();
+            DAL.DeleteLocation(this);
 
         }
         
-        public void UpdateLocation()
+        public void Update()
         {
 
+            DAL = new DAL();
+            DAL.UpdateLocation(this);
         }
 
 
