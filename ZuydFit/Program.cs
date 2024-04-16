@@ -143,7 +143,6 @@ public class Program
     static void ActivityMenu()
     {
         bool exit = false;
-        string userInput;
 
         while (!exit)
         {
@@ -153,8 +152,9 @@ public class Program
             Console.WriteLine("3. Een activiteit bijwerken");
             Console.WriteLine("4. Een activiteit verwijderen");
             Console.WriteLine("5. Terug naar hoofdmenu");
-        
-        
+            string userInput = Console.ReadLine();
+
+
 
             if (userInput == "1")
                 AskForNewActivity();
@@ -177,6 +177,10 @@ public class Program
             Console.WriteLine("Druk op Enter om door te gaan...");
             Console.ReadLine();
             Console.Clear();
+
+
+
+
 
             //hieronder staan de functies van goal
             /*Console.WriteLine("Schrijf de titel van je Goal");
