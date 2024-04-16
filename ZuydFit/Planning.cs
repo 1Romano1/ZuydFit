@@ -12,42 +12,28 @@ using ZuydFit;
     {
         public int Id { get; set; }
         public DateTime DateTime { get; set; }
-        public string ActivityId { get; set; }
+        public int ActivityId { get; set; }
         public DAL DAL { get; set; }
 
-        public List<Planning> PlanningsList { get; set; }
-        public Planning(DateTime datetime, string activityId)
+        List <Planning> planning = new List<Planning>();
+        public Planning(DateTime datetime, int activityId)
         {
             DateTime = datetime;
             ActivityId = activityId;
 
         }
-
-
-
+        public Planning() { }
 
         public void AddPlanning()
         {
-            try
-            {
-                Console.WriteLine("Voer de datum en tijd van de activiteit in (bijv. '2024-04-16 14:30'): ");
-                DateTime datetime = DateTime.Parse(Console.ReadLine());
 
-                Console.WriteLine("Voer de activiteit in: ");
-                string activity = Console.ReadLine();
+            DAL = new DAL();
+            DAL.CreatePlanning(this);
 
-                Planning planning = new Planning(datetime, activity);
-                DAL.CreatePlanning(planning);
-
-                Console.WriteLine("Planning succesvol toegevoegd.");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Er is een fout opgetreden bij het toevoegen van de planning: " + ex.Message);
-            }
+        
         }
 
-        public void ReadPlanning()
+        /*public void ReadPlanning()
         {
             PlanningsList = new List<Planning>();
             DAL.ReadPlanning(PlanningsList);
@@ -93,7 +79,7 @@ using ZuydFit;
             {
                 Console.WriteLine("Activiteit niet gevonden. Geen planning bijgewerkt.");
             }
-        }
+        }*/
     }
 }
 

@@ -23,7 +23,7 @@ namespace ZuydFit
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = "INSERT INTO Planning (DateTime, Activity) VALUES (@DateTime, @Activity) ";
+                    string sql = "INSERT INTO Planning (DateTime, ActivityId) VALUES (@DateTime, @ActivityId) ";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         command.Parameters.AddWithValue("DateTime", @planning.DateTime);
@@ -49,8 +49,8 @@ namespace ZuydFit
                     {
                         while (reader.Read())
                         {
-                            string dateTimeString = reader["DateTime"].ToString();
-                            string activityId = reader["Activity"].ToString();
+                            string dateTimeString = reader[0].ToString();
+                            int activityId = int.Parse(reader[1].ToString());
 
                             try
                             {
@@ -91,7 +91,6 @@ namespace ZuydFit
                 throw ex;
             }
         }
-
         public void DeletePlanning(Planning planning)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
