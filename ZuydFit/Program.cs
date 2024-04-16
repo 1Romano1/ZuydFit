@@ -51,8 +51,25 @@ public class Program
         advice3.Description = Console.ReadLine();
 
         advice3.UpdateAdvice();
-        */
+        
+        Console.WriteLine("Schrijf de titel van je Goal");
+        string name = Console.ReadLine();
 
+        Console.WriteLine("Geef een beschrijving van je Goal");
+        string description1 = Console.ReadLine();
 
+        Console.WriteLine("Hoeveel progressie heb je gemaakt aan deze goal?");
+        string progression = Console.ReadLine();
+
+        Goal goal1 = new Goal(name, description1, progression);
+        goal1.AddGoal();*/
+
+        Goal goal1 = new Goal();
+        List<Goal> goals = goal1.GetGoals();
+        foreach (var goal in goals)
+        {
+            Console.WriteLine(goal.Name);
+            Console.WriteLine(goal.Description);
+        }
     }
 }

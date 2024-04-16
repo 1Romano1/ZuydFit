@@ -257,18 +257,19 @@ namespace ZuydFit
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = "INSERT INTO Goal (Id, Name, Description) " +
-                        "VALUES (@Id, @name, @Description) ";
+                    string sql = "INSERT INTO Goal ( Name, Description, ProgressionId) " +
+                        "VALUES ( @name, @Description, @ProgressionId) ";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
-                        command.Parameters.AddWithValue("Id", goal.Id);
                         command.Parameters.AddWithValue("Name", goal.Name);
                         command.Parameters.AddWithValue("Description", goal.Description);
+                        command.Parameters.AddWithValue("ProgressionId", goal.Progression);
                         command.ExecuteNonQuery();
                     }
                 }
             }
-            catch (Exception ex) { throw ex; }
+            catch (Exception ex) { 
+                throw ex; }
         }
         public Goal GetGoalByName(string name)
         {
