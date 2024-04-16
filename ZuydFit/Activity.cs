@@ -27,6 +27,7 @@ namespace ZuydFit
         }
         public Activity() { }
 
+        //Doorgeef functies van program naar DAL.  
         public void Add()
         {
             DAL = new DAL();
