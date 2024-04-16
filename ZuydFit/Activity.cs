@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace ZuydFit
 {
@@ -12,17 +13,43 @@ namespace ZuydFit
         public string Description { get; set; }
         public string Name { get; set; }
         public decimal Duration { get; set; }
-
         public int Sets { get; set; }
+        public DAL DAL { get; set; }
 
-        public Activity(int id, string description, string name, decimal duration, int sets) 
+        List <Activity> activities = new List<Activity>();
+
+        public Activity(string description, string name, decimal duration, int sets)
         {
-            Id = id;
-            Description = description;
-            Name = name;
-            Duration = duration;
-            Sets = sets;
+            this.Name = name;
+            this.Description = description;
+            this.Duration = duration;
+            this.Sets = sets;
+        }
+        public Activity() { }
 
+        public void Add()
+        {
+            DAL = new DAL();
+            DAL.CreateActivity(this);
+        }
+
+        public List <Activity> Read()
+        {
+            DAL = new DAL();
+            DAL.ReadActivity(activities);
+            return activities;
+        }
+
+        public void Update()
+        {
+            DAL = new DAL();
+            DAL.UpdateActivity(this);
+        }
+
+        public void Delete()
+        {
+            DAL = new DAL();
+            DAL.DeleteActivity(Name);
         }
     }
 }
