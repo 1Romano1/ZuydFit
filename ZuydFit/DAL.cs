@@ -329,13 +329,14 @@ namespace ZuydFit
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = "UPDATE Goal SET Id = @Id, Name = @Name, Description = @description, " +
-                        "WHERE Id = @id";
+                    string sql = "UPDATE Goal SET Name = @Name, Description = @description, ProgressionId = @ProgressionId " +
+                        "WHERE Id = @Id";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         command.Parameters.AddWithValue("Id", goal.Id);
                         command.Parameters.AddWithValue("Name", goal.Name);
                         command.Parameters.AddWithValue("Description", goal.Description);
+                        command.Parameters.AddWithValue("ProgressionId", goal.Progression);
                         command.ExecuteNonQuery();
                     }
                 }

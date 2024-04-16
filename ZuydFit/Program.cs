@@ -62,7 +62,7 @@ public class Program
         string progression = Console.ReadLine();
 
         Goal goal = new Goal(name, description1, progression);
-        goal.AddGoal();*/
+        goal.AddGoal();
         
         Goal goal1 = new Goal();
         foreach (var goal in goal1.GetGoals())
@@ -77,6 +77,27 @@ public class Program
         Goal goal2 = new Goal();
         goal2.GetGoalByName(name1);
         goal2.DeleteGoal();
+        Goal goal3 = new Goal();
+        foreach (var go in goal3.GetGoals())
+        {
+            Console.WriteLine(go.Name);
+        }
+        Console.WriteLine("Welk advies wilt u aanpassen? Type de naam");
+        string name2 = Console.ReadLine();
+
+        Console.WriteLine(name2);
+        goal3.GetGoalByName(name2);
+
+        Console.WriteLine("wat is de naam van je goal");
+        goal3.Name = Console.ReadLine();
+
+        Console.WriteLine("Wat is het goal dat je wilt behalen?");
+        goal3.Description = Console.ReadLine();
+
+        Console.WriteLine("Wat is het progressieid");
+        goal3.Progression = Console.ReadLine(); 
+
+        goal3.UpdateGoals();*/
 
     }
 }
