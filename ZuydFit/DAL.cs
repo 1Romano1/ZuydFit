@@ -4,101 +4,109 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZuydFit.ZuydFit;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ZuydFit
 {
     public class DAL
     {
-        public string connectionString = "Data Source=.;Initial Catalog=HierKomtDeDatabase!!!!;Integrated Security=True";
+        public string connectionString = "Data Source=DESKTOP-UC5L5BN;Initial Catalog = ZuydFit;Integrated Security = True";
 
-        public DAL() 
+        public DAL() { }
+
+        List<Planning> plannings = new List<Planning>();
+        public void CreatePlanning(Planning planning)
         {
-
-            /*public void CreateItem(Item item)
-            {
-                try
-                {
-                    using (SqlConnection connection = new SqlConnection(connectionString))
-                    {
-                        connection.Open();
-                        string sql = "INSERT INTO Product (Name, Description, Price, ProductCode, Brand) " +
-                            "VALUES (@Name, @Description, @price, @ProductCode, @Brand) ";
-                        using (SqlCommand command = new SqlCommand(sql, connection))
-                        {
-                            command.Parameters.AddWithValue("Name", @item.Name);
-                            command.Parameters.AddWithValue("Description", @item.Description);
-                            command.Parameters.AddWithValue("Price", @item.Price);
-                            command.Parameters.AddWithValue("ProductCode", item.ProductCode);
-                            command.Parameters.AddWithValue("Brand", item.Brand);
-                            command.ExecuteNonQuery();
-                        }
-                    }
-                }
-                catch (Exception ex) { throw ex; }
-            }*/
-            /*public void ReadItem(List<Item> items)
-            {
-
-                using (SqlConnection connection = new SqlConnection())
-                {
-                    using (SqlCommand command = new SqlCommand())
-                    {
-                        connection.ConnectionString = connectionString;
-                        connection.Open();
-                        command.Connection = connection;
-                        command.CommandText = "SELECT Name, Description, Price, ProductCode, Brand " +
-                            "FROM Product ORDER BY ID ";
-                        using (SqlDataReader reader = command.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                //de uitroeptekens staan ervoor omdat de copiler denkt dat het een null waarde kan hebben terwijl dat zeker niet zo is.
-                                items?.Add(new Item(reader[0].ToString(), reader[1].ToString(),
-                                    decimal.Parse(reader[2].ToString()!), reader[3]?.ToString()));
-                            }
-                        }
-                    }
-                }
-            }*/
-            /*public void UpdateItem(Item item)
-            {
-                try
-                {
-                    using (SqlConnection connection = new SqlConnection(connectionString))
-                    {
-                        connection.Open();
-                        string sql = "UPDATE Product SET name = @name, Description = @description, Price = @price," +
-                            " ProductCode = @productCode, Brand = @brand WHERE Id = @id";
-                        using (SqlCommand command = new SqlCommand(sql, connection))
-                        {
-                            command.Parameters.AddWithValue("Id", @item.Id);
-                            command.Parameters.AddWithValue("Name", @item.Name);
-                            command.Parameters.AddWithValue("Description", item.Description);
-                            command.Parameters.AddWithValue("Price", @item.Price);
-                            command.Parameters.AddWithValue("ProductCode", @item.ProductCode);
-                            command.Parameters.AddWithValue("Brand", @item.Brand);
-                            command.ExecuteNonQuery();
-                        }
-                    }
-                }
-                catch (Exception ex) { throw ex; }
-            }*/
-            /*public void DeleteItem(int ProductCode)
+            try
             {
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = "DELETE FROM Product WHERE ProductCode = @ProductCode";
+                    string sql = "INSERT INTO Planning (DateTime, Activity) VALUES (@DateTime, @Activity) ";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
-                        command.Parameters.AddWithValue("@ProductCode", ProductCode);
+                        command.Parameters.AddWithValue("DateTime", @planning.DateTime);
+                        command.Parameters.AddWithValue("Activity", @planning.ActivityId);
+
                         command.ExecuteNonQuery();
                     }
                 }
-            }*/
-
-
-
+            }
+            catch (Exception ex) { throw ex; }
         }
+        public void ReadPlanning(List<Planning> plannings)
+        {
+            using (SqlConnection connection = new SqlConnection())
+            {
+                using (SqlCommand command = new SqlCommand())
+                {
+                    connection.ConnectionString = connectionString;
+                    connection.Open();
+                    command.Connection = connection;
+                    command.CommandText = "SELECT DateTime, Activity FROM Planning ORDER BY ID";
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            string dateTimeString = reader["DateTime"].ToString();
+                            string activityId = reader["Activity"].ToString();
+
+                            try
+                            {
+                                DateTime dateTime = DateTime.Parse(dateTimeString);
+                                plannings?.Add(new Planning(dateTime, activityId));
+                            }
+                            catch (FormatException ex)
+                            {
+
+                                Console.WriteLine($"Failed to parse DateTime string: {dateTimeString}. Error: {ex.Message}");
+                            }
+                        }
+                    }
+                }
+
+
+            }
+        }
+        public void UpdatePlanning(Planning planning)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    string sql = "UPDATE Planning SET DateTime = @DateTime, ActivityId = @ActivityId WHERE Id = @Id";
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        command.Parameters.AddWithValue("@Id", planning.Id);
+                        command.Parameters.AddWithValue("@DateTime", planning.DateTime);
+                        command.Parameters.AddWithValue("@ActivityId", planning.ActivityId);
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void DeletePlanning(Planning planning)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                string sql = "DELETE FROM Planning WHERE Id = @Id";
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@Id", planning.Id);
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
     }
 }
+           
+

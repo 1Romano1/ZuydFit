@@ -28,7 +28,7 @@ namespace ZuydFit
                 PersonalNumber = personalNumber;
                 Password = password;
             }
-            public User() { }
+            /*public User() { }
             var users = new User[]
         {
             new User(1, "John", "Doe", 123456789, "password123"),
@@ -64,7 +64,7 @@ namespace ZuydFit
                         Console.WriteLine("Incorrect username or password. Please try again.");
                     }
                 }
-            }
+            }*/
         }
     }
 }
