@@ -37,7 +37,7 @@ namespace ZuydFit
         public void AddAdvice()
         {
             DAL = new DAL();
-            DAL.CreateAdvice(this);
+            DAL.CreateAdvice(this); 
         }
         public List<Advice> ReadAdvice()
         {
