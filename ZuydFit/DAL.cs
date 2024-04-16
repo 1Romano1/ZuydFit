@@ -18,6 +18,8 @@ namespace ZuydFit
         public List<Goal> Goals { get; set; } = new List<Goal>();
         public static string connectionString = "Data Source=.;Initial Catalog=ZuydFit;Integrated Security=True;Encrypt=False";
 
+        //public static string connectionString = "Data Source=LAPPIEMELLIE;Initial Catalog=ZuydFit;Integrated Security=True";
+        public static string connectionString = "Data Source=.;Initial Catalog=ZuydFit;Integrated Security=True";
 
 
         public static void CreateLocation(Location location)
