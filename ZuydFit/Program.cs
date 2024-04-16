@@ -18,10 +18,10 @@ public class Program
         advice2.AddAdvice();
         
         Advice advice1 = new Advice();
-        List<Advice> advices = advice1.ReadAdvice();
-        foreach (var adv in advices)
+        foreach (var adv in advice1.ReadAdvice())
         {
             Console.WriteLine(adv.Title);
+            Console.WriteLine(adv.Description)
         }
 
         Console.WriteLine("Welk advies wil je verwijderen voer de Id in");
@@ -61,15 +61,22 @@ public class Program
         Console.WriteLine("Hoeveel progressie heb je gemaakt aan deze goal?");
         string progression = Console.ReadLine();
 
-        Goal goal1 = new Goal(name, description1, progression);
-        goal1.AddGoal();*/
-
+        Goal goal = new Goal(name, description1, progression);
+        goal.AddGoal();*/
+        
         Goal goal1 = new Goal();
-        List<Goal> goals = goal1.GetGoals();
-        foreach (var goal in goals)
+        foreach (var goal in goal1.GetGoals())
         {
+            Console.WriteLine(goal.Id);
             Console.WriteLine(goal.Name);
             Console.WriteLine(goal.Description);
         }
+        Console.WriteLine("Welke goal wil je verwijderen voer de naam in");
+        string name1 = Console.ReadLine();
+
+        Goal goal2 = new Goal();
+        goal2.GetGoalByName(name1);
+        goal2.DeleteGoal();
+
     }
 }

@@ -289,7 +289,7 @@ namespace ZuydFit
                         {
                             while (reader.Read())
                             {
-                                return (new Goal(reader[0].ToString(), reader[1].ToString(), reader[2].ToString()));
+                                return (new Goal(Int32.Parse(reader[0].ToString()), reader[1].ToString(), reader[2].ToString()));
                             }
                             return null;
                         }
@@ -309,7 +309,7 @@ namespace ZuydFit
                         connection.ConnectionString = connectionString;
                         connection.Open();
                         command.Connection = connection;
-                        command.CommandText = "SELECT Name, Description FROM Goal ORDER BY ID ";
+                        command.CommandText = "SELECT Name, Description, ProgressionId FROM Goal ORDER BY ID ";
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
@@ -349,7 +349,7 @@ namespace ZuydFit
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = "DELETE FROM Goal WHERE Id = @Id";
+                    string sql = "DELETE FROM dbo.Goal WHERE Id = @Id";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         command.Parameters.AddWithValue("@Id", goal.Id);

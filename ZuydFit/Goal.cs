@@ -23,11 +23,17 @@ namespace ZuydFit
             Progression = "";   
         }
 
-        public Goal(string name, string description, string progression) 
+        public Goal(int id, string name, string description) 
         {
+            Id = id;
             Name=name;
             Description=description;
-            Progression=progression;
+        }
+        public Goal( string name, string description, string progression)
+        {
+            Name = name;
+            Description = description;
+            Progression = progression;
         }
         public Goal(int id, string name, string description, string progression)
         {
@@ -41,7 +47,7 @@ namespace ZuydFit
             DAL = new DAL();
             DAL.CreateGoal(this);
         }
-        public List <Goal> GetGoals() 
+        public List<Goal> GetGoals() 
         {
             DAL = new DAL();
             DAL.ReadGoal();
@@ -52,10 +58,18 @@ namespace ZuydFit
             DAL = new DAL();
             DAL.UpdateGoal(this);      
         }
-        public void DeleteGoals() 
+        public void DeleteGoal() 
         {
             DAL = new DAL();
             DAL.DeleteGoal(this);       
+        }
+        public void GetGoalByName(string name)
+        {
+            DAL = new DAL();
+            Goal goal = DAL.GetGoalByName(name);
+            this.Id = goal.Id;
+            this.Name = goal.Name;
+            this.Description = goal.Description;
         }
     }
 }
