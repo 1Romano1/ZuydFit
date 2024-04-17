@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -301,7 +302,7 @@ namespace ZuydFit
             }
             catch (Exception ex) { throw ex; }
         }
-        public void ReadAdvice()
+       /* public void ReadAdvice()
         {
             try
             {
@@ -324,8 +325,8 @@ namespace ZuydFit
                 }
             }
             catch (Exception ex) { throw ex; }
-        }
-        public Advice GetAdviceByTitle(string title)
+        }*/
+       /* public Advice GetAdviceByTitle(string title)
         {
             try
             {
@@ -351,7 +352,7 @@ namespace ZuydFit
                 }
             }
             catch (Exception ex) { throw ex; }
-        }
+        }*/
         public void UpdateAdvice(Advice advice)
         {
             try
@@ -398,20 +399,23 @@ namespace ZuydFit
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = "INSERT INTO Planning (DateTime, ActivityId) VALUES (@DateTime, @ActivityId) ";
+                    string sql = "INSERT INTO Planning (DateTime, ActivityId) " + "VALUES (@DateTime, @ActivityId)";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
-                        command.Parameters.AddWithValue("DateTime", @planning.DateTime);
-                        command.Parameters.AddWithValue("Activity", @planning.ActivityId);
-
+                        command.Parameters.AddWithValue("DateTime", planning.DateTime);
+                        command.Parameters.AddWithValue("ActivityId", planning.ActivityId);
                         command.ExecuteNonQuery();
                     }
                 }
             }
-            catch (Exception ex) { throw ex; }
+            catch (Exception ex)
+            {
+
+            }
         }
         public void ReadPlanning(List<Planning> plannings)
         {
+
             using (SqlConnection connection = new SqlConnection())
             {
                 using (SqlCommand command = new SqlCommand())
@@ -419,29 +423,16 @@ namespace ZuydFit
                     connection.ConnectionString = connectionString;
                     connection.Open();
                     command.Connection = connection;
-                    command.CommandText = "SELECT DateTime, Activity FROM Planning ORDER BY ID";
+                    command.CommandText = "SELECT DateTime, ActivityId" + "FROM Planning ORDER BY ID ";
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())
                         {
-                            string dateTimeString = reader[0].ToString();
-                            int activityId = int.Parse(reader[1].ToString());
-
-                            try
-                            {
-                                DateTime dateTime = DateTime.Parse(dateTimeString);
-                                plannings?.Add(new Planning(dateTime, activityId));
-                            }
-                            catch (FormatException ex)
-                            {
-
-                                Console.WriteLine($"Failed to parse DateTime string: {dateTimeString}. Error: {ex.Message}");
-                            }
+                            plannings.Add(new Planning(DateTime.Parse(reader[0].ToString()), int.Parse(reader[1].ToString())));
+                                
                         }
                     }
                 }
-
-
             }
         }
         public void UpdatePlanning(Planning planning)
@@ -451,30 +442,27 @@ namespace ZuydFit
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = "UPDATE Planning SET DateTime = @DateTime, ActivityId = @ActivityId WHERE Id = @Id";
+                    string sql = "UPDATE Planning SET DateTime = @DateTime, ActivityId = @activityId,  WHERE Id = @id";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
-                        command.Parameters.AddWithValue("@Id", planning.Id);
-                        command.Parameters.AddWithValue("@DateTime", planning.DateTime);
-                        command.Parameters.AddWithValue("@ActivityId", planning.ActivityId);
+                        command.Parameters.AddWithValue("Id", planning.Id);
+                        command.Parameters.AddWithValue("DateTime", planning.DateTime);
+                        command.Parameters.AddWithValue("ActivityId", planning.ActivityId);
                         command.ExecuteNonQuery();
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            catch (Exception ex) { throw ex; }
         }
-        public void DeletePlanning(Planning planning)
+        public void DeletePlanning(Planning ActivityId)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                string sql = "DELETE FROM Planning WHERE Id = @Id";
+                string sql = "DELETE FROM Planning WHERE ActiivityId = @ActivityId";
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
-                    command.Parameters.AddWithValue("@Id", planning.Id);
+                    command.Parameters.AddWithValue("@Name", ActivityId);
                     command.ExecuteNonQuery();
                 }
             }

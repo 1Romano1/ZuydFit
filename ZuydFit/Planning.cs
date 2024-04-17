@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Channels;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using ZuydFit;
 
     namespace ZuydFit
@@ -15,11 +16,11 @@ using ZuydFit;
         public int ActivityId { get; set; }
         public DAL DAL { get; set; }
 
-        List <Planning> planning = new List<Planning>();
+        List <Planning> plannings = new List<Planning>();
         public Planning(DateTime datetime, int activityId)
         {
-            DateTime = datetime;
-            ActivityId = activityId;
+            this.DateTime = datetime;
+            this.ActivityId = activityId;
 
         }
         public Planning() { }
@@ -33,6 +34,24 @@ using ZuydFit;
         
         }
 
+        public List<Planning> Read()
+        {
+            DAL = new DAL();
+            DAL.ReadPlanning(plannings);
+            return plannings;
+        }
+
+        public void Update()
+        {
+            DAL = new DAL();
+            DAL.UpdatePlanning(this);
+        }
+
+        public void Delete()
+        {
+            DAL = new DAL();
+            DAL.DeletePlanning(ActivityId);
+        }
         /*public void ReadPlanning()
         {
             PlanningsList = new List<Planning>();
