@@ -81,7 +81,29 @@ namespace ZuydFit
                }
            }
         }
+        public void UpdateLocation(Location location)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    string sql = "UPDATE Location SET Classroom = @Classroom, Address = @Address, Zipcode = @Zipcode," +
+                        " City = @City WHERE Id = @id";
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        command.Parameters.AddWithValue("Id", location.Id);
+                        command.Parameters.AddWithValue("Classroom", location.Classroom);
+                        command.Parameters.AddWithValue("Address", location.Address);
+                        command.Parameters.AddWithValue("Zipcode", location.Zipcode);
+                        command.Parameters.AddWithValue("City", location.City);
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex) { throw ex; }
 
+        }
 
         public void CreateActivity(Activity activity)
         {
