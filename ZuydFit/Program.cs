@@ -9,6 +9,9 @@ public class Program
         Console.WriteLine("Welkom bij onze ZuydFit app");
         MainMenu();
     }
+
+
+    //Overkoepelende functie voor alle menu's.
     static void MainMenu()
     {
         bool exit = false;
@@ -19,7 +22,9 @@ public class Program
             Console.WriteLine("1. Goalmenu");
             Console.WriteLine("2. Advicemenu");
             Console.WriteLine("3. Activitymenu");
-            Console.WriteLine("4. Exit");
+            Console.WriteLine("4. Locationmenu");
+            Console.WriteLine("5. Planningmenu");
+            Console.WriteLine("6. Exit");
             Console.WriteLine("Kies een optie:");
 
             string userInput = Console.ReadLine();
@@ -38,6 +43,14 @@ public class Program
             }
             else if (userInput == "4")
             {
+                LocationMenu();
+            }
+            else if (userInput == "5")
+            {
+                PlanningMenu();
+            }
+            else if (userInput == "6")
+            {
                 exit = true;
             }
             else
@@ -53,6 +66,7 @@ public class Program
         }
 
     }
+
 
     //Hieronder staan de functies van Activity
     static void AskForNewActivity()
@@ -185,7 +199,7 @@ public class Program
     }
 
 
-    //hieronder staan de functies van goal.
+    //Hieronder staan de functies van goal.
     static void AskForGoal()
     {
         Console.WriteLine("Schrijf de titel van je Goal");
@@ -212,7 +226,7 @@ public class Program
         Console.WriteLine("wat is de naam van je goal");
         goal3.Name = Console.ReadLine();
 
-        Console.WriteLine("Wat is het goal dat je wilt behalen?");
+        Console.WriteLine("Wat is de goal dat je wilt behalen?");
         goal3.Description = Console.ReadLine();
 
         Console.WriteLine("Wat is het progressieid");
@@ -232,14 +246,14 @@ public class Program
     }
     static void AskToRemoveGoalFromList()
     {
-        Console.WriteLine("Welke goal wil je verwijderen voer de naam in");
+        Console.WriteLine("Wat is de naam van de goal die je wilt verwijderen?");
         string name1 = Console.ReadLine();
 
         Goal goal2 = new Goal();
         goal2.GetGoalByName(name1);
         goal2.DeleteGoal();
-        Goal goal3 = new Goal();
-        foreach (var go in goal3.GetGoals())
+        Goal goal4 = new Goal();
+        foreach (var go in goal4.GetGoals())
         {
             Console.WriteLine(go.Name);
         }
@@ -287,7 +301,7 @@ public class Program
     //Hieronder staan de functies voor advies.
     static void AskForAdvice()
     {
-        Console.WriteLine("wat is de titel van je advies");
+        Console.WriteLine("wat is de titel van je advies?");
         string title = Console.ReadLine();
 
         Console.WriteLine("Wat is het advies dat je wilt geven?");
@@ -305,29 +319,40 @@ public class Program
     }
     static void AskForListAdvice()
     {
-        Console.WriteLine("Dit moet nog gemaakt worden vgm.");
+        Console.WriteLine("Dit is de lijst met advices");
+
+        Advice adviceList = new Advice();
+        foreach (var adv in adviceList.ReadAdvice())
+        {
+            Console.WriteLine(adv.Title);
+            Console.WriteLine(adv.Description);
+        }
     }
     static void AskToAdjustAdvice()
     {
         Advice advice3 = new Advice();
+        foreach (var adv in advice3.ReadAdvice())
+        {
+            Console.WriteLine(adv.Title);
+        }
 
-        Console.WriteLine("Welk advies wilt u aanpassen? Type de titel");
+        Console.WriteLine("Welk advies wilt u aanpassen? Type de titel.");
         string title1 = Console.ReadLine();
 
         Console.WriteLine(title1);
         advice3.GetAdviceByTitle(title1);
 
-        Console.WriteLine("wat is de titel van je advies");
+        Console.WriteLine("wat is de nieuwe titel van je advies.");
         advice3.Title = Console.ReadLine();
 
-        Console.WriteLine("Wat is het advies dat je wilt geven?");
+        Console.WriteLine("Wat is het nieuwe advies dat je wilt geven?");
         advice3.Description = Console.ReadLine();
 
         advice3.UpdateAdvice();
     }
     static void AskToRemoveAdvice()
     {
-        Console.WriteLine("Welk advies wil je verwijderen voer de Id in");
+        Console.WriteLine("Welk advies wil je verwijderen? voer het Id in.");
         string title = Console.ReadLine();
 
         Advice advice = new Advice();
@@ -345,131 +370,6 @@ public class Program
     static void AdviceMenu()
     {
         bool exit = false;
-            static void AskForNewLocation()
-            {
-                Console.WriteLine("In Welk lokaal heb je de training?");
-                string classroom = Console.ReadLine();
-
-                Console.WriteLine("wat is het adres van de locatie?");
-                string address = Console.ReadLine();
-
-                Console.WriteLine("wat is de postcode van de locatie?");
-                string zipcode = Console.ReadLine();
-
-                Console.WriteLine("in welke stad is de locatie?");
-                string city = Console.ReadLine();
-
-
-                Location location = new Location(classroom, address, zipcode, city);
-                location.Add();
-            }
-
-            static void AskForListLocation()
-            {
-                Console.WriteLine("Locaties");
-                Location location = new Location();
-                List<Location> locations = location.Read();
-                foreach (Location loc in locations)
-                {
-                    Console.WriteLine($"Classroom: {loc.Classroom} \tAddress: {loc.Address} \tZipcode: {loc.Zipcode} \tCity: {loc.City}");
-                }
-            }
-
-            static void AskForDeleteLocation()
-            {
-                Console.WriteLine("Voer het ID in van de locatie die u wilt verwijderen?");
-                int id;
-                if (!int.TryParse(Console.ReadLine(), out id))
-                {
-                    return;
-                }
-                Location location = new Location();
-                location.Delete();
-            }
-
-            static void AskForUpdateLocation()
-            {
-                Console.WriteLine("Voer het Id in die u wilt bijwerken:");
-                int id;
-                if (!int.TryParse(Console.ReadLine(), out id))
-                {
-                    return;
-                }
-
-                Console.WriteLine("Voer het nieuwe klaslokaal in:");
-                string classroom = Console.ReadLine();
-
-                Console.WriteLine("Voer het nieuwe adres in:");
-                string address = Console.ReadLine();
-
-                Console.WriteLine("Voer de nieuwe postcode in:");
-                string zipcode = Console.ReadLine();
-
-                Console.WriteLine("Voer de nieuwe stad in:");
-                string city = Console.ReadLine();
-
-                Location location = new Location()
-                {
-                    Id = id,
-                    Classroom = classroom,
-                    Address = address,
-                    Zipcode = zipcode,
-                    City = city
-                };
-                location.Update();
-                Console.WriteLine("De Locatie met id '" + id + "' is succesvol bijgewerkt.");
-            }
-
-            static void LocationMenu()
-            {
-                bool exit = false;
-                string userInput;
-
-                while (!exit)
-                {
-                    Console.WriteLine("Wat wil je gaan doen?");
-                    Console.WriteLine("1. Een Locatie toevoegen");
-                    Console.WriteLine("2. Locaties bekijken");
-                    Console.WriteLine("3. Een Locatie bijwerken");
-                    Console.WriteLine("4. Een Locatie verwijderen");
-                    Console.WriteLine("5. Terug naar hoofdmenu");
-
-                    userInput = Console.ReadLine();
-
-                    if (userInput == "1")
-                        AskForNewLocation();
-                    else if (userInput == "2")
-                        AskForListLocation();
-                    else if (userInput == "3")
-                        AskForUpdateLocation();
-                    else if (userInput == "4")
-                        AskForDeleteLocation();
-                    else if (userInput == "5")
-                        exit = true;
-                    else
-                    {
-                        Console.Clear();
-                        Console.WriteLine("Ongeldige keuze. Probeer opnieuw.");
-                        continue;
-                    }
-
-                    // Extra regel om de interface duidelijk te houden na het uitvoeren van een actie
-                    Console.WriteLine("Druk op Enter om door te gaan...");
-                    Console.ReadLine();
-                    Console.Clear();
-                }
-            }
-        }
-    Goal goal2 = new Goal();
-    goal2.GetGoalByName(name1);
-    goal2.DeleteGoal();
-    Goal goal3 = new Goal();
-    foreach (var go in goal3.GetGoals())
-    {
-        Console.WriteLine(go.Name);
-    }
-    Console.WriteLine("Welk advies wilt u aanpassen? Type de naam");
-    string name2 = Console.ReadLine();
 
         while (!exit)
         {
@@ -512,22 +412,245 @@ public class Program
             Console.ReadLine();
             Console.Clear();
         }
-
     }
 
-    userInput = Console.ReadLine();
-    goal3.UpdateGoals();*/
 
-    static void AddPlanning()
+    //Hieronder staan de functies van location.
+    static void AskForNewLocation()
+    {
+        Console.WriteLine("In Welk lokaal heb je de training?");
+        string classroom = Console.ReadLine();
+
+        Console.WriteLine("wat is het adres van de locatie?");
+        string address = Console.ReadLine();
+
+        Console.WriteLine("wat is de postcode van de locatie?");
+        string zipcode = Console.ReadLine();
+
+        Console.WriteLine("in welke stad is de locatie?");
+        string city = Console.ReadLine();
+
+
+        Location location = new Location(classroom, address, zipcode, city);
+        location.Add();
+    }
+    static void AskForListLocation()
+    {
+        Console.WriteLine("Locaties");
+        Location location = new Location();
+        List<Location> locations = location.Read();
+        foreach (Location loc in locations)
+        {
+            Console.WriteLine($"Classroom: {loc.Classroom} \tAddress: {loc.Address} \tZipcode: {loc.Zipcode} \tCity: {loc.City}");
+        }
+    }
+    static void AskForUpdateLocation()
+    {
+        Console.WriteLine("Voer het Id in die u wilt bijwerken:");
+        int id;
+        if (!int.TryParse(Console.ReadLine(), out id))
+        {
+            return;
+        }
+
+        Console.WriteLine("Voer het nieuwe klaslokaal in:");
+        string classroom = Console.ReadLine();
+
+        Console.WriteLine("Voer het nieuwe adres in:");
+        string address = Console.ReadLine();
+
+        Console.WriteLine("Voer de nieuwe postcode in:");
+        string zipcode = Console.ReadLine();
+
+        Console.WriteLine("Voer de nieuwe stad in:");
+        string city = Console.ReadLine();
+
+        Location location = new Location()
+        {
+            Id = id,
+            Classroom = classroom,
+            Address = address,
+            Zipcode = zipcode,
+            City = city
+        };
+        location.Update();
+        Console.WriteLine("De Locatie met id '" + id + "' is succesvol bijgewerkt.");
+    }
+    static void AskForDeleteLocation()
+    {
+        Console.WriteLine("Voer het ID in van de locatie die u wilt verwijderen?");
+        int id;
+        if (!int.TryParse(Console.ReadLine(), out id))
+        {
+            return;
+        }
+        Location location = new Location();
+        location.Delete();
+    }
+    static void LocationMenu()
+    {
+        bool exit = false;
+
+        while (!exit)
+        {
+            Console.WriteLine("Wat wil je gaan doen?");
+            Console.WriteLine("1. Een Locatie toevoegen");
+            Console.WriteLine("2. Locaties bekijken");
+            Console.WriteLine("3. Een Locatie bijwerken");
+            Console.WriteLine("4. Een Locatie verwijderen");
+            Console.WriteLine("5. Terug naar hoofdmenu");
+            string userInput = Console.ReadLine();
+
+            if (userInput == "1")
+                AskForNewLocation();
+            else if (userInput == "2")
+                AskForListLocation();
+            else if (userInput == "3")
+                AskForUpdateLocation();
+            else if (userInput == "4")
+                AskForDeleteLocation();
+            else if (userInput == "5")
+                exit = true;
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("Ongeldige keuze. Probeer opnieuw.");
+                continue;
+            }
+
+            // Extra regel om de interface duidelijk te houden na het uitvoeren van een actie
+            Console.WriteLine("Druk op Enter om door te gaan...");
+            Console.ReadLine();
+            Console.Clear();
+        }
+    }
+
+
+    //Hieronder staan de functies van planning.
+    static void AskForNewPlanning()
     {
         Console.WriteLine("Voer de datum en tijd van de activiteit in (bijv. '2024-04-16 14:30'): ");
         DateTime datetime = DateTime.Parse(Console.ReadLine());
 
-        Console.WriteLine("Voer de ID van de activiteit in: ");
-        int activityId = int.Parse(Console.ReadLine());
+    Console.WriteLine("Voer de ID van de activiteit in: ");
+    int activityId = int.Parse(Console.ReadLine());
 
         Planning planning = new Planning(datetime, activityId);
-        planning.AddPlanning();
+        planning.Add();
+
+        Console.Clear();
+        Console.WriteLine("Dit volgende planning is gelogd.");
+        Console.WriteLine("Datum en Tijd:" + planning.DateTime);
+        Console.WriteLine("Uitgevoerde activiteit:" + planning.ActivityId);
+    }
+    static void AskForAdjustPlanning() 
+    {
+        Console.WriteLine("Voer de Id in van de planning die u wilt bewerken.");
+        int id;
+        if (!int.TryParse(Console.ReadLine(), out id))
+        {
+            return;
+        }
+        Console.WriteLine("Voer de nieuwe datum en tijd in:");
+        string input = Console.ReadLine();
+
+        DateTime datetime;
+        if (DateTime.TryParse(input, out datetime))
+        {
+            
+            Console.WriteLine("Ingevoerde datum en tijd: " + datetime);
+        }
+        else
+        {
+            
+            Console.WriteLine("Ongeldige invoer. Voer een geldige datum- en tijdnotatie in.");
+        }
+
+
+        Console.WriteLine("Voer de nieuwe activiteitId in:");
+        if (int.TryParse(Console.ReadLine(), out int activityId))
+        {
+            
+        }
+        else
+        {
+            Console.WriteLine("Ongeldige invoer. Voer een geldig getal in.");
+        }
+
+        Planning planning = new Planning
+        {
+            Id = id,
+            DateTime = datetime,
+            ActivityId = activityId
+        };
+        planning.Update();
+        Console.WriteLine("De planning met id" + id + "is succesvol bijgewerkt.");
+
+
+    }
+    static void AskForListPlanning() 
+    {
+        Console.WriteLine("Planning");
+        Console.WriteLine("Datum en tijd:\t ActiviteitId:");
+        Planning planning = new Planning();
+        List<Planning> plannings = planning.Read();
+        foreach (Planning act in plannings) 
+        {
+            Console.WriteLine(act.DateTime + "\t" + act.ActivityId + "\t");
+        }
+        Console.WriteLine();
+    }
+    static void AskForDeletePlanning() 
+    {
+        Console.WriteLine("Voer de datum en tijd in van de planning die u wilt verwijderen (bijv. '2024-04-18 14:30'):");
+
+        if (DateTime.TryParse(Console.ReadLine(), out DateTime datetime))
+        {
+            
+        }
+        else
+        {
+            Console.WriteLine("Ongeldige invoer. Voer een geldige datum en tijd in.");
+        }
+        Planning planning = new Planning();
+        planning.Delete();
+    }
+    static void PlanningMenu()
+    {
+        bool exit = false;
+
+        while (!exit)
+        {
+            Console.WriteLine("Wat wil je gaan doen?");
+            Console.WriteLine("1. Een planning toevoegen");
+            Console.WriteLine("2. Planningen bekijken");
+            Console.WriteLine("3. Een planning bijwerken");
+            Console.WriteLine("4. Een planning verwijderen");
+            Console.WriteLine("5. Terug naar hoofdmenu");
+            string userInput = Console.ReadLine();
+
+            if (userInput == "1")
+                AskForNewPlanning();
+            else if (userInput == "2")
+                AskForListPlanning();
+            else if (userInput == "3")
+                AskForAdjustPlanning();
+            else if (userInput == "4")
+                AskForDeletePlanning();
+            else if (userInput == "5")
+                exit = true;
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("Ongeldige keuze. Probeer opnieuw.");
+                continue;
+            }
+
+            // Extra regel om de interface duidelijk te houden na het uitvoeren van een actie
+            Console.WriteLine("Druk op Enter om door te gaan...");
+            Console.ReadLine();
+            Console.Clear();
+        }
     }
 }
 

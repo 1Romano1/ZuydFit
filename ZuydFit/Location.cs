@@ -31,7 +31,6 @@ namespace ZuydFit
             Zipcode = zipcode;
             City = city;
             //Trainings = trainings;
-       
         }
 
         public Location() { }
@@ -54,7 +53,7 @@ namespace ZuydFit
         public void Delete()
         {
             DAL = new DAL();
-            DAL.DeleteLocation(this)
+            DAL.DeleteLocation(Id);
         }
         public void Update()
         {
