@@ -454,7 +454,7 @@ namespace ZuydFit
             }
             catch (Exception ex) { throw ex; }
         }
-        public void DeletePlanning(Planning ActivityId)
+        public void DeletePlanning(int ActivityId)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
