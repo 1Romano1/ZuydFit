@@ -485,7 +485,7 @@ namespace ZuydFit
             }
             catch (Exception ex) { throw ex; }
         }
-        public void DeletePlanning(int id)
+        public void DeletePlanning(int ActivityId)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -531,12 +531,12 @@ namespace ZuydFit
                         connection.ConnectionString = connectionString;
                         connection.Open();
                         command.Connection = connection;
-                        command.CommandText = "SELECT Id, Description, Percentage FROM Progression ORDER BY ID ";
+                        command.CommandText = "SELECT Description, Percentage FROM Progression ORDER BY ID ";
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
-                                Progrresions.Add(new Progression(Int32.Parse(reader[0].ToString()), reader[1].ToString, Int32.Parse(reader[1].ToString())));
+                                Progrresions.Add(new Progression(reader[0].ToString(), Int32.Parse(reader[1].ToString())));
                             }
                         }
                     }
@@ -607,23 +607,6 @@ namespace ZuydFit
                 }
             }
             catch (Exception ex) { throw ex; }
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    connection.Open();
-                    string sql = "DELETE FROM Planning WHERE Id = @Id";
-                    using (SqlCommand command = new SqlCommand(sql, connection))
-                    {
-                        command.Parameters.AddWithValue("@Id", id);
-                        command.ExecuteNonQuery();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex; // This line might not be necessary, you can simply use 'throw;' 
-            }
         }
 
     }
