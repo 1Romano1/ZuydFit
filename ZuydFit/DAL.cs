@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ZuydFit
 {
@@ -13,6 +14,7 @@ namespace ZuydFit
         public List<Activity> activities = new List<Activity>();
         public List<Advice> Advices { get; set; } = new List<Advice>();
         public List<Goal> Goals { get; set; } = new List<Goal>();
+        List<Planning> plannings = new List<Planning>();
 
         //public static string connectionString = "Data Source=LAPPIEMELLIE;Initial Catalog=ZuydFit;Integrated Security=True";
         public string connectionString = "Data Source=.;Initial Catalog=ZuydFit;Integrated Security=True";
@@ -66,18 +68,18 @@ namespace ZuydFit
                 }
             }
         }
-        public void DeleteLocation(string Classroom)
+        public void DeleteLocation(int Id)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                connection.Open();
-                string sql = "DELETE FROM Location WHERE Classroom = @Classroom";
-                using (SqlCommand command = new SqlCommand(sql, connection))
-                {
-                    command.Parameters.AddWithValue("@Classroom", Classroom);
-                    command.ExecuteNonQuery();
-                }
-            }
+           using (SqlConnection connection = new SqlConnection(connectionString))
+           {
+               connection.Open();
+               string sql = "DELETE FROM Location WHERE Id = @Id";
+               using (SqlCommand command = new SqlCommand(sql, connection))
+               {
+                   command.Parameters.AddWithValue("@Id", Id);
+                   command.ExecuteNonQuery();
+               }
+           }
         }
 
 
@@ -183,8 +185,10 @@ namespace ZuydFit
                     }
                 }
             }
-            catch (Exception ex) { 
-                throw ex; }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         public Goal GetGoalByName(string name)
         {
@@ -229,7 +233,7 @@ namespace ZuydFit
                         {
                             while (reader.Read())
                             {
-                                Goals.Add(new (reader[0].ToString(), reader[1].ToString(), reader[2].ToString()));
+                                Goals.Add(new(reader[0].ToString(), reader[1].ToString(), reader[2].ToString()));
                             }
                         }
                     }
@@ -383,6 +387,98 @@ namespace ZuydFit
             }
             catch (Exception ex) { throw ex; }
         }
+
+
+
+        public void CreatePlanning(Planning planning)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    string sql = "INSERT INTO Planning (DateTime, ActivityId) VALUES (@DateTime, @ActivityId) ";
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        command.Parameters.AddWithValue("DateTime", @planning.DateTime);
+                        command.Parameters.AddWithValue("Activity", @planning.ActivityId);
+
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
+        public void ReadPlanning(List<Planning> plannings)
+        {
+            using (SqlConnection connection = new SqlConnection())
+            {
+                using (SqlCommand command = new SqlCommand())
+                {
+                    connection.ConnectionString = connectionString;
+                    connection.Open();
+                    command.Connection = connection;
+                    command.CommandText = "SELECT DateTime, Activity FROM Planning ORDER BY ID";
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            string dateTimeString = reader[0].ToString();
+                            int activityId = int.Parse(reader[1].ToString());
+
+                            try
+                            {
+                                DateTime dateTime = DateTime.Parse(dateTimeString);
+                                plannings?.Add(new Planning(dateTime, activityId));
+                            }
+                            catch (FormatException ex)
+                            {
+
+                                Console.WriteLine($"Failed to parse DateTime string: {dateTimeString}. Error: {ex.Message}");
+                            }
+                        }
+                    }
+                }
+
+
+            }
+        }
+        public void UpdatePlanning(Planning planning)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    string sql = "UPDATE Planning SET DateTime = @DateTime, ActivityId = @ActivityId WHERE Id = @Id";
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        command.Parameters.AddWithValue("@Id", planning.Id);
+                        command.Parameters.AddWithValue("@DateTime", planning.DateTime);
+                        command.Parameters.AddWithValue("@ActivityId", planning.ActivityId);
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public void DeletePlanning(Planning planning)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                string sql = "DELETE FROM Planning WHERE Id = @Id";
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@Id", planning.Id);
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
     }
 }
+
 
