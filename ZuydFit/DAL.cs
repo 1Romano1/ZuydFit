@@ -17,10 +17,10 @@ namespace ZuydFit
         public List<Advice> Advices { get; set; } = new List<Advice>();
         public List<Goal> Goals { get; set; } = new List<Goal>();
         List<Planning> plannings = new List<Planning>();
-        public List<Progression> Progrresions = new List<Progression>();
+        public List<Progression> Progressions = new List<Progression>();
 
         //public static string connectionString = "Data Source=LAPPIEMELLIE;Initial Catalog=ZuydFit;Integrated Security=True";
-        public string connectionString = "Data Source=.;Initial Catalog=ZuydFit;Integrated Security=True";
+        private string connectionString = "Data Source=.;Initial Catalog=ZuydFit;Integrated Security=True";
 
 
         //DAL van Location.
@@ -536,7 +536,7 @@ namespace ZuydFit
                         {
                             while (reader.Read())
                             {
-                                Progrresions.Add(new Progression(Int32.Parse(reader[0].ToString()), reader[1].ToString(), Int32.Parse(reader[2].ToString())));
+                                Progressions.Add(new Progression(Int32.Parse(reader[0].ToString()), reader[1].ToString(), Int32.Parse(reader[2].ToString())));
                             }
                         }
                     }

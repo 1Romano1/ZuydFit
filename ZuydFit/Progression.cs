@@ -49,7 +49,7 @@ namespace ZuydFit
         {
             DAL = new DAL();
             DAL.ReadProgression();
-            return DAL.Progrresions;
+            return DAL.Progressions;
         }
         public void GetProgressionById(int id) 
         {
