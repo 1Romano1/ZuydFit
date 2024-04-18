@@ -25,7 +25,7 @@ using ZuydFit;
         }
         public Planning() { }
 
-        public void AddPlanning()
+        public void Add()
         {
 
             DAL = new DAL();

@@ -323,7 +323,7 @@ namespace ZuydFit
             }
             catch (Exception ex) { throw ex; }
         }
-       /* public void ReadAdvice()
+        public void ReadAdvice()
         {
             try
             {
@@ -346,8 +346,8 @@ namespace ZuydFit
                 }
             }
             catch (Exception ex) { throw ex; }
-        }*/
-       /* public Advice GetAdviceByTitle(string title)
+        }
+        public Advice GetAdviceByTitle(string title)
         {
             try
             {
@@ -373,7 +373,7 @@ namespace ZuydFit
                 }
             }
             catch (Exception ex) { throw ex; }
-        }*/
+        }
         public void UpdateAdvice(Advice advice)
         {
             try

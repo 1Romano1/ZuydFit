@@ -9,6 +9,9 @@ public class Program
         Console.WriteLine("Welkom bij onze ZuydFit app");
         MainMenu();
     }
+
+
+    //Overkoepelende functie voor alle menu's.
     static void MainMenu()
     {
         bool exit = false;
@@ -19,7 +22,9 @@ public class Program
             Console.WriteLine("1. Goalmenu");
             Console.WriteLine("2. Advicemenu");
             Console.WriteLine("3. Activitymenu");
-            Console.WriteLine("4. Exit");
+            Console.WriteLine("4. Locationmenu");
+            Console.WriteLine("5. Planningmenu");
+            Console.WriteLine("6. Exit");
             Console.WriteLine("Kies een optie:");
 
             string userInput = Console.ReadLine();
@@ -38,11 +43,15 @@ public class Program
             }
             else if (userInput == "4")
             {
-                exit = true;
+                LocationMenu();
             }
             else if (userInput == "5")
             {
-                LocationMenu();
+                PlanningMenu();
+            }
+            else if (userInput == "6")
+            {
+                exit = true;
             }
             else
             {
@@ -57,6 +66,7 @@ public class Program
         }
 
     }
+
 
     //Hieronder staan de functies van Activity
     static void AskForNewActivity()
@@ -189,7 +199,7 @@ public class Program
     }
 
 
-    //hieronder staan de functies van goal.
+    //Hieronder staan de functies van goal.
     static void AskForGoal()
     {
         Console.WriteLine("Schrijf de titel van je Goal");
@@ -394,6 +404,7 @@ public class Program
     }
 
 
+    //Hieronder staan de functies van location.
     static void AskForNewLocation()
     {
         Console.WriteLine("In Welk lokaal heb je de training?");
@@ -503,6 +514,8 @@ public class Program
         }
     }
 
+
+    //Hieronder staan de functies van planning.
     static void AskForNewPlanning()
     {
         Console.WriteLine("Voer de datum en tijd van de activiteit in (bijv. '2024-04-16 14:30'): ");
@@ -512,14 +525,13 @@ public class Program
     int activityId = int.Parse(Console.ReadLine());
 
         Planning planning = new Planning(datetime, activityId);
-        planning.AddPlanning();
+        planning.Add();
 
         Console.Clear();
         Console.WriteLine("Dit volgende planning is gelogd.");
         Console.WriteLine("Datum en Tijd:" + planning.DateTime);
         Console.WriteLine("Uitgevoerde activiteit:" + planning.ActivityId);
     }
-
     static void AskForAdjustPlanning() 
     {
         Console.WriteLine("Voer de Id in van de planning die u wilt bewerken.");
@@ -565,7 +577,6 @@ public class Program
 
 
     }
-
     static void AskForListPlanning() 
     {
         Console.WriteLine("Planning");
@@ -578,7 +589,6 @@ public class Program
         }
         Console.WriteLine();
     }
-
     static void AskForDeletePlanning() 
     {
         Console.WriteLine("Voer de datum en tijd in van de planning die u wilt verwijderen (bijv. '2024-04-18 14:30'):");
@@ -594,7 +604,6 @@ public class Program
         Planning planning = new Planning();
         planning.Delete();
     }
-
     static void PlanningMenu()
     {
         bool exit = false;
@@ -632,6 +641,5 @@ public class Program
             Console.Clear();
         }
     }
-
 }
 
