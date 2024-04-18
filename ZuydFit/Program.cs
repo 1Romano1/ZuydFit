@@ -514,16 +514,135 @@ public class Program
         }
     }
 
-    static void AddPlanning()
-{
-    Console.WriteLine("Voer de datum en tijd van de activiteit in (bijv. '2024-04-16 14:30'): ");
-    DateTime datetime = DateTime.Parse(Console.ReadLine());
+    static void AskForNewPlanning()
+    {
+        Console.WriteLine("Voer de datum en tijd van de activiteit in (bijv. '2024-04-16 14:30'): ");
+        DateTime datetime = DateTime.Parse(Console.ReadLine());
 
     Console.WriteLine("Voer de ID van de activiteit in: ");
     int activityId = int.Parse(Console.ReadLine());
 
-    Planning planning = new Planning(datetime, activityId);
-    planning.AddPlanning();
-}
+        Planning planning = new Planning(datetime, activityId);
+        planning.AddPlanning();
+
+        Console.Clear();
+        Console.WriteLine("Dit volgende planning is gelogd.");
+        Console.WriteLine("Datum en Tijd:" + planning.DateTime);
+        Console.WriteLine("Uitgevoerde activiteit:" + planning.ActivityId);
+    }
+
+    static void AskForAdjustPlanning() 
+    {
+        Console.WriteLine("Voer de Id in van de planning die u wilt bewerken.");
+        int id;
+        if (!int.TryParse(Console.ReadLine(), out id))
+        {
+            return;
+        }
+        Console.WriteLine("Voer de nieuwe datum en tijd in:");
+        string input = Console.ReadLine();
+
+        DateTime datetime;
+        if (DateTime.TryParse(input, out datetime))
+        {
+            
+            Console.WriteLine("Ingevoerde datum en tijd: " + datetime);
+        }
+        else
+        {
+            
+            Console.WriteLine("Ongeldige invoer. Voer een geldige datum- en tijdnotatie in.");
+        }
+
+
+        Console.WriteLine("Voer de nieuwe activiteitId in:");
+        if (int.TryParse(Console.ReadLine(), out int activityId))
+        {
+            
+        }
+        else
+        {
+            Console.WriteLine("Ongeldige invoer. Voer een geldig getal in.");
+        }
+
+        Planning planning = new Planning
+        {
+            Id = id,
+            DateTime = datetime,
+            ActivityId = activityId
+        };
+        planning.Update();
+        Console.WriteLine("De planning met id" + id + "is succesvol bijgewerkt.");
+
+
+    }
+
+    static void AskForListPlanning() 
+    {
+        Console.WriteLine("Planning");
+        Console.WriteLine("Datum en tijd:\t ActiviteitId:");
+        Planning planning = new Planning();
+        List<Planning> plannings = planning.Read();
+        foreach (Planning act in plannings) 
+        {
+            Console.WriteLine(act.DateTime + "\t" + act.ActivityId + "\t");
+        }
+        Console.WriteLine();
+    }
+
+    static void AskForDeletePlanning() 
+    {
+        Console.WriteLine("Voer de datum en tijd in van de planning die u wilt verwijderen (bijv. '2024-04-18 14:30'):");
+
+        if (DateTime.TryParse(Console.ReadLine(), out DateTime datetime))
+        {
+            
+        }
+        else
+        {
+            Console.WriteLine("Ongeldige invoer. Voer een geldige datum en tijd in.");
+        }
+        Planning planning = new Planning();
+        planning.Delete();
+    }
+
+    static void PlanningMenu()
+    {
+        bool exit = false;
+
+        while (!exit)
+        {
+            Console.WriteLine("Wat wil je gaan doen?");
+            Console.WriteLine("1. Een planning toevoegen");
+            Console.WriteLine("2. Planningen bekijken");
+            Console.WriteLine("3. Een planning bijwerken");
+            Console.WriteLine("4. Een planning verwijderen");
+            Console.WriteLine("5. Terug naar hoofdmenu");
+            string userInput = Console.ReadLine();
+
+            if (userInput == "1")
+                AskForNewPlanning();
+            else if (userInput == "2")
+                AskForListPlanning();
+            else if (userInput == "3")
+                AskForAdjustPlanning();
+            else if (userInput == "4")
+                AskForDeletePlanning();
+            else if (userInput == "5")
+                exit = true;
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("Ongeldige keuze. Probeer opnieuw.");
+                continue;
+            }
+
+            // Extra regel om de interface duidelijk te houden na het uitvoeren van een actie
+            Console.WriteLine("Druk op Enter om door te gaan...");
+            Console.ReadLine();
+            Console.Clear();
+        }
+    }
+
 }
 
