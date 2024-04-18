@@ -17,7 +17,6 @@ namespace ZuydFit
         public List<Goal> Goals { get; set; } = new List<Goal>();
         List<Planning> plannings = new List<Planning>();
 
-
         //public static string connectionString = "Data Source=LAPPIEMELLIE;Initial Catalog=ZuydFit;Integrated Security=True";
         public string connectionString = "Data Source=.;Initial Catalog=ZuydFit;Integrated Security=True";
 
@@ -70,20 +69,42 @@ namespace ZuydFit
                 }
             }
         }
-        public void DeleteLocation(string Classroom)
+        public void DeleteLocation(int Id)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+           using (SqlConnection connection = new SqlConnection(connectionString))
+           {
+               connection.Open();
+               string sql = "DELETE FROM Location WHERE Id = @Id";
+               using (SqlCommand command = new SqlCommand(sql, connection))
+               {
+                   command.Parameters.AddWithValue("@Id", Id);
+                   command.ExecuteNonQuery();
+               }
+           }
+        }
+        public void UpdateLocation(Location location)
+        {
+            try
             {
-                connection.Open();
-                string sql = "DELETE FROM Location WHERE Classroom = @Classroom";
-                using (SqlCommand command = new SqlCommand(sql, connection))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    command.Parameters.AddWithValue("@Classroom", Classroom);
-                    command.ExecuteNonQuery();
+                    connection.Open();
+                    string sql = "UPDATE Location SET Classroom = @Classroom, Address = @Address, Zipcode = @Zipcode," +
+                        " City = @City WHERE Id = @id";
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        command.Parameters.AddWithValue("Id", location.Id);
+                        command.Parameters.AddWithValue("Classroom", location.Classroom);
+                        command.Parameters.AddWithValue("Address", location.Address);
+                        command.Parameters.AddWithValue("Zipcode", location.Zipcode);
+                        command.Parameters.AddWithValue("City", location.City);
+                        command.ExecuteNonQuery();
+                    }
                 }
             }
-        }
+            catch (Exception ex) { throw ex; }
 
+        }
 
         public void CreateActivity(Activity activity)
         {
