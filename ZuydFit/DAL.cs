@@ -499,6 +499,9 @@ namespace ZuydFit
                 }
             }
         }
+
+
+        //DAL van Progression.
         public void CreateProgression(Progression progression)
         {
             try

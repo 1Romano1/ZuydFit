@@ -24,7 +24,8 @@ public class Program
             Console.WriteLine("3. Activitymenu");
             Console.WriteLine("4. Locationmenu");
             Console.WriteLine("5. Planningmenu");
-            Console.WriteLine("6. Exit");
+            Console.WriteLine("6. Progressionmenu");
+            Console.WriteLine("7. Exit");
             Console.WriteLine("Kies een optie:");
 
             string userInput = Console.ReadLine();
@@ -55,6 +56,11 @@ public class Program
                 PlanningMenu();
             }
             else if (userInput == "6")
+            {
+                Console.Clear();
+                ProgressionMenu();
+            }
+            else if (userInput == "7")
             {
                 exit = true;
             }
@@ -673,6 +679,63 @@ public class Program
             Console.ReadLine();
             Console.Clear();
         }
+    }
+
+
+    //Hieronder staan de functies van Progression.
+    static void AskForNewProgression()
+    {
+
+    }
+    static void AskForListProgression()
+    {
+
+    }
+    static void AskToAdjustProgression()
+    {
+
+    }
+    static void AskToRemoveProgression()
+    {
+
+    }
+    static void ProgressionMenu()
+    {
+        bool exit = false;
+
+        while (!exit)
+        {
+            Console.WriteLine("Wat wil je gaan doen?");
+            Console.WriteLine("1. Een progressie toevoegen");
+            Console.WriteLine("2. Progressies bekijken");
+            Console.WriteLine("3. Een progressie bijwerken");
+            Console.WriteLine("4. Een progressie verwijderen");
+            Console.WriteLine("5. Terug naar hoofdmenu");
+            string userInput = Console.ReadLine();
+
+            if (userInput == "1")
+                AskForNewProgression();
+            else if (userInput == "2")
+                AskForListProgression();
+            else if (userInput == "3")
+                AskToAdjustProgression();
+            else if (userInput == "4")
+                AskToRemoveProgression();
+            else if (userInput == "5")
+                exit = true;
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("Ongeldige keuze. Probeer opnieuw.");
+                continue;
+            }
+
+            // Extra regel om de interface duidelijk te houden na het uitvoeren van een actie
+            Console.WriteLine("Druk op Enter om door te gaan...");
+            Console.ReadLine();
+            Console.Clear();
+        }
+
     }
 }
 

@@ -31,6 +31,9 @@ namespace ZuydFit
             Description = description;
             Percentage = percentage;
         }
+
+
+        //Onderstaande functies geven de data uit de program door aan de DAL.
         public void AddProgression() 
         {
             DAL = new DAL();
