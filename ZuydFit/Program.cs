@@ -242,8 +242,8 @@ public class Program
         Goal goal2 = new Goal();
         goal2.GetGoalByName(name1);
         goal2.DeleteGoal();
-        Goal goal3 = new Goal();
-        foreach (var go in goal3.GetGoals())
+        Goal goal4 = new Goal();
+        foreach (var go in goal4.GetGoals())
         {
             Console.WriteLine(go.Name);
         }
