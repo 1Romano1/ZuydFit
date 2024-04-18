@@ -319,11 +319,22 @@ public class Program
     }
     static void AskForListAdvice()
     {
-        Console.WriteLine("Dit moet nog gemaakt worden vgm.");
+        Console.WriteLine("Dit is de lijst met advices");
+
+        Advice adviceList = new Advice();
+        foreach (var adv in adviceList.ReadAdvice())
+        {
+            Console.WriteLine(adv.Title);
+            Console.WriteLine(adv.Description);
+        }
     }
     static void AskToAdjustAdvice()
     {
         Advice advice3 = new Advice();
+        foreach (var adv in advice3.ReadAdvice())
+        {
+            Console.WriteLine(adv.Title);
+        }
 
         Console.WriteLine("Welk advies wilt u aanpassen? Type de titel.");
         string title1 = Console.ReadLine();
