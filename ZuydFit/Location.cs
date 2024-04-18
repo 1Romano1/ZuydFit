@@ -36,13 +36,11 @@ namespace ZuydFit
         public Location() { }
 
 
-
+        //Onderstaande functies geven de ingevoerde data door aan de DAL.
         public void Add()
         {
-
             DAL = new DAL();
             DAL.CreateLocation(this);
-
         }
         public List<Location> Read()
         {

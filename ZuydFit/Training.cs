@@ -15,7 +15,5 @@ namespace ZuydFit
             Id = Id;
             Activities = activities;
         }
-       
-
     }
 }

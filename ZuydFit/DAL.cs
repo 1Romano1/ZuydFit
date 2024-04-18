@@ -22,6 +22,7 @@ namespace ZuydFit
         public string connectionString = "Data Source=.;Initial Catalog=ZuydFit;Integrated Security=True";
 
 
+        //DAL van Location.
         public void CreateLocation(Location location)
         {
             try
@@ -107,6 +108,8 @@ namespace ZuydFit
 
         }
 
+
+        //DAL van Activity.
         public void CreateActivity(Activity activity)
         {
             try
@@ -191,6 +194,7 @@ namespace ZuydFit
         }
 
 
+        //DAL van Goal.
         public void CreateGoal(Goal goal)
         {
             try
@@ -304,6 +308,8 @@ namespace ZuydFit
             catch (Exception ex) { throw ex; }
         }
 
+
+        //DAL van Advice.
         public void CreateAdvice(Advice advice)
         {
             try
@@ -377,8 +383,6 @@ namespace ZuydFit
             }
             catch (Exception ex) { throw ex; }
         }
-
-
         public void UpdateAdvice(Advice advice)
         {
             try
@@ -418,6 +422,7 @@ namespace ZuydFit
         }
 
 
+        //DAL van Planning.
         public void CreatePlanning(Planning planning)
         {
             try

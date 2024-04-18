@@ -34,6 +34,8 @@ namespace ZuydFit
             Description = description;
         }
 
+
+        //Onderstaande functies geven de ingevoerde data door aan de DAL.
         public void AddAdvice()
         {
             DAL = new DAL();
@@ -45,7 +47,6 @@ namespace ZuydFit
             DAL.ReadAdvice();
             return DAL.Advices;
         }
-
         public void GetAdviceByTitle(string title)
         {
             DAL = new DAL();
@@ -58,7 +59,6 @@ namespace ZuydFit
             }
             
         }
-
         public void UpdateAdvice()
         {
             DAL = new DAL();
