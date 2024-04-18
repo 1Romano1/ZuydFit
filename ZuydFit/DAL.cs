@@ -252,12 +252,12 @@ namespace ZuydFit
                         connection.ConnectionString = connectionString;
                         connection.Open();
                         command.Connection = connection;
-                        command.CommandText = "SELECT Name, Description, ProgressionId FROM Goal ORDER BY ID ";
+                        command.CommandText = "SELECT id, Name, Description, ProgressionId FROM Goal ORDER BY ID ";
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
-                                Goals.Add(new(reader[0].ToString(), reader[1].ToString(), reader[2].ToString()));
+                                Goals.Add(new(Int32.Parse(reader[0].ToString()), reader[1].ToString(), reader[2].ToString(), reader[3].ToString()));
                             }
                         }
                     }
@@ -303,7 +303,6 @@ namespace ZuydFit
             }
             catch (Exception ex) { throw ex; }
         }
-
 
         public void CreateAdvice(Advice advice)
         {
