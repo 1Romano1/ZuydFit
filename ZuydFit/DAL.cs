@@ -9,83 +9,17 @@ namespace ZuydFit
 {
     public class DAL
     {
-        public DAL()
-        {
-        }
 
         public List<Activity> activities = new List<Activity>();
         public List<Advice> Advices { get; set; } = new List<Advice>();
         public static string connectionString = "Data Source=.;Initial Catalog=ZuydFit;Integrated Security=True;Encrypt=False";
 
-
-        //public static string connectionString = "Data Source=LAPPIEMELLIE;Initial Catalog=ZuydFit;Integrated Security=True";
-        public static string connectionString = "Data Source=.;Initial Catalog=ZuydFit;Integrated Security=True";
-
-
-        public static void CreateLocation(Location location)
+        public DAL()
         {
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    connection.Open();
-                    string sql = "INSERT INTO Location (Classroom, Address, Zipcode, City) " +
-                        "VALUES (@Classroom, @Address, @Zipcode, @City) ";
-                    using (SqlCommand command = new SqlCommand(sql, connection))
-                    {
-                        command.Parameters.AddWithValue("Classroom", @location.Classroom);
-                        command.Parameters.AddWithValue("Address", @location.Address);
-                        command.Parameters.AddWithValue("Zipcode", @location.Zipcode);
-                        command.Parameters.AddWithValue("City", @location.City);
-                        // command.Parameters.AddWithValue("Training", @location.Trainings);
-                        command.ExecuteNonQuery();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-        public static void ReadLocation(List<Location> locations)
-        {
-
-            using (SqlConnection connection = new SqlConnection())
-            {
-                using (SqlCommand command = new SqlCommand())
-                {
-                    connection.ConnectionString = connectionString;
-                    connection.Open();
-                    command.Connection = connection;
-                    command.CommandText = "SELECT Classroom, Address, Zipcode, City " +
-                        "FROM Location ORDER BY ID ";
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            //de uitroeptekens staan ervoor omdat de copiler denkt dat het een null waarde kan hebben terwijl dat zeker niet zo is.
-                            locations?.Add(new Location(reader[0].ToString(), reader[1].ToString(), reader[2].ToString(), reader[3].ToString()));
-                        }
-                    }
-                }
-            }
-        }
-        public static void DeleteLocation(string Classroom)
-        {
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                connection.Open();
-                string sql = "DELETE FROM Location WHERE Classroom = @Classroom";
-                using (SqlCommand command = new SqlCommand(sql, connection))
-                {
-                    command.Parameters.AddWithValue("@Classroom", Classroom);
-                    command.ExecuteNonQuery();
-                }
-            }
         }
 
 
-        public static void CreateActivity(Activity activity)
+        public void CreateActivity(Activity activity)
         {
             try
             {
@@ -106,92 +40,10 @@ namespace ZuydFit
             }
             catch (Exception ex)
             {
-
-            }
-        }
-        public static void ReadActivity(List<Activity> activities)
-        {
-
-            using (SqlConnection connection = new SqlConnection())
-            {
-                using (SqlCommand command = new SqlCommand())
-                {
-                    connection.ConnectionString = connectionString;
-                    connection.Open();
-                    command.Connection = connection;
-                    command.CommandText = "SELECT Name, Description, Duration, Sets " +
-                        "FROM Activity ORDER BY ID ";
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            activities.Add(new Activity(reader[0].ToString(), reader[1].ToString(),
-                                decimal.Parse(reader[2].ToString()), int.Parse(reader[3].ToString())));
-                        }
-                    }
-                }
-            }
-        }
-        public static void UpdateActivity(Activity activity)
-        {
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    connection.Open();
-                    string sql = "UPDATE Activity SET name = @name, Description = @description, Duration = @Duration," +
-                        " Sets = @Sets WHERE Id = @id";
-                    using (SqlCommand command = new SqlCommand(sql, connection))
-                    {
-                        command.Parameters.AddWithValue("Id", activity.Id);
-                        command.Parameters.AddWithValue("Name", activity.Name);
-                        command.Parameters.AddWithValue("Description", activity.Description);
-                        command.Parameters.AddWithValue("Duration", activity.Duration);
-                        command.Parameters.AddWithValue("Sets", activity.Sets);
-                        command.ExecuteNonQuery();
-                    }
-                }
-            }
-            catch (Exception ex) { throw ex; }
-        }
-        public static void DeleteActivity(string Name)
-        {
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                connection.Open();
-                string sql = "DELETE FROM Activity WHERE Name = @Name";
-                using (SqlCommand command = new SqlCommand(sql, connection))
-                {
-                    command.Parameters.AddWithValue("@Name", Name);
-                    command.ExecuteNonQuery();
-                }
+                throw new Exception("Error creating activity.", ex);
             }
         }
 
-        /*public void ReadItem(List<Item> items)
-        {
-        /*public void CreateItem(Item item)
-           {
-               try
-               {
-                   using (SqlConnection connection = new SqlConnection(connectionString))
-                   {
-                       connection.Open();
-                       string sql = "INSERT INTO Product (Name, Description, Price, ProductCode, Brand) " +
-                           "VALUES (@Name, @Description, @price, @ProductCode, @Brand) ";
-                       using (SqlCommand command = new SqlCommand(sql, connection))
-                       {
-                           command.Parameters.AddWithValue("Name", @item.Name);
-                           command.Parameters.AddWithValue("Description", @item.Description);
-                           command.Parameters.AddWithValue("Price", @item.Price);
-                           command.Parameters.AddWithValue("ProductCode", item.ProductCode);
-                           command.Parameters.AddWithValue("Brand", item.Brand);
-                           command.ExecuteNonQuery();
-                       }
-                   }
-               }
-               catch (Exception ex) { throw ex; }
-           }*/
         /*public void ReadItem(List<Item> items)
         {
 
@@ -253,27 +105,50 @@ namespace ZuydFit
             }
         }*/
 
-
-        public void CreateAdvice(Advice advice)
+        public static void CreateAdvice(Advice advice)
         {
             try
             {
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = "INSERT INTO Advice (Id, Description) " +
-                        "VALUES (@Id, @Description) ";
+                    string sql = "INSERT INTO Advice (Description, Title) " +
+                        "VALUES (@Description, @Title) ";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
-                        command.Parameters.AddWithValue("Id", @advice.Id);
                         command.Parameters.AddWithValue("Description", @advice.Description);
+                        command.Parameters.AddWithValue("Title", @advice.Title);
                         command.ExecuteNonQuery();
                     }
                 }
             }
             catch (Exception ex) { throw ex; }
         }
-        public void ReadAdvice(List<Advice> advices)
+        public void ReadAdvice()
+        {
+            try {
+                using (SqlConnection connection = new SqlConnection())
+                {
+                    using (SqlCommand command = new SqlCommand())
+                    {
+                        connection.ConnectionString = connectionString;
+                        connection.Open();
+                        command.Connection = connection;
+                        command.CommandText = "SELECT Title, Description FROM Advice ORDER BY ID ";
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                Advices.Add(new Advice(reader[0].ToString(), reader[1].ToString()));
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
+
+        public Advice GetAdviceByTitle(string title)
         {
             try
             {
@@ -284,20 +159,24 @@ namespace ZuydFit
                         connection.ConnectionString = connectionString;
                         connection.Open();
                         command.Connection = connection;
-                        command.CommandText = "SELECT Id, Description " +
-                            "FROM Advice ORDER BY ID ";
+                        command.CommandText = "SELECT Id, Title, Description " +
+                            "FROM Advice WHERE Title = @Title";
+                        command.Parameters.AddWithValue("@Title", title);
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
-                                advices.Add(new Advice(reader[0].ToString(), reader[1].ToString(), reader[2].ToString()));
+                                return (new Advice(Int32.Parse(reader[0].ToString()), reader[1].ToString(), reader[2].ToString()));
                             }
+                            return null;
                         }
                     }
                 }
             }
             catch (Exception ex) { throw ex; }
         }
+
+
         public void UpdateAdvice(Advice advice)
         {
             try
@@ -305,12 +184,13 @@ namespace ZuydFit
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = "UPDATE Advice SET Id = @Id, Description = @description, " +
-                        "WHERE Id = @id";
+                    string sql = "UPDATE Advice SET Title = @Title, Description = @description WHERE Id = @id";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         command.Parameters.AddWithValue("Id", advice.Id);
+                        command.Parameters.AddWithValue("Title", advice.Title);
                         command.Parameters.AddWithValue("Description", advice.Description);
+                        
                         command.ExecuteNonQuery();
                     }
                 }
@@ -319,12 +199,11 @@ namespace ZuydFit
         }
         public void DeleteAdvice(Advice advice)
         {
-            try
-            {
+            try {
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = "DELETE FROM Advice WHERE Id = @Id";
+                    string sql = "DELETE FROM Advice WHERE Id= @Id";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         command.Parameters.AddWithValue("@Id", advice.Id);
