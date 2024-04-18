@@ -725,9 +725,9 @@ public class Program
         }
 
         Console.WriteLine("Welke Progress wilt u aanpassen? Type het Id.");
-        int Id = Int32.Parse(Console.ReadLine());
+        int id = Int32.Parse(Console.ReadLine());
 
-        Console.WriteLine(Id);
+        Console.WriteLine(id);
         progressionAdjsut.UpdateProgression();
 
         Console.WriteLine("wat is de nieuwe beschrijving van je progressie.");

@@ -531,12 +531,12 @@ namespace ZuydFit
                         connection.ConnectionString = connectionString;
                         connection.Open();
                         command.Connection = connection;
-                        command.CommandText = "SELECT Description, Percentage FROM Progression ORDER BY ID ";
+                        command.CommandText = "SELECT Id, Description, Percentage FROM Progression ORDER BY Id ";
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
-                                Progrresions.Add(new Progression(reader[0].ToString(), Int32.Parse(reader[1].ToString())));
+                                Progrresions.Add(new Progression(Int32.Parse(reader[0].ToString()), reader[1].ToString(), Int32.Parse(reader[2].ToString())));
                             }
                         }
                     }
@@ -562,7 +562,7 @@ namespace ZuydFit
                         {
                             while (reader.Read())
                             {
-                                return (new Progression(reader[0].ToString(), Int32.Parse(reader[1].ToString())));
+                                return (new Progression(Int32.Parse(reader[0].ToString()), reader[1].ToString(), Int32.Parse(reader[2].ToString())));
                             }
                             return null;
                         }
@@ -578,8 +578,7 @@ namespace ZuydFit
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = "UPDATE Progression SET Id = @Id, Description = @description, Percentage = @Percentage" +
-                        "WHERE Id = @id";
+                    string sql = "UPDATE Progression SET Description = @description, Percentage = @Percentage WHERE Id = @id";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         command.Parameters.AddWithValue("Id", progression.Id);
