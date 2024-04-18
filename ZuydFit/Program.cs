@@ -685,19 +685,75 @@ public class Program
     //Hieronder staan de functies van Progression.
     static void AskForNewProgression()
     {
+        Console.WriteLine("wat is de beschrijving van je Progression?");
+        string description = Console.ReadLine();
 
+        Console.WriteLine("Wat is de progress die je gemaakt hebt in prozenten?");
+        int percentage = Int32.Parse(Console.ReadLine());
+
+        Progression progression = new Progression(description, percentage);
+        progression.AddProgression();
+
+        Progression progression1 = new Progression();
+        foreach (var prog in progression1.ReadProgression())
+        {
+            Console.WriteLine(prog.Description);
+            Console.WriteLine(prog.Percentage);
+        }
     }
     static void AskForListProgression()
     {
+        Console.WriteLine("Dit is de lijst met Progressions");
 
+        Progression ProgressionList = new Progression();
+        foreach (var pro in ProgressionList.ReadProgression())
+        {
+            Console.WriteLine(pro.Description);
+            Console.WriteLine(pro.Percentage);
+        }
     }
     static void AskToAdjustProgression()
     {
+        Progression progressionAdjsut = new Progression();
+        foreach (var progr in progressionAdjsut.ReadProgression())
+        {
+            Console.WriteLine(progr.Id);
+            Console.WriteLine(progr.Description);
+            Console.WriteLine(progr.Percentage);
+        }
 
+        Console.WriteLine("Welke Progress wilt u aanpassen? Type het Id.");
+        int Id = Int32.Parse(Console.ReadLine());
+
+        Console.WriteLine(Id);
+        progressionAdjsut.UpdateProgression();
+
+        Console.WriteLine("wat is de nieuwe beschrijving van je progressie.");
+        progressionAdjsut.Description = Console.ReadLine();
+
+        Console.WriteLine("Wat is het nieuwe percentage wat je wilt geven voor de progressie?");
+        progressionAdjsut.Percentage = Int32.Parse(Console.ReadLine());
+
+        progressionAdjsut.UpdateProgression();
     }
     static void AskToRemoveProgression()
     {
+        Console.WriteLine("Welke progressie wil je verwijderen? voer het Id in.");
+        int Id = Int32.Parse(Console.ReadLine());
 
+        Progression progressiondelete = new Progression();
+        progressiondelete.GetProgressionById(Id);
+        progressiondelete.DeleteProgression();
+
+
+        Progression progression = new Progression();
+        List<Progression> progressions = progression.ReadProgression();
+        foreach (var progre in progressions)
+        {
+            Console.WriteLine(progre.Id);
+            Console.WriteLine(progre.Description);
+            Console.WriteLine(progre.Percentage);
+        }
     }
     static void ProgressionMenu()
     {

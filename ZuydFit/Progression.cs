@@ -16,7 +16,13 @@ namespace ZuydFit
         public Progression()
         {
             Description = "";
-            Percentage = 1;
+            Percentage = 0;
+        }
+        public Progression(int id, string description, int percentage)
+        {
+            Id = id;
+            Description = description;
+            Percentage = percentage;
         }
 
         public Progression(string description, int percentage)

@@ -509,11 +509,11 @@ namespace ZuydFit
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = "INSERT INTO Progression (Id, Description) " +
-                        "VALUES (@Id, @Description) ";
+                    string sql = "INSERT INTO Progression (Percentage, Description) " +
+                        "VALUES (@Percentage, @Description) ";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
-                        command.Parameters.AddWithValue("Id", @progression.Id);
+                        command.Parameters.AddWithValue("Percentage", @progression.Percentage);
                         command.Parameters.AddWithValue("Description", @progression.Description);
                         command.ExecuteNonQuery();
                     }
@@ -532,12 +532,12 @@ namespace ZuydFit
                         connection.ConnectionString = connectionString;
                         connection.Open();
                         command.Connection = connection;
-                        command.CommandText = "SELECT Description FROM Progression ORDER BY ID ";
+                        command.CommandText = "SELECT Id, Description, Percentage FROM Progression ORDER BY ID ";
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
-                                Progrresions.Add(new Progression(reader[0].ToString(), Int32.Parse(reader[1].ToString())));
+                                Progrresions.Add(new Progression(Int32.Parse(reader[0].ToString()), reader[1].ToString, Int32.Parse(reader[1].ToString())));
                             }
                         }
                     }
