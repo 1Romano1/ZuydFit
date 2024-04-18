@@ -629,7 +629,6 @@ public class Program
         }
         Console.WriteLine();
     }
-
     static void AskForDeletePlanning()
     {
         Console.WriteLine("Voer het ID in van de planning die u wilt verwijderen.");
@@ -646,10 +645,6 @@ public class Program
             Console.WriteLine("Ongeldige invoer. Voer een geldig ID (integer) in.");
         }
     }
-
-
-
-
     static void PlanningMenu()
     {
         bool exit = false;

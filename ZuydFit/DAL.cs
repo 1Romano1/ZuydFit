@@ -354,7 +354,6 @@ namespace ZuydFit
             }
             catch (Exception ex) { throw ex; }
         }
-
         public List<Advice> GetAdviceByTitle(string title)
         {
             try
