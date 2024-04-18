@@ -42,6 +42,9 @@ namespace ZuydFit
             Description = description;
             Progression = progression;
         }
+
+
+        //Onderstaande functies geven de functies door aan de DAL.
         public void AddGoal() 
         {
             DAL = new DAL();

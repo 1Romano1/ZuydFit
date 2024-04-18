@@ -31,22 +31,27 @@ public class Program
 
             if (userInput == "1")
             {
+                Console.Clear();
                 GoalMenu();
             }
             else if (userInput == "2")
             {
+                Console.Clear();
                 AdviceMenu();
             }
             else if (userInput == "3")
             {
+                Console.Clear();
                 ActivityMenu();
             }
             else if (userInput == "4")
             {
+                Console.Clear();
                 LocationMenu();
             }
             else if (userInput == "5")
             {
+                Console.Clear();
                 PlanningMenu();
             }
             else if (userInput == "6")
@@ -58,13 +63,7 @@ public class Program
                 Console.Clear();
                 Console.WriteLine("Ongeldige keuze. Probeer opnieuw.");
             }
-
-            // Extra regel om de interface duidelijk te houden na het uitvoeren van een actie
-            Console.WriteLine("Druk op Enter om door te gaan...");
-            Console.ReadLine();
-            Console.Clear();
         }
-
     }
 
 
@@ -169,13 +168,25 @@ public class Program
 
 
             if (userInput == "1")
+            {
+                Console.Clear();
                 AskForNewActivity();
+            }
             else if (userInput == "2")
+            {
+                Console.Clear();
                 AskForListActivity();
+            }
             else if (userInput == "3")
+            {
+                Console.Clear();
                 AskForAdjustActivity();
+            }
             else if (userInput == "4")
+            {
+                Console.Clear();
                 AskForDeleteActivity();
+            }
             else if (userInput == "5")
                 exit = true;
             else
@@ -532,8 +543,8 @@ public class Program
         Console.WriteLine("Voer de datum en tijd van de activiteit in (bijv. '2024-04-16 14:30'): ");
         DateTime datetime = DateTime.Parse(Console.ReadLine());
 
-    Console.WriteLine("Voer de ID van de activiteit in: ");
-    int activityId = int.Parse(Console.ReadLine());
+        Console.WriteLine("Voer de ID van de activiteit in: ");
+        int activityId = int.Parse(Console.ReadLine());
 
         Planning planning = new Planning(datetime, activityId);
         planning.Add();
@@ -543,7 +554,7 @@ public class Program
         Console.WriteLine("Datum en Tijd:" + planning.DateTime);
         Console.WriteLine("Uitgevoerde activiteit:" + planning.ActivityId);
     }
-    static void AskForAdjustPlanning() 
+    static void AskForAdjustPlanning()
     {
         Console.WriteLine("Voer de Id in van de planning die u wilt bewerken.");
         int id;
@@ -557,12 +568,12 @@ public class Program
         DateTime datetime;
         if (DateTime.TryParse(input, out datetime))
         {
-            
+
             Console.WriteLine("Ingevoerde datum en tijd: " + datetime);
         }
         else
         {
-            
+
             Console.WriteLine("Ongeldige invoer. Voer een geldige datum- en tijdnotatie in.");
         }
 
@@ -570,7 +581,7 @@ public class Program
         Console.WriteLine("Voer de nieuwe activiteitId in:");
         if (int.TryParse(Console.ReadLine(), out int activityId))
         {
-            
+
         }
         else
         {
@@ -588,25 +599,25 @@ public class Program
 
 
     }
-    static void AskForListPlanning() 
+    static void AskForListPlanning()
     {
         Console.WriteLine("Planning");
         Console.WriteLine("Datum en tijd:\t ActiviteitId:");
         Planning planning = new Planning();
         List<Planning> plannings = planning.Read();
-        foreach (Planning act in plannings) 
+        foreach (Planning act in plannings)
         {
             Console.WriteLine(act.DateTime + "\t" + act.ActivityId + "\t");
         }
         Console.WriteLine();
     }
-    static void AskForDeletePlanning() 
+    static void AskForDeletePlanning()
     {
         Console.WriteLine("Voer de datum en tijd in van de planning die u wilt verwijderen (bijv. '2024-04-18 14:30'):");
 
         if (DateTime.TryParse(Console.ReadLine(), out DateTime datetime))
         {
-            
+
         }
         else
         {
