@@ -7,7 +7,7 @@ public class Program
     static void Main(string[] args)
     {
         Console.WriteLine("Welkom bij onze ZuydFit app");
-        ActivityMenu();
+        AskForDeletePlanning();
         /*
         Console.WriteLine("wat is de titel van je advies");
         string title = Console.ReadLine();
@@ -250,7 +250,7 @@ public class Program
         Console.WriteLine("Uitgevoerde activiteit:" + planning.ActivityId);
     }
 
-    static void AskForAdjustPlanning() 
+    static void AskForAdjustPlanning()
     {
         Console.WriteLine("Voer de Id in van de planning die u wilt bewerken.");
         int id;
@@ -264,12 +264,12 @@ public class Program
         DateTime datetime;
         if (DateTime.TryParse(input, out datetime))
         {
-            
+
             Console.WriteLine("Ingevoerde datum en tijd: " + datetime);
         }
         else
         {
-            
+
             Console.WriteLine("Ongeldige invoer. Voer een geldige datum- en tijdnotatie in.");
         }
 
@@ -277,12 +277,13 @@ public class Program
         Console.WriteLine("Voer de nieuwe activiteitId in:");
         if (int.TryParse(Console.ReadLine(), out int activityId))
         {
-            
+            // Hier kun je de activityId gebruiken
         }
         else
         {
             Console.WriteLine("Ongeldige invoer. Voer een geldig getal in.");
         }
+
 
         Planning planning = new Planning
         {
@@ -296,34 +297,38 @@ public class Program
 
     }
 
-    static void AskForListPlanning() 
+    static void AskForListPlanning()
     {
         Console.WriteLine("Planning");
         Console.WriteLine("Datum en tijd:\t ActiviteitId:");
         Planning planning = new Planning();
         List<Planning> plannings = planning.Read();
-        foreach (Planning act in plannings) 
+        foreach (Planning act in plannings)
         {
             Console.WriteLine(act.DateTime + "\t" + act.ActivityId + "\t");
         }
         Console.WriteLine();
     }
 
-    static void AskForDeletePlanning() 
+    static void AskForDeletePlanning()
     {
-        Console.WriteLine("Voer de datum en tijd in van de planning die u wilt verwijderen (bijv. '2024-04-18 14:30'):");
+        Console.WriteLine("Voer het ID in van de planning die u wilt verwijderen.");
 
-        if (DateTime.TryParse(Console.ReadLine(), out DateTime datetime))
+        if (int.TryParse(Console.ReadLine(), out int id))
         {
-            
+            Planning planning = new Planning();
+            planning.Id = id; // Stel het Id in voordat Delete wordt aangeroepen
+            planning.Delete();
+            Console.WriteLine("De planning met Id: " + id + " is succesvol verwijderd.");
         }
         else
         {
-            Console.WriteLine("Ongeldige invoer. Voer een geldige datum en tijd in.");
+            Console.WriteLine("Ongeldige invoer. Voer een geldig ID (integer) in.");
         }
-        Planning planning = new Planning();
-        planning.Delete();
     }
+
+
+
 
     static void PlanningMenu()
     {
@@ -364,4 +369,5 @@ public class Program
     }
 
 }
+
 

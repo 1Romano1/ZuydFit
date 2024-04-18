@@ -302,57 +302,57 @@ namespace ZuydFit
             }
             catch (Exception ex) { throw ex; }
         }
-       /* public void ReadAdvice()
-        {
-            try
-            {
-                using (SqlConnection connection = new SqlConnection())
-                {
-                    using (SqlCommand command = new SqlCommand())
-                    {
-                        connection.ConnectionString = connectionString;
-                        connection.Open();
-                        command.Connection = connection;
-                        command.CommandText = "SELECT Title, Description FROM Advice ORDER BY ID ";
-                        using (SqlDataReader reader = command.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                Advices.Add(new Advice(reader[0].ToString(), reader[1].ToString()));
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception ex) { throw ex; }
-        }*/
-       /* public Advice GetAdviceByTitle(string title)
-        {
-            try
-            {
-                using (SqlConnection connection = new SqlConnection())
-                {
-                    using (SqlCommand command = new SqlCommand())
-                    {
-                        connection.ConnectionString = connectionString;
-                        connection.Open();
-                        command.Connection = connection;
-                        command.CommandText = "SELECT Id, Title, Description " +
-                            "FROM Advice WHERE Title = @Title";
-                        command.Parameters.AddWithValue("@Title", title);
-                        using (SqlDataReader reader = command.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                return (new Advice(Int32.Parse(reader[0].ToString()), reader[1].ToString(), reader[2].ToString()));
-                            }
-                            return null;
-                        }
-                    }
-                }
-            }
-            catch (Exception ex) { throw ex; }
-        }*/
+        /* public void ReadAdvice()
+         {
+             try
+             {
+                 using (SqlConnection connection = new SqlConnection())
+                 {
+                     using (SqlCommand command = new SqlCommand())
+                     {
+                         connection.ConnectionString = connectionString;
+                         connection.Open();
+                         command.Connection = connection;
+                         command.CommandText = "SELECT Title, Description FROM Advice ORDER BY ID ";
+                         using (SqlDataReader reader = command.ExecuteReader())
+                         {
+                             while (reader.Read())
+                             {
+                                 Advices.Add(new Advice(reader[0].ToString(), reader[1].ToString()));
+                             }
+                         }
+                     }
+                 }
+             }
+             catch (Exception ex) { throw ex; }
+         }*/
+        /* public Advice GetAdviceByTitle(string title)
+         {
+             try
+             {
+                 using (SqlConnection connection = new SqlConnection())
+                 {
+                     using (SqlCommand command = new SqlCommand())
+                     {
+                         connection.ConnectionString = connectionString;
+                         connection.Open();
+                         command.Connection = connection;
+                         command.CommandText = "SELECT Id, Title, Description " +
+                             "FROM Advice WHERE Title = @Title";
+                         command.Parameters.AddWithValue("@Title", title);
+                         using (SqlDataReader reader = command.ExecuteReader())
+                         {
+                             while (reader.Read())
+                             {
+                                 return (new Advice(Int32.Parse(reader[0].ToString()), reader[1].ToString(), reader[2].ToString()));
+                             }
+                             return null;
+                         }
+                     }
+                 }
+             }
+             catch (Exception ex) { throw ex; }
+         }*/
         public void UpdateAdvice(Advice advice)
         {
             try
@@ -423,13 +423,13 @@ namespace ZuydFit
                     connection.ConnectionString = connectionString;
                     connection.Open();
                     command.Connection = connection;
-                    command.CommandText = "SELECT DateTime, ActivityId" + "FROM Planning ORDER BY ID ";
+                    command.CommandText = "SELECT DateTime, ActivityId" + " FROM Planning ORDER BY ID ";
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())
                         {
                             plannings.Add(new Planning(DateTime.Parse(reader[0].ToString()), int.Parse(reader[1].ToString())));
-                                
+
                         }
                     }
                 }
@@ -442,7 +442,7 @@ namespace ZuydFit
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = "UPDATE Planning SET DateTime = @DateTime, ActivityId = @activityId,  WHERE Id = @id";
+                    string sql = "UPDATE Planning SET DateTime = @DateTime, ActivityId = @activityId  WHERE Id = @id";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         command.Parameters.AddWithValue("Id", planning.Id);
@@ -454,19 +454,27 @@ namespace ZuydFit
             }
             catch (Exception ex) { throw ex; }
         }
-        public void DeletePlanning(int ActivityId)
+        public void DeletePlanning(int id)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            try
             {
-                connection.Open();
-                string sql = "DELETE FROM Planning WHERE ActiivityId = @ActivityId";
-                using (SqlCommand command = new SqlCommand(sql, connection))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    command.Parameters.AddWithValue("@Name", ActivityId);
-                    command.ExecuteNonQuery();
+                    connection.Open();
+                    string sql = "DELETE FROM Planning WHERE Id = @Id";
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        command.Parameters.AddWithValue("@Id", id);
+                        command.ExecuteNonQuery();
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                throw ex; // This line might not be necessary, you can simply use 'throw;' 
+            }
         }
+
     }
 }
 

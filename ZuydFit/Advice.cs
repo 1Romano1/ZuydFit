@@ -39,21 +39,21 @@ namespace ZuydFit
             DAL = new DAL();
             DAL.CreateAdvice(this); 
         }
-        public List<Advice> ReadAdvice()
+        /*public List<Advice> ReadAdvice()
         {
             DAL = new DAL();
             DAL.ReadAdvice();
             return DAL.Advices;
-        }
+        }*/
 
-        public void GetAdviceByTitle(string title)
+        /*public void GetAdviceByTitle(string title)
         {
             DAL = new DAL();
             Advice advice = DAL.GetAdviceByTitle(title);
             this.Id = advice.Id;
             this.Title = advice.Title;
             this.Description = advice.Description;
-        }
+        }*/
 
         public void UpdateAdvice()
         {

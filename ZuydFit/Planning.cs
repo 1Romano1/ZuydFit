@@ -17,13 +17,23 @@ using ZuydFit;
         public DAL DAL { get; set; }
 
         List <Planning> plannings = new List<Planning>();
-        public Planning(DateTime datetime, int activityId)
+        public Planning(int id, DateTime datetime, int activityId)
         {
+            this.Id = id;
             this.DateTime = datetime;
             this.ActivityId = activityId;
 
         }
-        public Planning() { }
+        public Planning(DateTime datetime, int activityId)
+        {
+            this.DateTime = datetime;
+            this.ActivityId = activityId;
+        }
+        public Planning() 
+        {
+        
+        
+        }
 
         public void AddPlanning()
         {
@@ -50,7 +60,7 @@ using ZuydFit;
         public void Delete()
         {
             DAL = new DAL();
-            DAL.DeletePlanning(ActivityId);
+            DAL.DeletePlanning(Id);
         }
         /*public void ReadPlanning()
         {
