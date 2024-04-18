@@ -7,6 +7,12 @@ public class Program
     static void Main(string[] args)
     {
         Console.WriteLine("Welkom bij onze ZuydFit app");
+
+        AskForDeletePlanning();
+        
+        Console.WriteLine("wat is de titel van je advies");
+        string title = Console.ReadLine();
+
         MainMenu();
     }
     static void MainMenu()
