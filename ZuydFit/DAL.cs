@@ -311,12 +311,12 @@ namespace ZuydFit
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = "INSERT INTO Advice (Title, Description) " +
-                        "VALUES (@Title, @Description) ";
+                    string sql = "INSERT INTO Advice (Description, Title) " +
+                        "VALUES (@Description, @Title) ";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
-                        command.Parameters.AddWithValue("Title", advice.Title);
-                        command.Parameters.AddWithValue("Description", advice.Description);
+                        command.Parameters.AddWithValue("Description", @advice.Description);
+                        command.Parameters.AddWithValue("Title", @advice.Title);
                         command.ExecuteNonQuery();
                     }
                 }
@@ -347,6 +347,7 @@ namespace ZuydFit
             }
             catch (Exception ex) { throw ex; }
         }
+
         public Advice GetAdviceByTitle(string title)
         {
             try
@@ -374,6 +375,8 @@ namespace ZuydFit
             }
             catch (Exception ex) { throw ex; }
         }
+
+
         public void UpdateAdvice(Advice advice)
         {
             try
@@ -381,13 +384,13 @@ namespace ZuydFit
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = "UPDATE Advice SET Id = @Id, Description = @description, Title = @Title " +
-                        "WHERE Id = @id";
+                    string sql = "UPDATE Advice SET Title = @Title, Description = @description WHERE Id = @id";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         command.Parameters.AddWithValue("Id", advice.Id);
                         command.Parameters.AddWithValue("Title", advice.Title);
                         command.Parameters.AddWithValue("Description", advice.Description);
+
                         command.ExecuteNonQuery();
                     }
                 }
@@ -401,7 +404,7 @@ namespace ZuydFit
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = "DELETE FROM Advice WHERE Id = @Id";
+                    string sql = "DELETE FROM Advice WHERE Id= @Id";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         command.Parameters.AddWithValue("@Id", advice.Id);
@@ -411,7 +414,6 @@ namespace ZuydFit
             }
             catch (Exception ex) { throw ex; }
         }
-
 
 
         public void CreatePlanning(Planning planning)
