@@ -598,12 +598,13 @@ public class Program
         Console.WriteLine("Voer de nieuwe activiteitId in:");
         if (int.TryParse(Console.ReadLine(), out int activityId))
         {
-
+            
         }
         else
         {
             Console.WriteLine("Ongeldige invoer. Voer een geldig getal in.");
         }
+
 
         Planning planning = new Planning
         {
@@ -630,18 +631,19 @@ public class Program
     }
     static void AskForDeletePlanning()
     {
-        Console.WriteLine("Voer de datum en tijd in van de planning die u wilt verwijderen (bijv. '2024-04-18 14:30'):");
+        Console.WriteLine("Voer het ID in van de planning die u wilt verwijderen.");
 
-        if (DateTime.TryParse(Console.ReadLine(), out DateTime datetime))
+        if (int.TryParse(Console.ReadLine(), out int id))
         {
-
+            Planning planning = new Planning();
+            planning.Id = id; // Stel het Id in voordat Delete wordt aangeroepen
+            planning.Delete();
+            Console.WriteLine("De planning met Id: " + id + " is succesvol verwijderd.");
         }
         else
         {
-            Console.WriteLine("Ongeldige invoer. Voer een geldige datum en tijd in.");
+            Console.WriteLine("Ongeldige invoer. Voer een geldig ID (integer) in.");
         }
-        Planning planning = new Planning();
-        planning.Delete();
     }
     static void PlanningMenu()
     {
@@ -794,4 +796,5 @@ public class Program
 
     }
 }
+
 

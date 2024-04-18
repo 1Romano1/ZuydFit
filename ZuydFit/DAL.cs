@@ -354,7 +354,6 @@ namespace ZuydFit
             }
             catch (Exception ex) { throw ex; }
         }
-
         public List<Advice> GetAdviceByTitle(string title)
         {
             try
@@ -455,13 +454,13 @@ namespace ZuydFit
                     connection.ConnectionString = connectionString;
                     connection.Open();
                     command.Connection = connection;
-                    command.CommandText = "SELECT DateTime, ActivityId" + "FROM Planning ORDER BY ID ";
+                    command.CommandText = "SELECT DateTime, ActivityId" + " FROM Planning ORDER BY ID ";
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())
                         {
                             plannings.Add(new Planning(DateTime.Parse(reader[0].ToString()), int.Parse(reader[1].ToString())));
-                                
+
                         }
                     }
                 }
@@ -474,7 +473,7 @@ namespace ZuydFit
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = "UPDATE Planning SET DateTime = @DateTime, ActivityId = @activityId,  WHERE Id = @id";
+                    string sql = "UPDATE Planning SET DateTime = @DateTime, ActivityId = @activityId  WHERE Id = @id";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         command.Parameters.AddWithValue("Id", planning.Id);
@@ -486,7 +485,7 @@ namespace ZuydFit
             }
             catch (Exception ex) { throw ex; }
         }
-        public void DeletePlanning(int ActivityId)
+        public void DeletePlanning(int id)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -608,7 +607,25 @@ namespace ZuydFit
                 }
             }
             catch (Exception ex) { throw ex; }
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    string sql = "DELETE FROM Planning WHERE Id = @Id";
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        command.Parameters.AddWithValue("@Id", id);
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex; // This line might not be necessary, you can simply use 'throw;' 
+            }
         }
+
     }
 }
 
