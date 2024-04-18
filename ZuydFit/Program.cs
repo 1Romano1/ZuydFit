@@ -227,6 +227,11 @@ public class Program
     }
     static void AskToAdjustGoal()
     {
+        Goal goal4 = new Goal();
+        foreach (var goal in goal4.GetGoals())
+        {
+            Console.WriteLine(goal.Name);
+        }
         Console.WriteLine("Welk advies wilt u aanpassen? Type de naam");
         string name2 = Console.ReadLine();
         Goal goal3 = new Goal();
@@ -257,6 +262,12 @@ public class Program
     }
     static void AskToRemoveGoalFromList()
     {
+        Goal goal5 = new Goal();
+        foreach (var goal in goal5.GetGoals())
+        {
+            Console.WriteLine(goal.Name);
+        }
+
         Console.WriteLine("Wat is de naam van de goal die je wilt verwijderen?");
         string name1 = Console.ReadLine();
 

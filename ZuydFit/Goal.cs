@@ -16,20 +16,20 @@ namespace ZuydFit
         public List<Goal> Goals { get; set; } = new List<Goal>();
         public DAL DAL { get; set; }
 
-        public Goal() 
+        public Goal()
         {
             Name = "";
             Description = "";
-            Progression = "";   
+            Progression = "";
         }
 
-        public Goal(int id, string name, string description) 
+        public Goal(int id, string name, string description)
         {
             Id = id;
-            Name=name;
-            Description=description;
+            Name = name;
+            Description = description;
         }
-        public Goal( string name, string description, string progression)
+        public Goal(string name, string description, string progression)
         {
             Name = name;
             Description = description;
@@ -50,21 +50,21 @@ namespace ZuydFit
             DAL = new DAL();
             DAL.CreateGoal(this);
         }
-        public List<Goal> GetGoals() 
+        public List<Goal> GetGoals()
         {
             DAL = new DAL();
             DAL.ReadGoal();
             return DAL.Goals;
         }
-        public void UpdateGoals() 
+        public void UpdateGoals()
         {
             DAL = new DAL();
-            DAL.UpdateGoal(this);      
+            DAL.UpdateGoal(this);
         }
-        public void DeleteGoal() 
+        public void DeleteGoal()
         {
             DAL = new DAL();
-            DAL.DeleteGoal(this);       
+            DAL.DeleteGoal(this);
         }
         public void GetGoalByName(string name)
         {

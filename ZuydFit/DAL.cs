@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
@@ -255,12 +256,12 @@ namespace ZuydFit
                         connection.ConnectionString = connectionString;
                         connection.Open();
                         command.Connection = connection;
-                        command.CommandText = "SELECT Name, Description, ProgressionId FROM Goal ORDER BY ID ";
+                        command.CommandText = "SELECT id, Name, Description, ProgressionId FROM Goal ORDER BY ID ";
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
-                                Goals.Add(new(reader[0].ToString(), reader[1].ToString(), reader[2].ToString()));
+                                Goals.Add(new(Int32.Parse(reader[0].ToString()), reader[1].ToString(), reader[2].ToString(), reader[3].ToString()));
                             }
                         }
                     }
@@ -339,12 +340,12 @@ namespace ZuydFit
                         connection.ConnectionString = connectionString;
                         connection.Open();
                         command.Connection = connection;
-                        command.CommandText = "SELECT Title, Description FROM Advice ORDER BY ID ";
+                        command.CommandText = "SELECT Id, Title, Description FROM Advice ORDER BY Id ";
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
-                                Advices.Add(new Advice(reader[0].ToString(), reader[1].ToString()));
+                                Advices.Add(new Advice(Int32.Parse(reader[0].ToString()), reader[1].ToString(), reader[2].ToString()));
                             }
                         }
                     }
@@ -352,10 +353,12 @@ namespace ZuydFit
             }
             catch (Exception ex) { throw ex; }
         }
-        public Advice GetAdviceByTitle(string title)
+
+        public List<Advice> GetAdviceByTitle(string title)
         {
             try
             {
+                Advices.Clear();
                 using (SqlConnection connection = new SqlConnection())
                 {
                     using (SqlCommand command = new SqlCommand())
@@ -370,9 +373,10 @@ namespace ZuydFit
                         {
                             while (reader.Read())
                             {
-                                return (new Advice(Int32.Parse(reader[0].ToString()), reader[1].ToString(), reader[2].ToString()));
+                                Advices.Add(new Advice(Int32.Parse(reader[0].ToString()), reader[1].ToString(), reader[2].ToString()));
+                                //return (new Advice(Int32.Parse(reader[0].ToString()), reader[1].ToString(), reader[2].ToString()));
                             }
-                            return null;
+                            return Advices;
                         }
                     }
                 }
