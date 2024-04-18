@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZuydFit.ZuydFit;
 
 namespace ZuydFit
 {
@@ -12,7 +13,7 @@ namespace ZuydFit
         public List<Advice> Advices { get; set; }
 
 
-        public Athlete(int id, string firstName, string lastName, int personalNumber, List<Goal> goals, List<Advice> advices) : base(id, firstName,lastName, personalNumber)
+        public Athlete(int id, string firstName, string lastName, int personalNumber, List<Goal> goals, List<Advice> advices, string password) : base(id, firstName,lastName, personalNumber, password)
         {
             Goals = goals;
             Advices = advices;
