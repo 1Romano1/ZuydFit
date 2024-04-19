@@ -932,10 +932,6 @@ public class Program
         }
     }
 
-}
-
-    }
-
     static bool PerformLogin(int personalNumber, string password)
     {
         Athlete athlete = new Athlete(personalNumber, password);
