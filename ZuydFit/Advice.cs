@@ -34,6 +34,8 @@ namespace ZuydFit
             Description = description;
         }
 
+
+        //Onderstaande functies geven de ingevoerde data door aan de DAL.
         public void AddAdvice()
         {
             DAL = new DAL();
@@ -45,16 +47,18 @@ namespace ZuydFit
             DAL.ReadAdvice();
             return DAL.Advices;
         }
-
         public void GetAdviceByTitle(string title)
         {
             DAL = new DAL();
-            Advice advice = DAL.GetAdviceByTitle(title);
-            this.Id = advice.Id;
-            this.Title = advice.Title;
-            this.Description = advice.Description;
+            List<Advice> advices = DAL.GetAdviceByTitle(title);
+            for (int i = 0; i < advices.Count; i++)
+            {
+                this.Id = advices[i].Id;
+                this.Title = advices[i].Title;
+                this.Description = advices[i].Description;
+            }
+            
         }
-
         public void UpdateAdvice()
         {
             DAL = new DAL();

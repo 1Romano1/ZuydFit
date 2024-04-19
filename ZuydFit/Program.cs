@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Linq;
 using ZuydFit;
+using ZuydFit.ZuydFit;
 
 public class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Welkom bij onze ZuydFit app");
-        MainMenu();
+        ShowMenu();
     }
 
     
@@ -24,6 +24,8 @@ public class Program
             Console.WriteLine("3. Activitymenu");
             Console.WriteLine("4. Locationmenu");
             Console.WriteLine("5. Planningmenu");
+            Console.WriteLine("6. Progressionmenu");
+            Console.WriteLine("7. Exit");
             Console.WriteLine("6. Trainingmenu");
             Console.WriteLine("7. Exit");
             Console.WriteLine("Kies een optie:");
@@ -32,25 +34,35 @@ public class Program
 
             if (userInput == "1")
             {
+                Console.Clear();
                 GoalMenu();
             }
             else if (userInput == "2")
             {
+                Console.Clear();
                 AdviceMenu();
             }
             else if (userInput == "3")
             {
+                Console.Clear();
                 ActivityMenu();
             }
             else if (userInput == "4")
             {
+                Console.Clear();
                 LocationMenu();
             }
             else if (userInput == "5")
             {
+                Console.Clear();
                 PlanningMenu();
             }
             else if (userInput == "6")
+            {
+                Console.Clear();
+                ProgressionMenu();
+            }
+            else if (userInput == "7")
             {
                 TrainingMenu();
             }
@@ -63,13 +75,7 @@ public class Program
                 Console.Clear();
                 Console.WriteLine("Ongeldige keuze. Probeer opnieuw.");
             }
-
-            // Extra regel om de interface duidelijk te houden na het uitvoeren van een actie
-            Console.WriteLine("Druk op Enter om door te gaan...");
-            Console.ReadLine();
-            Console.Clear();
         }
-
     }
 
     
@@ -176,13 +182,25 @@ public class Program
 
 
             if (userInput == "1")
+            {
+                Console.Clear();
                 AskForNewActivity();
+            }
             else if (userInput == "2")
+            {
+                Console.Clear();
                 AskForListActivity();
+            }
             else if (userInput == "3")
+            {
+                Console.Clear();
                 AskForAdjustActivity();
+            }
             else if (userInput == "4")
+            {
+                Console.Clear();
                 AskForDeleteActivity();
+            }
             else if (userInput == "5")
                 exit = true;
             else
@@ -213,38 +231,43 @@ public class Program
         string name = Console.ReadLine();
 
         Console.WriteLine("Geef een beschrijving van je Goal");
-        string description1 = Console.ReadLine();
+        string descriptionadd = Console.ReadLine();
 
         Console.WriteLine("Hoeveel progressie heb je gemaakt aan deze goal?");
         string progression = Console.ReadLine();
 
-        Goal goal = new Goal(name, description1, progression);
-        goal.AddGoal();
+        Goal goaladd = new Goal(name, descriptionadd, progression);
+        goaladd.AddGoal();
     }
     static void AskToAdjustGoal()
     {
+        Goal goalUpdate = new Goal();
+        foreach (var goal in goalUpdate.GetGoals())
+        {
+            Console.WriteLine(goal.Name);
+        }
         Console.WriteLine("Welk advies wilt u aanpassen? Type de naam");
-        string name2 = Console.ReadLine();
-        Goal goal3 = new Goal();
+        string nameUpdate = Console.ReadLine();
+        Goal goalUp = new Goal();
 
-        Console.WriteLine(name2);
-        goal3.GetGoalByName(name2);
+        Console.WriteLine(nameUpdate);
+        goalUp.GetGoalByName(nameUpdate);
 
         Console.WriteLine("wat is de naam van je goal");
-        goal3.Name = Console.ReadLine();
+        goalUp.Name = Console.ReadLine();
 
         Console.WriteLine("Wat is de goal dat je wilt behalen?");
-        goal3.Description = Console.ReadLine();
+        goalUp.Description = Console.ReadLine();
 
         Console.WriteLine("Wat is het progressieid");
-        goal3.Progression = Console.ReadLine();
+        goalUp.Progression = Console.ReadLine();
 
-        goal3.UpdateGoals();
+        goalUp.UpdateGoals();
     }
     static void AskForListGoal()
     {
-        Goal goal1 = new Goal();
-        foreach (var goal in goal1.GetGoals())
+        Goal goalRead = new Goal();
+        foreach (var goal in goalRead.GetGoals())
         {
             Console.WriteLine(goal.Id);
             Console.WriteLine(goal.Name);
@@ -253,14 +276,20 @@ public class Program
     }
     static void AskToRemoveGoalFromList()
     {
-        Console.WriteLine("Wat is de naam van de goal die je wilt verwijderen?");
-        string name1 = Console.ReadLine();
+        Goal goalDelete = new Goal();
+        foreach (var goal in goalDelete.GetGoals())
+        {
+            Console.WriteLine(goal.Name);
+        }
 
-        Goal goal2 = new Goal();
-        goal2.GetGoalByName(name1);
-        goal2.DeleteGoal();
-        Goal goal4 = new Goal();
-        foreach (var go in goal4.GetGoals())
+        Console.WriteLine("Wat is de naam van de goal die je wilt verwijderen?");
+        string nameDelete = Console.ReadLine();
+
+        Goal goalDel = new Goal();
+        goalDel.GetGoalByName(nameDelete);
+        goalDel.DeleteGoal();
+        Goal goalDele = new Goal();
+        foreach (var go in goalDele.GetGoals())
         {
             Console.WriteLine(go.Name);
         }
@@ -314,11 +343,11 @@ public class Program
         Console.WriteLine("Wat is het advies dat je wilt geven?");
         string description = Console.ReadLine();
 
-        Advice advice2 = new Advice(title, description);
-        advice2.AddAdvice();
+        Advice adviceAdd = new Advice(title, description);
+        adviceAdd.AddAdvice();
 
-        Advice advice1 = new Advice();
-        foreach (var adv in advice1.ReadAdvice())
+        Advice adviceAd = new Advice();
+        foreach (var adv in adviceAd.ReadAdvice())
         {
             Console.WriteLine(adv.Title);
             Console.WriteLine(adv.Description);
@@ -337,25 +366,25 @@ public class Program
     }
     static void AskToAdjustAdvice()
     {
-        Advice advice3 = new Advice();
-        foreach (var adv in advice3.ReadAdvice())
+        Advice adviceUpdate = new Advice();
+        foreach (var adv in adviceUpdate.ReadAdvice())
         {
             Console.WriteLine(adv.Title);
         }
 
         Console.WriteLine("Welk advies wilt u aanpassen? Type de titel.");
-        string title1 = Console.ReadLine();
+        string titleUpdate = Console.ReadLine();
 
-        Console.WriteLine(title1);
-        advice3.GetAdviceByTitle(title1);
+        Console.WriteLine(titleUpdate);
+        adviceUpdate.GetAdviceByTitle(titleUpdate);
 
         Console.WriteLine("wat is de nieuwe titel van je advies.");
-        advice3.Title = Console.ReadLine();
+        adviceUpdate.Title = Console.ReadLine();
 
         Console.WriteLine("Wat is het nieuwe advies dat je wilt geven?");
-        advice3.Description = Console.ReadLine();
+        adviceUpdate.Description = Console.ReadLine();
 
-        advice3.UpdateAdvice();
+        adviceUpdate.UpdateAdvice();
     }
     static void AskToRemoveAdvice()
     {
@@ -367,8 +396,8 @@ public class Program
         advice.DeleteAdvice();
 
 
-        Advice advice3 = new Advice();
-        List<Advice> Advices = advice3.ReadAdvice();
+        Advice adviceDelete = new Advice();
+        List<Advice> Advices = adviceDelete.ReadAdvice();
         foreach (var ad in Advices)
         {
             Console.WriteLine(ad.Title);
@@ -584,6 +613,7 @@ public class Program
             Console.WriteLine("Ongeldige invoer. Voer een geldig getal in.");
         }
 
+
         Planning planning = new Planning
         {
             Id = id,
@@ -609,18 +639,19 @@ public class Program
     }
     static void AskForDeletePlanning()
     {
-        Console.WriteLine("Voer de datum en tijd in van de planning die u wilt verwijderen (bijv. '2024-04-18 14:30'):");
+        Console.WriteLine("Voer het ID in van de planning die u wilt verwijderen.");
 
-        if (DateTime.TryParse(Console.ReadLine(), out DateTime datetime))
+        if (int.TryParse(Console.ReadLine(), out int id))
         {
-
+            Planning planning = new Planning();
+            planning.Id = id; // Stel het Id in voordat Delete wordt aangeroepen
+            planning.Delete();
+            Console.WriteLine("De planning met Id: " + id + " is succesvol verwijderd.");
         }
         else
         {
-            Console.WriteLine("Ongeldige invoer. Voer een geldige datum en tijd in.");
+            Console.WriteLine("Ongeldige invoer. Voer een geldig ID (integer) in.");
         }
-        Planning planning = new Planning();
-        planning.Delete();
     }
     static void PlanningMenu()
     {
@@ -644,6 +675,118 @@ public class Program
                 AskForAdjustPlanning();
             else if (userInput == "4")
                 AskForDeletePlanning();
+            else if (userInput == "5")
+                exit = true;
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("Ongeldige keuze. Probeer opnieuw.");
+                continue;
+            }
+
+            // Extra regel om de interface duidelijk te houden na het uitvoeren van een actie
+            Console.WriteLine("Druk op Enter om door te gaan...");
+            Console.ReadLine();
+            Console.Clear();
+        }
+    }
+
+
+    //Hieronder staan de functies van Progression.
+    static void AskForNewProgression()
+    {
+        Console.WriteLine("wat is de beschrijving van je Progression?");
+        string description = Console.ReadLine();
+
+        Console.WriteLine("Wat is de progress die je gemaakt hebt in prozenten?");
+        int percentage = Int32.Parse(Console.ReadLine());
+
+        Progression progression = new Progression(description, percentage);
+        progression.AddProgression();
+
+        Progression progressionAdd = new Progression();
+        foreach (var prog in progressionAdd.ReadProgression())
+        {
+            Console.WriteLine(prog.Description);
+            Console.WriteLine(prog.Percentage);
+        }
+    }
+    static void AskForListProgression()
+    {
+        Console.WriteLine("Dit is de lijst met Progressions");
+
+        Progression ProgressionList = new Progression();
+        foreach (var pro in ProgressionList.ReadProgression())
+        {
+            Console.WriteLine(pro.Description);
+            Console.WriteLine(pro.Percentage);
+        }
+    }
+    static void AskToAdjustProgression()
+    {
+        Progression progressionAdjsut = new Progression();
+        foreach (var progr in progressionAdjsut.ReadProgression())
+        {
+            Console.WriteLine(progr.Id);
+            Console.WriteLine(progr.Description);
+            Console.WriteLine(progr.Percentage);
+        }
+
+        Console.WriteLine("Welke Progress wilt u aanpassen? Type het Id.");
+        int id = Int32.Parse(Console.ReadLine());
+
+        Console.WriteLine(id);
+        progressionAdjsut.GetProgressionById(id);
+
+        Console.WriteLine("wat is de nieuwe beschrijving van je progressie.");
+        progressionAdjsut.Description = Console.ReadLine();
+
+        Console.WriteLine("Wat is het nieuwe percentage wat je wilt geven voor de progressie?");
+        progressionAdjsut.Percentage = Int32.Parse(Console.ReadLine());
+
+        progressionAdjsut.UpdateProgression();
+    }
+    static void AskToRemoveProgression()
+    {
+        Console.WriteLine("Welke progressie wil je verwijderen? voer het Id in.");
+        int Id = Int32.Parse(Console.ReadLine());
+
+        Progression progressiondelete = new Progression();
+        progressiondelete.GetProgressionById(Id);
+        progressiondelete.DeleteProgression();
+
+
+        Progression progression = new Progression();
+        List<Progression> progressions = progression.ReadProgression();
+        foreach (var progre in progressions)
+        {
+            Console.WriteLine(progre.Id);
+            Console.WriteLine(progre.Description);
+            Console.WriteLine(progre.Percentage);
+        }
+    }
+    static void ProgressionMenu()
+    {
+        bool exit = false;
+
+        while (!exit)
+        {
+            Console.WriteLine("Wat wil je gaan doen?");
+            Console.WriteLine("1. Een progressie toevoegen");
+            Console.WriteLine("2. Progressies bekijken");
+            Console.WriteLine("3. Een progressie bijwerken");
+            Console.WriteLine("4. Een progressie verwijderen");
+            Console.WriteLine("5. Terug naar hoofdmenu");
+            string userInput = Console.ReadLine();
+
+            if (userInput == "1")
+                AskForNewProgression();
+            else if (userInput == "2")
+                AskForListProgression();
+            else if (userInput == "3")
+                AskToAdjustProgression();
+            else if (userInput == "4")
+                AskToRemoveProgression();
             else if (userInput == "5")
                 exit = true;
             else
@@ -791,6 +934,121 @@ public class Program
 
 }
 
+    }
+
+    static bool PerformLogin(int personalNumber, string password)
+    {
+        Athlete athlete = new Athlete(personalNumber, password);
+        bool isAthleteLoggedIn = athlete.Login();
+
+        Trainer trainer = new Trainer(personalNumber, password);
+        bool isTrainerLoggedIn = trainer.Login();
+
+        if (isAthleteLoggedIn)
+        {
+            Console.WriteLine("Welkom, atleet!");
+            return true;
+        }
+        else if (isTrainerLoggedIn)
+        {
+            Console.WriteLine("Welkom, trainer!");
+            return true;
+        }
+        else
+        {
+            Console.WriteLine("Ongeldige inloggegevens. Probeer het opnieuw.");
+            return false;
+        }
+    }
+
+    static void ShowMenu()
+    {
+        Console.WriteLine("Maak een keuze:");
+        Console.WriteLine("1. Inloggen als atleet");
+        Console.WriteLine("2. Inloggen als trainer");
+
+        // Vraag om een keuze en converteer naar een integer
+        int choice = int.Parse(Console.ReadLine());
+
+        if (choice == 1)
+        {
+            PerformAthleteLogin();
+        }
+        else if (choice == 2)
+        {
+            PerformTrainerLogin();
+        }
+        else
+        {
+            Console.WriteLine("Ongeldige keuze. Probeer het opnieuw.");
+        }
+    }
+
+    static void PerformAthleteLogin()
+    {
+        bool isLoggedIn = false;
+
+        // Blijf de inlogpoging herhalen totdat deze succesvol is
+        while (!isLoggedIn)
+        {
+            // Voer de inlogprocedure uit voor atleten
+            Console.WriteLine("Voer hier je nummer in:");
+            int personalNumber = int.Parse(Console.ReadLine());
+
+            Console.WriteLine("Voer hier je wachtwoord in:");
+            string password = Console.ReadLine();
+
+            // Instantieer een atleet en voer de inlogactie uit
+            Athlete athlete = new Athlete(personalNumber, password);
+            isLoggedIn = athlete.Login();
+
+            // Voer verdere acties uit voor atleten
+            if (isLoggedIn)
+            {
+                Console.WriteLine("Welkom, atleet!");
+                // Voer hier verdere acties uit voor atleten na succesvol inloggen
+            }
+            else
+            {
+                Console.WriteLine("Ongeldige inloggegevens. Probeer het opnieuw.");
+            }
+        }
+    }
+
+    static void PerformTrainerLogin()
+    {
+        bool isLoggedIn = false;
+
+        // Blijf de inlogpoging herhalen totdat deze succesvol is
+        while (!isLoggedIn)
+        {
+            // Voer de inlogprocedure uit voor trainers
+            Console.WriteLine("Voer hier je nummer in:");
+            int personalNumber = int.Parse(Console.ReadLine());
+
+            Console.WriteLine("Voer hier je wachtwoord in:");
+            string password = Console.ReadLine();
+
+            // Instantieer een trainer en voer de inlogactie uit
+            Trainer trainer = new Trainer(personalNumber, password);
+            isLoggedIn = trainer.Login();
+
+            // Voer verdere acties uit voor trainers
+            if (isLoggedIn)
+            {
+                Console.WriteLine("Welkom, trainer!");
+                // Voer hier verdere acties uit voor trainers na succesvol inloggen
+            }
+            else
+            {
+                Console.WriteLine("Ongeldige inloggegevens. Probeer het opnieuw.");
+            }
+        }
+    }
+
+
+
+}
 
 
 

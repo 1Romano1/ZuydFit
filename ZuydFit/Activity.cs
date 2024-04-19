@@ -27,26 +27,25 @@ namespace ZuydFit
         }
         public Activity() { }
 
-        //Doorgeef functies van program naar DAL.  
+
+
+        //Onderstaande functies geven de ingevoerde data door aan de DAL.
         public void Add()
         {
             DAL = new DAL();
             DAL.CreateActivity(this);
         }
-
         public List <Activity> Read()
         {
             DAL = new DAL();
             DAL.ReadActivity(activities);
             return activities;
         }
-
         public void Update()
         {
             DAL = new DAL();
             DAL.UpdateActivity(this);
         }
-
         public void Delete()
         {
             DAL = new DAL();

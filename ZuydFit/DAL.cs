@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
@@ -15,13 +16,15 @@ namespace ZuydFit
         public List<Activity> activities = new List<Activity>();
         public List<Advice> Advices { get; set; } = new List<Advice>();
         public List<Goal> Goals { get; set; } = new List<Goal>();
-        public List<Planning> plannings = new List<Planning>();
-        public List<Training> trainings = new List<Training>();
+        List<Planning> plannings = new List<Planning>();
+        public List<Progression> Progressions = new List<Progression>();
+
 
         //public static string connectionString = "Data Source=LAPPIEMELLIE;Initial Catalog=ZuydFit;Integrated Security=True";
-        public string connectionString = "Data Source=.;Initial Catalog=ZuydFit;Integrated Security=True";
+        private string connectionString = "Data Source=.;Initial Catalog=ZuydFit;Integrated Security=True";
 
 
+        //DAL van Location.
         public void CreateLocation(Location location)
         {
             try
@@ -107,6 +110,8 @@ namespace ZuydFit
 
         }
 
+
+        //DAL van Activity.
         public void CreateActivity(Activity activity)
         {
             try
@@ -191,6 +196,7 @@ namespace ZuydFit
         }
 
 
+        //DAL van Goal.
         public void CreateGoal(Goal goal)
         {
             try
@@ -252,12 +258,12 @@ namespace ZuydFit
                         connection.ConnectionString = connectionString;
                         connection.Open();
                         command.Connection = connection;
-                        command.CommandText = "SELECT Name, Description, ProgressionId FROM Goal ORDER BY ID ";
+                        command.CommandText = "SELECT id, Name, Description, ProgressionId FROM Goal ORDER BY ID ";
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
-                                Goals.Add(new(reader[0].ToString(), reader[1].ToString(), reader[2].ToString()));
+                                Goals.Add(new(Int32.Parse(reader[0].ToString()), reader[1].ToString(), reader[2].ToString(), reader[3].ToString()));
                             }
                         }
                     }
@@ -305,6 +311,7 @@ namespace ZuydFit
         }
 
 
+        //DAL van Advice.
         public void CreateAdvice(Advice advice)
         {
             try
@@ -312,12 +319,12 @@ namespace ZuydFit
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = "INSERT INTO Advice (Title, Description) " +
-                        "VALUES (@Title, @Description) ";
+                    string sql = "INSERT INTO Advice (Description, Title) " +
+                        "VALUES (@Description, @Title) ";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
-                        command.Parameters.AddWithValue("Title", advice.Title);
-                        command.Parameters.AddWithValue("Description", advice.Description);
+                        command.Parameters.AddWithValue("Description", @advice.Description);
+                        command.Parameters.AddWithValue("Title", @advice.Title);
                         command.ExecuteNonQuery();
                     }
                 }
@@ -335,12 +342,12 @@ namespace ZuydFit
                         connection.ConnectionString = connectionString;
                         connection.Open();
                         command.Connection = connection;
-                        command.CommandText = "SELECT Title, Description FROM Advice ORDER BY ID ";
+                        command.CommandText = "SELECT Id, Title, Description FROM Advice ORDER BY Id ";
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
-                                Advices.Add(new Advice(reader[0].ToString(), reader[1].ToString()));
+                                Advices.Add(new Advice(Int32.Parse(reader[0].ToString()), reader[1].ToString(), reader[2].ToString()));
                             }
                         }
                     }
@@ -348,10 +355,11 @@ namespace ZuydFit
             }
             catch (Exception ex) { throw ex; }
         }
-        public Advice GetAdviceByTitle(string title)
+        public List<Advice> GetAdviceByTitle(string title)
         {
             try
             {
+                Advices.Clear();
                 using (SqlConnection connection = new SqlConnection())
                 {
                     using (SqlCommand command = new SqlCommand())
@@ -366,9 +374,10 @@ namespace ZuydFit
                         {
                             while (reader.Read())
                             {
-                                return (new Advice(Int32.Parse(reader[0].ToString()), reader[1].ToString(), reader[2].ToString()));
+                                Advices.Add(new Advice(Int32.Parse(reader[0].ToString()), reader[1].ToString(), reader[2].ToString()));
+                                //return (new Advice(Int32.Parse(reader[0].ToString()), reader[1].ToString(), reader[2].ToString()));
                             }
-                            return null;
+                            return Advices;
                         }
                     }
                 }
@@ -382,13 +391,13 @@ namespace ZuydFit
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = "UPDATE Advice SET Id = @Id, Description = @description, Title = @Title " +
-                        "WHERE Id = @id";
+                    string sql = "UPDATE Advice SET Title = @Title, Description = @description WHERE Id = @id";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         command.Parameters.AddWithValue("Id", advice.Id);
                         command.Parameters.AddWithValue("Title", advice.Title);
                         command.Parameters.AddWithValue("Description", advice.Description);
+
                         command.ExecuteNonQuery();
                     }
                 }
@@ -402,7 +411,7 @@ namespace ZuydFit
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = "DELETE FROM Advice WHERE Id = @Id";
+                    string sql = "DELETE FROM Advice WHERE Id= @Id";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         command.Parameters.AddWithValue("@Id", advice.Id);
@@ -414,7 +423,7 @@ namespace ZuydFit
         }
 
 
-
+        //DAL van Planning.
         public void CreatePlanning(Planning planning)
         {
             try
@@ -446,7 +455,7 @@ namespace ZuydFit
                     connection.ConnectionString = connectionString;
                     connection.Open();
                     command.Connection = connection;
-                    command.CommandText = "SELECT DateTime, ActivityId" + "FROM Planning ORDER BY ID ";
+                    command.CommandText = "SELECT DateTime, ActivityId" + " FROM Planning ORDER BY ID ";
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())
@@ -465,7 +474,7 @@ namespace ZuydFit
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = "UPDATE Planning SET DateTime = @DateTime, ActivityId = @activityId,  WHERE Id = @id";
+                    string sql = "UPDATE Planning SET DateTime = @DateTime, ActivityId = @activityId  WHERE Id = @id";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         command.Parameters.AddWithValue("Id", planning.Id);
@@ -490,6 +499,174 @@ namespace ZuydFit
                 }
             }
         }
+
+
+        //DAL van Progression.
+        public void CreateProgression(Progression progression)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    string sql = "INSERT INTO Progression (Percentage, Description) " +
+                        "VALUES (@Percentage, @Description) ";
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        command.Parameters.AddWithValue("Percentage", @progression.Percentage);
+                        command.Parameters.AddWithValue("Description", @progression.Description);
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
+        public void ReadProgression()
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection())
+                {
+                    using (SqlCommand command = new SqlCommand())
+                    {
+                        connection.ConnectionString = connectionString;
+                        connection.Open();
+                        command.Connection = connection;
+                        command.CommandText = "SELECT Id, Description, Percentage FROM Progression ORDER BY Id ";
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                Progressions.Add(new Progression(Int32.Parse(reader[0].ToString()), reader[1].ToString(), Int32.Parse(reader[2].ToString())));
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
+        public Progression GetProgressionById(int id)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection())
+                {
+                    using (SqlCommand command = new SqlCommand())
+                    {
+                        connection.ConnectionString = connectionString;
+                        connection.Open();
+                        command.Connection = connection;
+                        command.CommandText = "SELECT Id, Description, Percentage " +
+                            "FROM Progression WHERE Id = @Id";
+                        command.Parameters.AddWithValue("@Id", id);
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                return (new Progression(Int32.Parse(reader[0].ToString()), reader[1].ToString(), Int32.Parse(reader[2].ToString())));
+                            }
+                            return null;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
+        public void UpdateProgression(Progression progression)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    string sql = "UPDATE Progression SET Description = @description, Percentage = @Percentage WHERE Id = @id";
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        command.Parameters.AddWithValue("Id", progression.Id);
+                        command.Parameters.AddWithValue("Description", progression.Description);
+                        command.Parameters.AddWithValue("Percentage", progression.Percentage);
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
+        public void DeleteProgression(Progression progression)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    string sql = "DELETE FROM Progression WHERE Id = @Id";
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        command.Parameters.AddWithValue("@Id", progression.Id);
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
+
+
+        public bool ValidateAthlete(int personalNumber, string password)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    string query = "SELECT COUNT(*) FROM [User] WHERE PersonalNumber = @PersonalNumber AND Password = @Password AND FavoriteMuscleGroup IS NOT NULL";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@PersonalNumber", personalNumber);
+                        command.Parameters.AddWithValue("@Password", password);
+
+                        int count = (int)command.ExecuteScalar();
+
+                        return count > 0;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Er is een fout opgetreden bij het valideren van de atleet: " + ex.Message);
+                return false;
+            }
+        }
+        public bool ValidateTrainer(int personalNumber, string password)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    string query = "SELECT COUNT(*) FROM [User] WHERE PersonalNumber = @PersonalNumber AND Password = @Password AND Specialization IS NOT NULL";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@PersonalNumber", personalNumber);
+                        command.Parameters.AddWithValue("@Password", password);
+
+                        int count = (int)command.ExecuteScalar();
+
+                        return count > 0;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Er is een fout opgetreden bij het valideren van de trainer: " + ex.Message);
+                return false;
+            }
+        }
+
+
+
 
         public void CreateTraining(Training training)
         {
