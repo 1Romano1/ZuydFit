@@ -15,7 +15,8 @@ namespace ZuydFit
         public List<Activity> activities = new List<Activity>();
         public List<Advice> Advices { get; set; } = new List<Advice>();
         public List<Goal> Goals { get; set; } = new List<Goal>();
-        List<Planning> plannings = new List<Planning>();
+        public List<Planning> plannings = new List<Planning>();
+        public List<Training> trainings = new List<Training>();
 
         //public static string connectionString = "Data Source=LAPPIEMELLIE;Initial Catalog=ZuydFit;Integrated Security=True";
         public string connectionString = "Data Source=.;Initial Catalog=ZuydFit;Integrated Security=True";
@@ -71,16 +72,16 @@ namespace ZuydFit
         }
         public void DeleteLocation(int Id)
         {
-           using (SqlConnection connection = new SqlConnection(connectionString))
-           {
-               connection.Open();
-               string sql = "DELETE FROM Location WHERE Id = @Id";
-               using (SqlCommand command = new SqlCommand(sql, connection))
-               {
-                   command.Parameters.AddWithValue("@Id", Id);
-                   command.ExecuteNonQuery();
-               }
-           }
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                string sql = "DELETE FROM Location WHERE Id = @Id";
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@Id", Id);
+                    command.ExecuteNonQuery();
+                }
+            }
         }
         public void UpdateLocation(Location location)
         {
@@ -451,7 +452,7 @@ namespace ZuydFit
                         while (reader.Read())
                         {
                             plannings.Add(new Planning(DateTime.Parse(reader[0].ToString()), int.Parse(reader[1].ToString())));
-                                
+
                         }
                     }
                 }
@@ -485,6 +486,82 @@ namespace ZuydFit
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
                     command.Parameters.AddWithValue("@Name", ActivityId);
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void CreateTraining(Training training)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    string sql = "INSERT INTO Training (Name) " +
+                        "VALUES (@Name)";
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        command.Parameters.AddWithValue("Name", training.Name);
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+        public void ReadTraining(List<Training> trainings)
+        {
+
+            using (SqlConnection connection = new SqlConnection())
+            {
+                using (SqlCommand command = new SqlCommand())
+                {
+                    connection.ConnectionString = connectionString;
+                    connection.Open();
+                    command.Connection = connection;
+                    command.CommandText = "SELECT Name " + 
+                        "FROM Training ORDER BY ID ";
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            trainings.Add(new Training(reader[0].ToString()));
+                        }
+                    }
+                }
+            }
+        }
+        public void UpdateTraining(Training training)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    string sql = "UPDATE Training SET Name = @Name " +
+                        "WHERE Id = @Id";
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        command.Parameters.AddWithValue("Id", training.Id);
+                        command.Parameters.AddWithValue("Name", training.Name);
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
+        public void DeleteTraining(string Name)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                string sql = "DELETE FROM Training WHERE Name = @Name";
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@Name", Name);
                     command.ExecuteNonQuery();
                 }
             }

@@ -10,7 +10,7 @@ public class Program
         MainMenu();
     }
 
-
+    
     //Overkoepelende functie voor alle menu's.
     static void MainMenu()
     {
@@ -24,7 +24,8 @@ public class Program
             Console.WriteLine("3. Activitymenu");
             Console.WriteLine("4. Locationmenu");
             Console.WriteLine("5. Planningmenu");
-            Console.WriteLine("6. Exit");
+            Console.WriteLine("6. Trainingmenu");
+            Console.WriteLine("7. Exit");
             Console.WriteLine("Kies een optie:");
 
             string userInput = Console.ReadLine();
@@ -51,6 +52,10 @@ public class Program
             }
             else if (userInput == "6")
             {
+                TrainingMenu();
+            }
+            else if (userInput == "7")
+            {
                 exit = true;
             }
             else
@@ -67,7 +72,7 @@ public class Program
 
     }
 
-
+    
     //Hieronder staan de functies van Activity
     static void AskForNewActivity()
     {
@@ -133,7 +138,7 @@ public class Program
         activity.Update();
         Console.WriteLine("De activiteit met id '" + id + "' is succesvol bijgewerkt.");
     }
-    static void AskForListActivity()
+    static List<Activity> AskForListActivity()
     {
         Console.WriteLine("Activiteit:");
         Console.WriteLine("Naam:\t Beschrijving:\tTijdsduur:\tSet:");
@@ -144,6 +149,8 @@ public class Program
             Console.WriteLine(act.Name + "\t" + act.Description + "\t" + act.Duration + "\t" + act.Sets + "\t");
         }
         Console.WriteLine();
+
+        return activities;
     }
     static void AskForDeleteActivity()
     {
@@ -198,7 +205,7 @@ public class Program
         }
     }
 
-
+    
     //Hieronder staan de functies van goal.
     static void AskForGoal()
     {
@@ -532,8 +539,8 @@ public class Program
         Console.WriteLine("Voer de datum en tijd van de activiteit in (bijv. '2024-04-16 14:30'): ");
         DateTime datetime = DateTime.Parse(Console.ReadLine());
 
-    Console.WriteLine("Voer de ID van de activiteit in: ");
-    int activityId = int.Parse(Console.ReadLine());
+        Console.WriteLine("Voer de ID van de activiteit in: ");
+        int activityId = int.Parse(Console.ReadLine());
 
         Planning planning = new Planning(datetime, activityId);
         planning.Add();
@@ -543,7 +550,7 @@ public class Program
         Console.WriteLine("Datum en Tijd:" + planning.DateTime);
         Console.WriteLine("Uitgevoerde activiteit:" + planning.ActivityId);
     }
-    static void AskForAdjustPlanning() 
+    static void AskForAdjustPlanning()
     {
         Console.WriteLine("Voer de Id in van de planning die u wilt bewerken.");
         int id;
@@ -557,12 +564,12 @@ public class Program
         DateTime datetime;
         if (DateTime.TryParse(input, out datetime))
         {
-            
+
             Console.WriteLine("Ingevoerde datum en tijd: " + datetime);
         }
         else
         {
-            
+
             Console.WriteLine("Ongeldige invoer. Voer een geldige datum- en tijdnotatie in.");
         }
 
@@ -570,7 +577,7 @@ public class Program
         Console.WriteLine("Voer de nieuwe activiteitId in:");
         if (int.TryParse(Console.ReadLine(), out int activityId))
         {
-            
+
         }
         else
         {
@@ -588,25 +595,25 @@ public class Program
 
 
     }
-    static void AskForListPlanning() 
+    static void AskForListPlanning()
     {
         Console.WriteLine("Planning");
         Console.WriteLine("Datum en tijd:\t ActiviteitId:");
         Planning planning = new Planning();
         List<Planning> plannings = planning.Read();
-        foreach (Planning act in plannings) 
+        foreach (Planning act in plannings)
         {
             Console.WriteLine(act.DateTime + "\t" + act.ActivityId + "\t");
         }
         Console.WriteLine();
     }
-    static void AskForDeletePlanning() 
+    static void AskForDeletePlanning()
     {
         Console.WriteLine("Voer de datum en tijd in van de planning die u wilt verwijderen (bijv. '2024-04-18 14:30'):");
 
         if (DateTime.TryParse(Console.ReadLine(), out DateTime datetime))
         {
-            
+
         }
         else
         {
@@ -652,5 +659,138 @@ public class Program
             Console.Clear();
         }
     }
+
+
+    //Hieronder komen de functies van training.
+    static void AskForNewTraining()
+    {
+        Console.WriteLine("Voer de naam in van de nieuwe training:");
+        string name = Console.ReadLine();
+
+        Training training = new Training(name);
+        AddExistingActivityToTraining(training);
+        training.Add();
+    }
+    static void AskForListTraining()
+    {
+        Console.WriteLine("Trainingen");
+        Training training = new Training();
+        List<Training> trainings = training.Read();
+        foreach (Training tra in trainings)
+        {
+            Console.WriteLine($"Name: {tra.Name}");
+        }
+    }
+    static void AskForUpdateTraining()
+    {
+        Console.WriteLine("Voer de id van de activiteit in die u wilt gaan bijwerken:");
+        int id;
+        if (!int.TryParse(Console.ReadLine(), out id))
+        {
+            return;
+        }
+
+        Console.WriteLine("Voer de nieuwe naam in:");
+        string name = Console.ReadLine();
+
+        Training training = new Training
+        {
+            Id = id,
+            Name = name
+        };
+        training.Update();
+        Console.WriteLine("De activiteit met id '" + id + "' is succesvol bijgewerkt.");
+    }
+    static void AskForDeleteTraining()
+    {
+        Console.WriteLine("Voer de naam in van de training die je wilt verwijderen:");
+        string trainingName = Console.ReadLine();
+
+        // Create an instance of the Training class with the specified name
+        Training training = new Training(trainingName);
+
+        // Call the Delete method to delete the training
+        training.Delete();
+
+        Console.WriteLine($"Training '{trainingName}' is succesvol verwijderd.");
+    }
+    static void AddExistingActivityToTraining(Training training)
+    {
+        bool addactivity = true;
+        while (addactivity)
+        {
+            AskForListActivity();
+            Console.WriteLine("Voer de naam in van de activiteit die u aan de training wilt toevoegen:");
+            string activityName = Console.ReadLine();
+            
+
+            List<Activity> activities = AskForListActivity();
+            Console.Clear();   
+            // Zoek naar een activiteit in de lijst van activiteiten met een naam die overeenkomt met de opgegeven activiteitnaam, 
+            // waarbij hoofdletters en spaties niet van belang zijn.
+            Activity selectedActivity = activities.Find(activity => activity.Name.Trim().Equals(activityName, StringComparison.OrdinalIgnoreCase));
+
+            if (selectedActivity != null)
+            {
+                Console.WriteLine($"De activiteit '{selectedActivity.Name}' is succesvol toegevoegd aan de training.");
+            }
+            else
+            {
+                Console.WriteLine($"Geen activiteit gevonden met de naam '{activityName}'. De activiteit wordt niet toegevoegd aan de training.");
+            }
+
+            Console.WriteLine("Is er nog een activiteit dat u wilt toevoegen? (Y/N):");
+            string choice = Console.ReadLine();
+            Console.Clear();
+
+            if (choice == "N" || choice == "n")
+            {
+                addactivity = false;
+                Console.Clear();
+            }
+        }
+        
+    }
+    static void TrainingMenu()
+    {
+        bool exit = false;
+
+        while (!exit)
+        {
+            Console.WriteLine("Wat wil je gaan doen?");
+            Console.WriteLine("1. Een training toevoegen");
+            Console.WriteLine("2. Trainingen bekijken");
+            Console.WriteLine("3. Een training bijwerken");
+            Console.WriteLine("4. Een training verwijderen");
+            Console.WriteLine("5. Terug naar hoofdmenu");
+            string userInput = Console.ReadLine();
+
+            if (userInput == "1")
+                AskForNewTraining();
+            else if (userInput == "2")
+                AskForListTraining();
+            else if (userInput == "3")
+                AskForUpdateTraining();
+            else if (userInput == "4")
+                AskForDeleteTraining();
+            else if (userInput == "5")
+                exit = true;
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("Ongeldige keuze. Probeer opnieuw.");
+                continue;
+            }
+
+            // Extra regel om de interface duidelijk te houden na het uitvoeren van een actie
+            Console.WriteLine("Druk op Enter om door te gaan...");
+            Console.ReadLine();
+            Console.Clear();
+        }
+    }
+
 }
+
+
+
 
