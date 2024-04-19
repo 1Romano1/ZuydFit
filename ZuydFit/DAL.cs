@@ -617,7 +617,7 @@ namespace ZuydFit
                 {
                     connection.Open();
 
-                    string query = "SELECT COUNT(*) FROM `User` WHERE PersonalNumber = @PersonalNumber AND Password = @Password";
+                    string query = "SELECT COUNT(*) FROM [User] WHERE PersonalNumber = @PersonalNumber AND Password = @Password";
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {

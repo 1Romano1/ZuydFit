@@ -9,12 +9,14 @@ namespace ZuydFit
 {
     public class Athlete : User
     { 
+        public string FavoriteMuscleGroup { get; set; }
         public List<Goal> Goals { get; set; }
         public List<Advice> Advices { get; set; }
 
 
-        public Athlete(int id, string firstName, string lastName, int personalNumber, List<Goal> goals, List<Advice> advices, string password) : base(id, firstName,lastName, personalNumber, password)
+        public Athlete(int personalNumber, string password,string favoriteMuscleGroup, List<Goal> goals, List<Advice> advices) : base(personalNumber, password)
         {
+            FavoriteMuscleGroup = favoriteMuscleGroup;
             Goals = goals;
             Advices = advices;
         }

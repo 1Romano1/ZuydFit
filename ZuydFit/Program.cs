@@ -8,7 +8,8 @@ public class Program
     static void Main(string[] args)
     {
         Console.WriteLine("Welkom bij onze ZuydFit app");
-        MainMenu();
+        TrainerLogin();
+        Console.WriteLine("Test");
     }
 
 

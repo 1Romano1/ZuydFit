@@ -12,7 +12,7 @@ namespace ZuydFit
 
     namespace ZuydFit
     {
-        public class User
+        public abstract class User
         {
             public int Id { get; set; }
             public string FirstName { get; set; }
@@ -34,22 +34,11 @@ namespace ZuydFit
                 Password = password;
             }
 
-            public bool Login()
+            public abstract bool Login()
             {
-                try
-                {
-                    DAL dal = new DAL();
-                    return dal.ValidateUser(PersonalNumber, Password);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Er is een fout opgetreden bij het inloggen: " + ex.Message);
-                    return false;
-                }
+
             }
-
-
-
+           
         }
     }
 }
