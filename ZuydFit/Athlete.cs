@@ -12,7 +12,6 @@ namespace ZuydFit
         public string FavoriteMuscleGroup { get; set; }
         public List<Goal> Goals { get; set; }
         public List<Advice> Advices { get; set; }
-        DAL DAL { get; set; }
 
 
         /*public Athlete(int personalNumber, string password,string favoriteMuscleGroup, List<Goal> goals, List<Advice> advices) : base(personalNumber, password)
