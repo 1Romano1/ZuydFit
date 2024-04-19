@@ -223,43 +223,43 @@ public class Program
         string name = Console.ReadLine();
 
         Console.WriteLine("Geef een beschrijving van je Goal");
-        string description1 = Console.ReadLine();
+        string descriptionadd = Console.ReadLine();
 
         Console.WriteLine("Hoeveel progressie heb je gemaakt aan deze goal?");
         string progression = Console.ReadLine();
 
-        Goal goal = new Goal(name, description1, progression);
-        goal.AddGoal();
+        Goal goaladd = new Goal(name, descriptionadd, progression);
+        goaladd.AddGoal();
     }
     static void AskToAdjustGoal()
     {
-        Goal goal4 = new Goal();
-        foreach (var goal in goal4.GetGoals())
+        Goal goalUpdate = new Goal();
+        foreach (var goal in goalUpdate.GetGoals())
         {
             Console.WriteLine(goal.Name);
         }
         Console.WriteLine("Welk advies wilt u aanpassen? Type de naam");
-        string name2 = Console.ReadLine();
-        Goal goal3 = new Goal();
+        string nameUpdate = Console.ReadLine();
+        Goal goalUp = new Goal();
 
-        Console.WriteLine(name2);
-        goal3.GetGoalByName(name2);
+        Console.WriteLine(nameUpdate);
+        goalUp.GetGoalByName(nameUpdate);
 
         Console.WriteLine("wat is de naam van je goal");
-        goal3.Name = Console.ReadLine();
+        goalUp.Name = Console.ReadLine();
 
         Console.WriteLine("Wat is de goal dat je wilt behalen?");
-        goal3.Description = Console.ReadLine();
+        goalUp.Description = Console.ReadLine();
 
         Console.WriteLine("Wat is het progressieid");
-        goal3.Progression = Console.ReadLine();
+        goalUp.Progression = Console.ReadLine();
 
-        goal3.UpdateGoals();
+        goalUp.UpdateGoals();
     }
     static void AskForListGoal()
     {
-        Goal goal1 = new Goal();
-        foreach (var goal in goal1.GetGoals())
+        Goal goalRead = new Goal();
+        foreach (var goal in goalRead.GetGoals())
         {
             Console.WriteLine(goal.Id);
             Console.WriteLine(goal.Name);
@@ -268,20 +268,20 @@ public class Program
     }
     static void AskToRemoveGoalFromList()
     {
-        Goal goal5 = new Goal();
-        foreach (var goal in goal5.GetGoals())
+        Goal goalDelete = new Goal();
+        foreach (var goal in goalDelete.GetGoals())
         {
             Console.WriteLine(goal.Name);
         }
 
         Console.WriteLine("Wat is de naam van de goal die je wilt verwijderen?");
-        string name1 = Console.ReadLine();
+        string nameDelete = Console.ReadLine();
 
-        Goal goal2 = new Goal();
-        goal2.GetGoalByName(name1);
-        goal2.DeleteGoal();
-        Goal goal4 = new Goal();
-        foreach (var go in goal4.GetGoals())
+        Goal goalDel = new Goal();
+        goalDel.GetGoalByName(nameDelete);
+        goalDel.DeleteGoal();
+        Goal goalDele = new Goal();
+        foreach (var go in goalDele.GetGoals())
         {
             Console.WriteLine(go.Name);
         }
@@ -335,11 +335,11 @@ public class Program
         Console.WriteLine("Wat is het advies dat je wilt geven?");
         string description = Console.ReadLine();
 
-        Advice advice2 = new Advice(title, description);
-        advice2.AddAdvice();
+        Advice adviceAdd = new Advice(title, description);
+        adviceAdd.AddAdvice();
 
-        Advice advice1 = new Advice();
-        foreach (var adv in advice1.ReadAdvice())
+        Advice adviceAd = new Advice();
+        foreach (var adv in adviceAd.ReadAdvice())
         {
             Console.WriteLine(adv.Title);
             Console.WriteLine(adv.Description);
@@ -358,25 +358,25 @@ public class Program
     }
     static void AskToAdjustAdvice()
     {
-        Advice advice3 = new Advice();
-        foreach (var adv in advice3.ReadAdvice())
+        Advice adviceUpdate = new Advice();
+        foreach (var adv in adviceUpdate.ReadAdvice())
         {
             Console.WriteLine(adv.Title);
         }
 
         Console.WriteLine("Welk advies wilt u aanpassen? Type de titel.");
-        string title1 = Console.ReadLine();
+        string titleUpdate = Console.ReadLine();
 
-        Console.WriteLine(title1);
-        advice3.GetAdviceByTitle(title1);
+        Console.WriteLine(titleUpdate);
+        adviceUpdate.GetAdviceByTitle(titleUpdate);
 
         Console.WriteLine("wat is de nieuwe titel van je advies.");
-        advice3.Title = Console.ReadLine();
+        adviceUpdate.Title = Console.ReadLine();
 
         Console.WriteLine("Wat is het nieuwe advies dat je wilt geven?");
-        advice3.Description = Console.ReadLine();
+        adviceUpdate.Description = Console.ReadLine();
 
-        advice3.UpdateAdvice();
+        adviceUpdate.UpdateAdvice();
     }
     static void AskToRemoveAdvice()
     {
@@ -388,8 +388,8 @@ public class Program
         advice.DeleteAdvice();
 
 
-        Advice advice3 = new Advice();
-        List<Advice> Advices = advice3.ReadAdvice();
+        Advice adviceDelete = new Advice();
+        List<Advice> Advices = adviceDelete.ReadAdvice();
         foreach (var ad in Advices)
         {
             Console.WriteLine(ad.Title);
@@ -696,8 +696,8 @@ public class Program
         Progression progression = new Progression(description, percentage);
         progression.AddProgression();
 
-        Progression progression1 = new Progression();
-        foreach (var prog in progression1.ReadProgression())
+        Progression progressionAdd = new Progression();
+        foreach (var prog in progressionAdd.ReadProgression())
         {
             Console.WriteLine(prog.Description);
             Console.WriteLine(prog.Percentage);
