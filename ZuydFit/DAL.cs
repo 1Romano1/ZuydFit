@@ -19,6 +19,7 @@ namespace ZuydFit
         List<Planning> plannings = new List<Planning>();
         public List<Progression> Progressions = new List<Progression>();
 
+
         //public static string connectionString = "Data Source=LAPPIEMELLIE;Initial Catalog=ZuydFit;Integrated Security=True";
         private string connectionString = "Data Source=.;Initial Catalog=ZuydFit;Integrated Security=True";
 

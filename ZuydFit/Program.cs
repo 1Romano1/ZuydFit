@@ -728,7 +728,7 @@ public class Program
         int id = Int32.Parse(Console.ReadLine());
 
         Console.WriteLine(id);
-        progressionAdjsut.UpdateProgression();
+        progressionAdjsut.GetProgressionById(id);
 
         Console.WriteLine("wat is de nieuwe beschrijving van je progressie.");
         progressionAdjsut.Description = Console.ReadLine();
