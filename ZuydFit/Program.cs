@@ -7,7 +7,7 @@ public class Program
 {
     static void Main(string[] args)
     {
-        ShowMenu();
+        MainMenu();
     }
 
     
@@ -25,9 +25,8 @@ public class Program
             Console.WriteLine("4. Locationmenu");
             Console.WriteLine("5. Planningmenu");
             Console.WriteLine("6. Progressionmenu");
-            Console.WriteLine("7. Exit");
-            Console.WriteLine("6. Trainingmenu");
-            Console.WriteLine("7. Exit");
+            Console.WriteLine("7. Trainingmenu");
+            Console.WriteLine("8. Exit");
             Console.WriteLine("Kies een optie:");
 
             string userInput = Console.ReadLine();
@@ -66,7 +65,7 @@ public class Program
             {
                 TrainingMenu();
             }
-            else if (userInput == "7")
+            else if (userInput == "8")
             {
                 exit = true;
             }
@@ -932,6 +931,7 @@ public class Program
         }
     }
 
+    //Functies voor de Login.
     static bool PerformLogin(int personalNumber, string password)
     {
         Athlete athlete = new Athlete(personalNumber, password);
@@ -956,7 +956,6 @@ public class Program
             return false;
         }
     }
-
     static void ShowMenu()
     {
         Console.WriteLine("Maak een keuze:");
@@ -979,7 +978,6 @@ public class Program
             Console.WriteLine("Ongeldige keuze. Probeer het opnieuw.");
         }
     }
-
     static void PerformAthleteLogin()
     {
         bool isLoggedIn = false;
@@ -1010,7 +1008,6 @@ public class Program
             }
         }
     }
-
     static void PerformTrainerLogin()
     {
         bool isLoggedIn = false;
