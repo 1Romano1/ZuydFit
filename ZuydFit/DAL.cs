@@ -609,7 +609,7 @@ namespace ZuydFit
         }
 
 
-        public bool ValidateUser(int PersonalNumber, string Password)
+        public bool ValidateAthlete(int personalNumber, string password)
         {
             try
             {
@@ -617,12 +617,12 @@ namespace ZuydFit
                 {
                     connection.Open();
 
-                    string query = "SELECT COUNT(*) FROM [User] WHERE PersonalNumber = @PersonalNumber AND Password = @Password";
+                    string query = "SELECT COUNT(*) FROM [User] WHERE PersonalNumber = @PersonalNumber AND Password = @Password AND FavoriteMuscleGroup IS NOT NULL";
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
-                        command.Parameters.AddWithValue("@PersonalNumber", PersonalNumber);
-                        command.Parameters.AddWithValue("@Password", Password);
+                        command.Parameters.AddWithValue("@PersonalNumber", personalNumber);
+                        command.Parameters.AddWithValue("@Password", password);
 
                         int count = (int)command.ExecuteScalar();
 
@@ -632,10 +632,38 @@ namespace ZuydFit
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Er is een fout opgetreden bij het valideren van de gebruiker: " + ex.Message);
+                Console.WriteLine("Er is een fout opgetreden bij het valideren van de atleet: " + ex.Message);
                 return false;
             }
         }
+        public bool ValidateTrainer(int personalNumber, string password)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    string query = "SELECT COUNT(*) FROM [User] WHERE PersonalNumber = @PersonalNumber AND Password = @Password AND Specialization IS NOT NULL";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@PersonalNumber", personalNumber);
+                        command.Parameters.AddWithValue("@Password", password);
+
+                        int count = (int)command.ExecuteScalar();
+
+                        return count > 0;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Er is een fout opgetreden bij het valideren van de trainer: " + ex.Message);
+                return false;
+            }
+        }
+
 
 
     }

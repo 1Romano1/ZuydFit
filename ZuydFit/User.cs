@@ -34,11 +34,8 @@ namespace ZuydFit
                 Password = password;
             }
 
-            public abstract bool Login()
-            {
-
-            }
-           
+            //Login functie voor de athlete en trianer.
+            public abstract bool Login();
         }
     }
 }

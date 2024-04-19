@@ -14,12 +14,24 @@ namespace ZuydFit
         public List<Advice> Advices { get; set; }
 
 
-        public Athlete(int personalNumber, string password,string favoriteMuscleGroup, List<Goal> goals, List<Advice> advices) : base(personalNumber, password)
+        /*public Athlete(int personalNumber, string password,string favoriteMuscleGroup, List<Goal> goals, List<Advice> advices) : base(personalNumber, password)
         {
             FavoriteMuscleGroup = favoriteMuscleGroup;
             Goals = goals;
             Advices = advices;
+        }*/
+
+        public Athlete(int personalNumber, string password) : base(personalNumber, password)
+        {
+         
+
         }
+        public override bool Login()
+        {
+            DAL = new DAL();
+            return DAL.ValidateAthlete(PersonalNumber, Password);
+        }
+
 
     }
 }
