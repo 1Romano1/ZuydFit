@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Linq;
 using ZuydFit;
+using ZuydFit.ZuydFit;
 
 public class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Welkom bij onze ZuydFit app");
-        MainMenu();
+        ShowMenu();
     }
 
 
@@ -598,7 +598,7 @@ public class Program
         Console.WriteLine("Voer de nieuwe activiteitId in:");
         if (int.TryParse(Console.ReadLine(), out int activityId))
         {
-            
+
         }
         else
         {
@@ -795,6 +795,120 @@ public class Program
         }
 
     }
+
+    static bool PerformLogin(int personalNumber, string password)
+    {
+        Athlete athlete = new Athlete(personalNumber, password);
+        bool isAthleteLoggedIn = athlete.Login();
+
+        Trainer trainer = new Trainer(personalNumber, password);
+        bool isTrainerLoggedIn = trainer.Login();
+
+        if (isAthleteLoggedIn)
+        {
+            Console.WriteLine("Welkom, atleet!");
+            return true;
+        }
+        else if (isTrainerLoggedIn)
+        {
+            Console.WriteLine("Welkom, trainer!");
+            return true;
+        }
+        else
+        {
+            Console.WriteLine("Ongeldige inloggegevens. Probeer het opnieuw.");
+            return false;
+        }
+    }
+
+    static void ShowMenu()
+    {
+        Console.WriteLine("Maak een keuze:");
+        Console.WriteLine("1. Inloggen als atleet");
+        Console.WriteLine("2. Inloggen als trainer");
+
+        // Vraag om een keuze en converteer naar een integer
+        int choice = int.Parse(Console.ReadLine());
+
+        if (choice == 1)
+        {
+            PerformAthleteLogin();
+        }
+        else if (choice == 2)
+        {
+            PerformTrainerLogin();
+        }
+        else
+        {
+            Console.WriteLine("Ongeldige keuze. Probeer het opnieuw.");
+        }
+    }
+
+    static void PerformAthleteLogin()
+    {
+        bool isLoggedIn = false;
+
+        // Blijf de inlogpoging herhalen totdat deze succesvol is
+        while (!isLoggedIn)
+        {
+            // Voer de inlogprocedure uit voor atleten
+            Console.WriteLine("Voer hier je nummer in:");
+            int personalNumber = int.Parse(Console.ReadLine());
+
+            Console.WriteLine("Voer hier je wachtwoord in:");
+            string password = Console.ReadLine();
+
+            // Instantieer een atleet en voer de inlogactie uit
+            Athlete athlete = new Athlete(personalNumber, password);
+            isLoggedIn = athlete.Login();
+
+            // Voer verdere acties uit voor atleten
+            if (isLoggedIn)
+            {
+                Console.WriteLine("Welkom, atleet!");
+                // Voer hier verdere acties uit voor atleten na succesvol inloggen
+            }
+            else
+            {
+                Console.WriteLine("Ongeldige inloggegevens. Probeer het opnieuw.");
+            }
+        }
+    }
+
+    static void PerformTrainerLogin()
+    {
+        bool isLoggedIn = false;
+
+        // Blijf de inlogpoging herhalen totdat deze succesvol is
+        while (!isLoggedIn)
+        {
+            // Voer de inlogprocedure uit voor trainers
+            Console.WriteLine("Voer hier je nummer in:");
+            int personalNumber = int.Parse(Console.ReadLine());
+
+            Console.WriteLine("Voer hier je wachtwoord in:");
+            string password = Console.ReadLine();
+
+            // Instantieer een trainer en voer de inlogactie uit
+            Trainer trainer = new Trainer(personalNumber, password);
+            isLoggedIn = trainer.Login();
+
+            // Voer verdere acties uit voor trainers
+            if (isLoggedIn)
+            {
+                Console.WriteLine("Welkom, trainer!");
+                // Voer hier verdere acties uit voor trainers na succesvol inloggen
+            }
+            else
+            {
+                Console.WriteLine("Ongeldige inloggegevens. Probeer het opnieuw.");
+            }
+        }
+    }
+
+
+
 }
+
 
 

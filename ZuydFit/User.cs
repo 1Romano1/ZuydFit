@@ -12,59 +12,30 @@ namespace ZuydFit
 
     namespace ZuydFit
     {
-        public class User
+        public abstract class User
         {
             public int Id { get; set; }
             public string FirstName { get; set; }
             public string LastName { get; set; }
             public int PersonalNumber { get; set; }
             public string Password { get; set; }
+            public DAL DAL { get; set; }
 
-            public User(int id, string firstName, string lastName, int personalNumber, string password)
+            /*public User(string firstName, string lastName, int personalNumber, string password)
             {
-                Id = id;
                 FirstName = firstName;
                 LastName = lastName;
                 PersonalNumber = personalNumber;
                 Password = password;
-            }
-            /*public User() { }
-            var users = new User[]
-        {
-            new User(1, "John", "Doe", 123456789, "password123"),
-            new User(2, "Jane", "Smith", 987654321, "letmein")
-        }.AsQueryable();
-
-            // Maak een nieuwe instantie van de User-klasse
-            
-            public void EmployeeLogin(IQueryable<User> users)
-            {
-                bool isLoggedIn = false;
-
-                while (!isLoggedIn)
-                {
-                    Console.WriteLine("Enter your  Personalnumber:");
-                    string personalNumber = Console.ReadLine();
-
-                    Console.WriteLine("Enter your password:");
-                    string password = Console.ReadLine();
-
-                    var user = users.FirstOrDefault(u => u.PersonalNumber.ToString() == personalNumber);
-
-                    if (user != null && user.Password == password)
-                    {
-                        isLoggedIn = true;
-                        Console.Clear();
-                        Console.WriteLine("You are now in the home screen.");
-                        Console.ReadLine();
-                    }
-                    else
-                    {
-                        Console.Clear();
-                        Console.WriteLine("Incorrect username or password. Please try again.");
-                    }
-                }
             }*/
+            public User(int personalNumber,string password )
+            {
+                PersonalNumber = personalNumber;
+                Password = password;
+            }
+
+            //Login functie voor de athlete en trianer.
+            public abstract bool Login();
         }
     }
 }
