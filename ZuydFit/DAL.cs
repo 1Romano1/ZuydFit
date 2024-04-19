@@ -608,6 +608,36 @@ namespace ZuydFit
             catch (Exception ex) { throw ex; }
         }
 
+
+        public bool ValidateUser(int PersonalNumber, string Password)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    string query = "SELECT COUNT(*) FROM `User` WHERE PersonalNumber = @PersonalNumber AND Password = @Password";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@PersonalNumber", PersonalNumber);
+                        command.Parameters.AddWithValue("@Password", Password);
+
+                        int count = (int)command.ExecuteScalar();
+
+                        return count > 0;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Er is een fout opgetreden bij het valideren van de gebruiker: " + ex.Message);
+                return false;
+            }
+        }
+
+
     }
 }
 

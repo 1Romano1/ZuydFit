@@ -13,7 +13,7 @@ namespace ZuydFit
         public List<Advice> Advices { get; set; }
         public List<Training> Trainings { get; set; }
 
-        public Trainer(int id, string firstName, string lastName, int personalNumber, List<Advice> advices, List<Training> trainings, string password) : base(id, firstName, lastName,personalNumber, password)
+        public Trainer(int personalNumber, List<Advice> advices, List<Training> trainings, string password) : base(personalNumber, password)
 
         {
             Advices = advices;

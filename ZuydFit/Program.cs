@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using ZuydFit;
+using ZuydFit.ZuydFit;
 
 public class Program
 {
@@ -795,6 +796,36 @@ public class Program
         }
 
     }
+
+    static void TrainerLogin()
+    {
+        bool isLoggedIn = false;
+
+        while (!isLoggedIn)
+        {
+            Console.WriteLine("Voer hier je nummer in:");
+            int personalNumber = int.Parse(Console.ReadLine());
+
+            Console.WriteLine("Voer hier je wachtwoord in:");
+            string password = Console.ReadLine();
+
+            User user = new User(personalNumber, password);
+            isLoggedIn = user.Login();
+
+            if (isLoggedIn)
+            {
+                Console.Clear();
+                Console.WriteLine("Welkom bij de ZuydFit app.");
+                Console.ReadLine();
+            }
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("Uw nummer of wachtwoord is onjuist. Probeer het opnieuw.");
+            }
+        }
+    }
+
 }
 
 
