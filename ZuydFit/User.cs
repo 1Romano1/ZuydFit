@@ -21,6 +21,7 @@ namespace ZuydFit
             public string Password { get; set; }
             public DAL DAL { get; set; }
 
+
             /*public User(string firstName, string lastName, int personalNumber, string password)
             {
                 FirstName = firstName;
@@ -34,12 +35,9 @@ namespace ZuydFit
                 Password = password;
             }
 
+
             //Login functie voor de athlete en trianer.
             public abstract bool Login();
         }
     }
 }
-
-
-    
-

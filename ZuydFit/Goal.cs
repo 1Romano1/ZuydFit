@@ -16,13 +16,13 @@ namespace ZuydFit
         public List<Goal> Goals { get; set; } = new List<Goal>();
         public DAL DAL { get; set; }
 
+
         public Goal()
         {
             Name = "";
             Description = "";
             Progression = "";
         }
-
         public Goal(int id, string name, string description)
         {
             Id = id;
@@ -45,23 +45,23 @@ namespace ZuydFit
 
 
         //Onderstaande functies geven de functies door aan de DAL.
-        public void AddGoal() 
+        public void Create() 
         {
             DAL = new DAL();
             DAL.CreateGoal(this);
         }
-        public List<Goal> GetGoals()
+        public List<Goal> Read()
         {
             DAL = new DAL();
             DAL.ReadGoal();
             return DAL.Goals;
         }
-        public void UpdateGoals()
+        public void Update()
         {
             DAL = new DAL();
             DAL.UpdateGoal(this);
         }
-        public void DeleteGoal()
+        public void Delete()
         {
             DAL = new DAL();
             DAL.DeleteGoal(this);

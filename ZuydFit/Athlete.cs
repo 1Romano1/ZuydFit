@@ -20,18 +20,17 @@ namespace ZuydFit
             Goals = goals;
             Advices = advices;
         }*/
-
         public Athlete(int personalNumber, string password) : base(personalNumber, password)
         {
          
 
         }
+        
+        
         public override bool Login()
         {
             DAL = new DAL();
             return DAL.ValidateAthlete(PersonalNumber, Password);
         }
-
-
     }
 }

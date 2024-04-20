@@ -14,6 +14,7 @@ namespace ZuydFit
         public List<Advice> Advices { get; set; }
         public List<Training> Trainings { get; set; }
 
+
         /*public Trainer(int personalNumber, string password, string specialization, List<Advice> advices, List<Training> trainings) : base(personalNumber, password)
 
         {
@@ -26,11 +27,12 @@ namespace ZuydFit
 
         }
 
+
+        //Login functie specifiek voor Trainer
         public override bool Login()
         {
             DAL = new DAL();
             return DAL.ValidateTrainer(PersonalNumber, Password);
         }
-
     }
 }

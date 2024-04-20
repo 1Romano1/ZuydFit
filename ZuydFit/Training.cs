@@ -13,24 +13,24 @@ namespace ZuydFit
         public List<Activity> Activities { get; set; } = new List<Activity>();
         public DAL DAL { get; set; }
 
+
         List<Training> training = new List<Training>();
         
+
         public Training(string name)
         {
             Name = name;
         }
-
         public Training(string name, List<Activity> activities)
         {
             Name = name;
             Activities = activities;
         }
-
         public Training() { }
 
 
-
-        public void Add()
+        //Onderstaande functies geven de data uit de program door aan de DAL.
+        public void Create()
         {
             
             DAL = new DAL();
@@ -43,16 +43,15 @@ namespace ZuydFit
             DAL.ReadTraining(training);
             return training;
         }
-        public void Delete()
-        {
-            DAL = new DAL();
-            DAL.DeleteTraining(Name);
-        }
         public void Update()
         {
             DAL = new DAL();
             DAL.UpdateTraining(this);
         }
-
+        public void Delete()
+        {
+            DAL = new DAL();
+            DAL.DeleteTraining(Name);
+        }
     }
 }

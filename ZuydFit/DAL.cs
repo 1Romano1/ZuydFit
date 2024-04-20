@@ -12,7 +12,6 @@ namespace ZuydFit
 {
     public class DAL
     {
-
         public List<Activity> activities = new List<Activity>();
         public List<Advice> Advices { get; set; } = new List<Advice>();
         public List<Goal> Goals { get; set; } = new List<Goal>();
@@ -20,7 +19,7 @@ namespace ZuydFit
         public List<Progression> Progressions = new List<Progression>();
 
 
-        //public static string connectionString = "Data Source=LAPPIEMELLIE;Initial Catalog=ZuydFit;Integrated Security=True";
+        //private string connectionString = "Data Source=LAPPIEMELLIE;Initial Catalog=ZuydFit;Integrated Security=True";
         private string connectionString = "Data Source=.;Initial Catalog=ZuydFit;Integrated Security=True";
 
 
@@ -610,64 +609,7 @@ namespace ZuydFit
         }
 
 
-        public bool ValidateAthlete(int personalNumber, string password)
-        {
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    connection.Open();
-
-                    string query = "SELECT COUNT(*) FROM [User] WHERE PersonalNumber = @PersonalNumber AND Password = @Password AND FavoriteMuscleGroup IS NOT NULL";
-
-                    using (SqlCommand command = new SqlCommand(query, connection))
-                    {
-                        command.Parameters.AddWithValue("@PersonalNumber", personalNumber);
-                        command.Parameters.AddWithValue("@Password", password);
-
-                        int count = (int)command.ExecuteScalar();
-
-                        return count > 0;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Er is een fout opgetreden bij het valideren van de atleet: " + ex.Message);
-                return false;
-            }
-        }
-        public bool ValidateTrainer(int personalNumber, string password)
-        {
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    connection.Open();
-
-                    string query = "SELECT COUNT(*) FROM [User] WHERE PersonalNumber = @PersonalNumber AND Password = @Password AND Specialization IS NOT NULL";
-
-                    using (SqlCommand command = new SqlCommand(query, connection))
-                    {
-                        command.Parameters.AddWithValue("@PersonalNumber", personalNumber);
-                        command.Parameters.AddWithValue("@Password", password);
-
-                        int count = (int)command.ExecuteScalar();
-
-                        return count > 0;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Er is een fout opgetreden bij het valideren van de trainer: " + ex.Message);
-                return false;
-            }
-        }
-
-
-
-
+        //DAL van Training.
         public void CreateTraining(Training training)
         {
             try
@@ -743,7 +685,62 @@ namespace ZuydFit
                 }
             }
         }
+
+
+        //DAL voor de logins.
+        public bool ValidateAthlete(int personalNumber, string password)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    string query = "SELECT COUNT(*) FROM [User] WHERE PersonalNumber = @PersonalNumber AND Password = @Password AND FavoriteMuscleGroup IS NOT NULL";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@PersonalNumber", personalNumber);
+                        command.Parameters.AddWithValue("@Password", password);
+
+                        int count = (int)command.ExecuteScalar();
+
+                        return count > 0;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Er is een fout opgetreden bij het valideren van de atleet: " + ex.Message);
+                return false;
+            }
+        }
+        public bool ValidateTrainer(int personalNumber, string password)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    string query = "SELECT COUNT(*) FROM [User] WHERE PersonalNumber = @PersonalNumber AND Password = @Password AND Specialization IS NOT NULL";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@PersonalNumber", personalNumber);
+                        command.Parameters.AddWithValue("@Password", password);
+
+                        int count = (int)command.ExecuteScalar();
+
+                        return count > 0;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Er is een fout opgetreden bij het valideren van de trainer: " + ex.Message);
+                return false;
+            }
+        }
     }
 }
-
-

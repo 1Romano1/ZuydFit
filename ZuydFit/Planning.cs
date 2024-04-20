@@ -16,6 +16,7 @@ using ZuydFit;
         public int ActivityId { get; set; }
         public DAL DAL { get; set; }
 
+
         List <Planning> plannings = new List<Planning>();
         public Planning(int id, DateTime datetime, int activityId)
         {
@@ -37,7 +38,7 @@ using ZuydFit;
 
 
         //Onderstaande functies geven de data uit de program door aan de DAL.
-        public void Add()
+        public void Create()
         {
             DAL = new DAL();
             DAL.CreatePlanning(this);
@@ -60,4 +61,3 @@ using ZuydFit;
         }
     }
 }
-

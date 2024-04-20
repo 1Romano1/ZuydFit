@@ -16,7 +16,9 @@ namespace ZuydFit
         public int Sets { get; set; }
         public DAL DAL { get; set; }
 
+
         List <Activity> activities = new List<Activity>();
+
 
         public Activity(string description, string name, decimal duration, int sets)
         {
@@ -30,7 +32,7 @@ namespace ZuydFit
 
 
         //Onderstaande functies geven de ingevoerde data door aan de DAL.
-        public void Add()
+        public void Create()
         {
             DAL = new DAL();
             DAL.CreateActivity(this);
