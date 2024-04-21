@@ -30,7 +30,6 @@ public class Program
             Console.WriteLine("Kies een optie:");
 
             string userInput = Console.ReadLine();
-
             if (userInput == "1")
             {
                 Console.Clear();
@@ -109,6 +108,7 @@ public class Program
         Console.WriteLine("Naam:\t Beschrijving:\tTijdsduur:\tSet:");
         Activity activity = new Activity();
         List<Activity> activities = activity.Read();
+        
         foreach (Activity act in activities)
         {
             Console.WriteLine(act.Name + "\t" + act.Description + "\t" + act.Duration + "\t" + act.Sets + "\t");
@@ -178,8 +178,6 @@ public class Program
             Console.WriteLine("5. Terug naar hoofdmenu");
             string userInput = Console.ReadLine();
 
-
-
             if (userInput == "1")
             {
                 Console.Clear();
@@ -213,12 +211,6 @@ public class Program
             Console.WriteLine("Druk op Enter om door te gaan...");
             Console.ReadLine();
             Console.Clear();
-
-
-
-
-
-
         }
     }
 
@@ -241,6 +233,7 @@ public class Program
     static void AskForListGoal()
     {
         Goal goalRead = new Goal();
+        
         foreach (var goal in goalRead.Read())
         {
             Console.WriteLine(goal.Id);
@@ -251,6 +244,7 @@ public class Program
     static void AskToAdjustGoal()
     {
         Goal goalUpdate = new Goal();
+        
         foreach (var goal in goalUpdate.Read())
         {
             Console.WriteLine(goal.Name);
@@ -288,6 +282,7 @@ public class Program
         goalDel.GetGoalByName(nameDelete);
         goalDel.Delete();
         Goal goalDele = new Goal();
+        
         foreach (var go in goalDele.Read())
         {
             Console.WriteLine(go.Name);
@@ -357,6 +352,7 @@ public class Program
         Console.WriteLine("Dit is de lijst met advices");
 
         Advice adviceList = new Advice();
+        
         foreach (var adv in adviceList.Read())
         {
             Console.WriteLine(adv.Title);
@@ -366,6 +362,7 @@ public class Program
     static void AskToAdjustAdvice()
     {
         Advice adviceUpdate = new Advice();
+        
         foreach (var adv in adviceUpdate.Read())
         {
             Console.WriteLine(adv.Title);
@@ -397,6 +394,7 @@ public class Program
 
         Advice adviceDelete = new Advice();
         List<Advice> Advices = adviceDelete.Read();
+        
         foreach (var ad in Advices)
         {
             Console.WriteLine(ad.Title);
@@ -414,6 +412,7 @@ public class Program
             Console.WriteLine("3. Advies aanpassen");
             Console.WriteLine("4. Advies verwijderen");
             Console.WriteLine("5. Terug naar hoofdmenu");
+            
             string userInput = Console.ReadLine();
 
             if (userInput == "1")
@@ -474,6 +473,7 @@ public class Program
         Console.WriteLine("Locaties");
         Location location = new Location();
         List<Location> locations = location.Read();
+        
         foreach (Location loc in locations)
         {
             Console.WriteLine($"Classroom: {loc.Classroom} \tAddress: {loc.Address} \tZipcode: {loc.Zipcode} \tCity: {loc.City}");
@@ -508,6 +508,7 @@ public class Program
             Zipcode = zipcode,
             City = city
         };
+        
         location.Update();
         Console.WriteLine("De Locatie met id '" + id + "' is succesvol bijgewerkt.");
     }
@@ -519,6 +520,7 @@ public class Program
         {
             return;
         }
+        
         Location location = new Location();
         location.Delete();
     }
@@ -534,8 +536,8 @@ public class Program
             Console.WriteLine("3. Een Locatie bijwerken");
             Console.WriteLine("4. Een Locatie verwijderen");
             Console.WriteLine("5. Terug naar hoofdmenu");
+            
             string userInput = Console.ReadLine();
-
             if (userInput == "1")
                 AskForNewLocation();
             else if (userInput == "2")
@@ -584,6 +586,7 @@ public class Program
         Console.WriteLine("Datum en tijd:\t ActiviteitId:");
         Planning planning = new Planning();
         List<Planning> plannings = planning.Read();
+        
         foreach (Planning act in plannings)
         {
             Console.WriteLine(act.DateTime + "\t" + act.ActivityId + "\t");
@@ -598,6 +601,7 @@ public class Program
         {
             return;
         }
+       
         Console.WriteLine("Voer de nieuwe datum en tijd in:");
         string input = Console.ReadLine();
 
@@ -624,7 +628,6 @@ public class Program
             Console.WriteLine("Ongeldige invoer. Voer een geldig getal in.");
         }
 
-
         Planning planning = new Planning
         {
             Id = id,
@@ -633,8 +636,6 @@ public class Program
         };
         planning.Update();
         Console.WriteLine("De planning met id" + id + "is succesvol bijgewerkt.");
-
-
     }
     static void AskForDeletePlanning()
     {
@@ -664,8 +665,8 @@ public class Program
             Console.WriteLine("3. Een planning bijwerken");
             Console.WriteLine("4. Een planning verwijderen");
             Console.WriteLine("5. Terug naar hoofdmenu");
+            
             string userInput = Console.ReadLine();
-
             if (userInput == "1")
                 AskForNewPlanning();
             else if (userInput == "2")
@@ -757,6 +758,7 @@ public class Program
 
         Progression progression = new Progression();
         List<Progression> progressions = progression.Read();
+        
         foreach (var progre in progressions)
         {
             Console.WriteLine(progre.Id);
@@ -776,8 +778,8 @@ public class Program
             Console.WriteLine("3. Een progressie bijwerken");
             Console.WriteLine("4. Een progressie verwijderen");
             Console.WriteLine("5. Terug naar hoofdmenu");
+            
             string userInput = Console.ReadLine();
-
             if (userInput == "1")
                 AskForNewProgression();
             else if (userInput == "2")
@@ -818,6 +820,7 @@ public class Program
         Console.WriteLine("Trainingen");
         Training training = new Training();
         List<Training> trainings = training.Read();
+        
         foreach (Training tra in trainings)
         {
             Console.WriteLine($"Name: {tra.Name}");
@@ -840,6 +843,7 @@ public class Program
             Id = id,
             Name = name
         };
+        
         training.Update();
         Console.WriteLine("De activiteit met id '" + id + "' is succesvol bijgewerkt.");
     }
@@ -848,12 +852,9 @@ public class Program
         Console.WriteLine("Voer de naam in van de training die je wilt verwijderen:");
         string trainingName = Console.ReadLine();
 
-        // Create an instance of the Training class with the specified name
         Training training = new Training(trainingName);
 
-        // Call the Delete method to delete the training
         training.Delete();
-
         Console.WriteLine($"Training '{trainingName}' is succesvol verwijderd.");
     }
     static void AddExistingActivityToTraining(Training training)
@@ -865,7 +866,6 @@ public class Program
             Console.WriteLine("Voer de naam in van de activiteit die u aan de training wilt toevoegen:");
             string activityName = Console.ReadLine();
             
-
             List<Activity> activities = AskForListActivity();
             Console.Clear();   
             // Zoek naar een activiteit in de lijst van activiteiten met een naam die overeenkomt met de opgegeven activiteitnaam, 
@@ -905,8 +905,8 @@ public class Program
             Console.WriteLine("3. Een training bijwerken");
             Console.WriteLine("4. Een training verwijderen");
             Console.WriteLine("5. Terug naar hoofdmenu");
+            
             string userInput = Console.ReadLine();
-
             if (userInput == "1")
                 AskForNewTraining();
             else if (userInput == "2")
@@ -963,7 +963,6 @@ public class Program
         Console.WriteLine("1. Inloggen als atleet");
         Console.WriteLine("2. Inloggen als trainer");
 
-        // Vraag om een keuze en converteer naar een integer
         int choice = int.Parse(Console.ReadLine());
 
         if (choice == 1)
@@ -983,25 +982,20 @@ public class Program
     {
         bool isLoggedIn = false;
 
-        // Blijf de inlogpoging herhalen totdat deze succesvol is
         while (!isLoggedIn)
         {
-            // Voer de inlogprocedure uit voor atleten
             Console.WriteLine("Voer hier je nummer in:");
             int personalNumber = int.Parse(Console.ReadLine());
 
             Console.WriteLine("Voer hier je wachtwoord in:");
             string password = Console.ReadLine();
 
-            // Instantieer een atleet en voer de inlogactie uit
             Athlete athlete = new Athlete(personalNumber, password);
             isLoggedIn = athlete.Login();
 
-            // Voer verdere acties uit voor atleten
             if (isLoggedIn)
             {
                 Console.WriteLine("Welkom, atleet!");
-                // Voer hier verdere acties uit voor atleten na succesvol inloggen
             }
             else
             {
@@ -1013,25 +1007,20 @@ public class Program
     {
         bool isLoggedIn = false;
 
-        // Blijf de inlogpoging herhalen totdat deze succesvol is
         while (!isLoggedIn)
         {
-            // Voer de inlogprocedure uit voor trainers
             Console.WriteLine("Voer hier je nummer in:");
             int personalNumber = int.Parse(Console.ReadLine());
 
             Console.WriteLine("Voer hier je wachtwoord in:");
             string password = Console.ReadLine();
 
-            // Instantieer een trainer en voer de inlogactie uit
             Trainer trainer = new Trainer(personalNumber, password);
             isLoggedIn = trainer.Login();
 
-            // Voer verdere acties uit voor trainers
             if (isLoggedIn)
             {
                 Console.WriteLine("Welkom, trainer!");
-                // Voer hier verdere acties uit voor trainers na succesvol inloggen
             }
             else
             {
@@ -1039,10 +1028,4 @@ public class Program
             }
         }
     }
-
-
-
 }
-
-
-
