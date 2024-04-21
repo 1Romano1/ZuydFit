@@ -39,7 +39,6 @@ namespace ZuydFit
                         command.Parameters.AddWithValue("Address", @location.Address);
                         command.Parameters.AddWithValue("Zipcode", @location.Zipcode);
                         command.Parameters.AddWithValue("City", @location.City);
-                        // command.Parameters.AddWithValue("Training", @location.Trainings);
                         command.ExecuteNonQuery();
                     }
                 }
@@ -65,8 +64,7 @@ namespace ZuydFit
                     {
                         while (reader.Read())
                         {
-                            //de uitroeptekens staan ervoor omdat de copiler denkt dat het een null waarde kan hebben terwijl dat zeker niet zo is.
-                            locations?.Add(new Location(reader[0].ToString(), reader[1].ToString(), reader[2].ToString(), reader[3].ToString()));
+                            locations.Add(new Location(reader[0].ToString(), reader[1].ToString(), reader[2].ToString(), reader[3].ToString()));
                         }
                     }
                 }

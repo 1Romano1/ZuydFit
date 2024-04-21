@@ -7,59 +7,10 @@ public class Program
 {
     static void Main(string[] args)
     {
-        MainMenu();
+        ChooseOption();
     }
 
 
-    static void AtletheMenu() 
-    {
-        bool exit = false;
-
-        while (!exit)
-        {
-            Console.WriteLine("Hoofdmenu:");
-            Console.WriteLine("1. Goalmenu");
-            Console.WriteLine("2. Progressionmenu");
-            Console.WriteLine("3. Locationmenu");
-            Console.WriteLine("4. Trainingmenu");
-            Console.WriteLine("5. Exit");
-
-            string userInput = Console.ReadLine();
-            if (userInput == "1")
-            {
-                Console.Clear();
-                GoalMenu();
-            }
-            else if (userInput == "2")
-            {
-                Console.Clear();
-                ProgressionMenu();
-            }
-            else if (userInput == "3")
-            {
-                Console.Clear();
-                LocationMenu();
-            }
-            else if (userInput == "4")
-            {
-                Console.Clear();
-                TrainingMenu();
-            }
-            else if (userInput == "5")
-            {
-                exit = true;
-            }
-            else
-            {
-                Console.Clear();
-                Console.WriteLine("Ongeldige keuze. Probeer opnieuw.");
-            }
-
-        }
-    
-    
-    
-    }
     //Overkoepelende functie voor alle menu's.
     static void MainMenu()
     {
@@ -306,7 +257,7 @@ public class Program
         Goal goalUp = new Goal();
 
         Console.WriteLine(nameUpdate);
-        goalUp.GetGoalByName(nameUpdate);
+        goalUp.ReadByName(nameUpdate);
 
         Console.WriteLine("wat is de naam van je goal");
         goalUp.Name = Console.ReadLine();
@@ -331,7 +282,7 @@ public class Program
         string nameDelete = Console.ReadLine();
 
         Goal goalDel = new Goal();
-        goalDel.GetGoalByName(nameDelete);
+        goalDel.ReadByName(nameDelete);
         goalDel.Delete();
         Goal goalDele = new Goal();
         
@@ -381,7 +332,7 @@ public class Program
 
 
     //Hieronder staan de functies voor advies.
-    static void AskForAdvice()
+    static void AskForNewAdvice()
     {
         Console.WriteLine("wat is de titel van je advies?");
         string title = Console.ReadLine();
@@ -469,7 +420,7 @@ public class Program
 
             if (userInput == "1")
             {
-                AskForAdvice();
+                AskForNewAdvice();
             }
             else if (userInput == "2")
             {
@@ -1006,11 +957,12 @@ public class Program
             return false;
         }
     }
-    static void ShowMenu()
+    static void ChooseOption()
     {
         Console.WriteLine("Maak een keuze:");
         Console.WriteLine("1. Inloggen als atleet");
         Console.WriteLine("2. Inloggen als trainer");
+        Console.WriteLine("3. Testen zonder in te loggen.");
 
         int choice = int.Parse(Console.ReadLine());
 
@@ -1021,6 +973,10 @@ public class Program
         else if (choice == 2)
         {
             PerformTrainerLogin();
+        }
+        else if (choice == 3)
+        {
+            MainMenu();
         }
         else
         {
@@ -1071,11 +1027,119 @@ public class Program
             if (isLoggedIn)
             {
                 Console.WriteLine("Welkom, trainer!");
-                MainMenu();
+                TrainerMenu();
             }
             else
             {
                 Console.WriteLine("Ongeldige inloggegevens. Probeer het opnieuw.");
+            }
+        }
+    }
+    static void AtletheMenu()
+    {
+        bool exit = false;
+
+        while (!exit)
+        {
+            Console.WriteLine("Hoofdmenu:");
+            Console.WriteLine("1. Goalmenu");
+            Console.WriteLine("2. Progressionmenu");
+            Console.WriteLine("3. Locatie inzien");
+            Console.WriteLine("4. Activiteit bekijken");
+            Console.WriteLine("5. Training bekijken");
+            Console.WriteLine("6. Exit");
+
+            string userInput = Console.ReadLine();
+            if (userInput == "1")
+            {
+                Console.Clear();
+                GoalMenu();
+            }
+            else if (userInput == "2")
+            {
+                Console.Clear();
+                ProgressionMenu();
+            }
+            else if (userInput == "3")
+            {
+                Console.Clear();
+                AskForListLocation();
+            }
+            else if (userInput == "4")
+            {
+                Console.Clear();
+                AskForListActivity();
+            }
+            else if (userInput == "5")
+            {
+                Console.Clear();
+                AskForListTraining();
+            }
+            else if (userInput == "6")
+            {
+                exit = true;
+            }
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("Ongeldige keuze. Probeer opnieuw.");
+            }
+        }
+    }
+    static void TrainerMenu()
+    {
+        bool exit = false;
+
+        while (!exit)
+        {
+            Console.WriteLine("Hoofdmenu:");
+            Console.WriteLine("1. Doelen inzien");
+            Console.WriteLine("2.Advies geven");
+            Console.WriteLine("4.Locatie bekijken.");
+            Console.WriteLine("2. ProgressionMenu");
+            Console.WriteLine("3. ActivityMenu");
+            Console.WriteLine("4. Trainingmenu");
+            Console.WriteLine("5. Exit");
+
+            string userInput = Console.ReadLine();
+            if (userInput == "1")
+            {
+                Console.Clear();
+                AskForListGoal();
+            }
+            else if (userInput == "2")
+            {
+                Console.Clear();
+                AskForNewAdvice();
+            }
+            else if (userInput == "3")
+            {
+                Console.Clear();
+                AskForListLocation();
+            }
+            else if (userInput == "4")
+            {
+                Console.Clear();
+                ProgressionMenu();
+            }
+            else if (userInput == "5")
+            {
+                Console.Clear();
+                ActivityMenu();
+            }
+            else if (userInput == "6")
+            {
+                Console.Clear();
+                TrainingMenu();
+            }
+            else if (userInput == "7")
+            {
+                exit = true;
+            }
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("Ongeldige keuze. Probeer opnieuw.");
             }
         }
     }

@@ -51,6 +51,14 @@ namespace ZuydFit.Models
             DAL.ReadGoal();
             return DAL.goals;
         }
+        public void ReadByName(string name)
+        {
+            DAL = new DAL();
+            Goal goal = DAL.GetGoalByName(name);
+            Id = goal.Id;
+            Name = goal.Name;
+            Description = goal.Description;
+        }
         public void Update()
         {
             DAL = new DAL();
@@ -60,14 +68,6 @@ namespace ZuydFit.Models
         {
             DAL = new DAL();
             DAL.DeleteGoal(this);
-        }
-        public void GetGoalByName(string name)
-        {
-            DAL = new DAL();
-            Goal goal = DAL.GetGoalByName(name);
-            Id = goal.Id;
-            Name = goal.Name;
-            Description = goal.Description;
         }
     }
 }
