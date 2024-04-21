@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ZuydFit
+namespace ZuydFit.Models
 {
     public class Training
     {
@@ -15,7 +15,7 @@ namespace ZuydFit
 
 
         List<Training> training = new List<Training>();
-        
+
 
         public Training(string name)
         {
@@ -32,7 +32,7 @@ namespace ZuydFit
         //Onderstaande functies geven de data uit de program door aan de DAL.
         public void Create()
         {
-            
+
             DAL = new DAL();
             DAL.CreateTraining(this);
 

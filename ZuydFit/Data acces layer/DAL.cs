@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZuydFit.Models;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ZuydFit

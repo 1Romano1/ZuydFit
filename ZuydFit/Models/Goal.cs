@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ZuydFit
+namespace ZuydFit.Models
 {
     public class Goal
     {
@@ -45,7 +45,7 @@ namespace ZuydFit
 
 
         //Onderstaande functies geven de functies door aan de DAL.
-        public void Create() 
+        public void Create()
         {
             DAL = new DAL();
             DAL.CreateGoal(this);
@@ -70,9 +70,9 @@ namespace ZuydFit
         {
             DAL = new DAL();
             Goal goal = DAL.GetGoalByName(name);
-            this.Id = goal.Id;
-            this.Name = goal.Name;
-            this.Description = goal.Description;
+            Id = goal.Id;
+            Name = goal.Name;
+            Description = goal.Description;
         }
     }
 }

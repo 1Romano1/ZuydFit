@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace ZuydFit
+namespace ZuydFit.Models
 {
     public class Activity
     {
@@ -17,15 +17,15 @@ namespace ZuydFit
         public DAL DAL { get; set; }
 
 
-        List <Activity> activities = new List<Activity>();
+        List<Activity> activities = new List<Activity>();
 
 
         public Activity(string description, string name, decimal duration, int sets)
         {
-            this.Name = name;
-            this.Description = description;
-            this.Duration = duration;
-            this.Sets = sets;
+            Name = name;
+            Description = description;
+            Duration = duration;
+            Sets = sets;
         }
         public Activity() { }
 
@@ -37,7 +37,7 @@ namespace ZuydFit
             DAL = new DAL();
             DAL.CreateActivity(this);
         }
-        public List <Activity> Read()
+        public List<Activity> Read()
         {
             DAL = new DAL();
             DAL.ReadActivity(activities);

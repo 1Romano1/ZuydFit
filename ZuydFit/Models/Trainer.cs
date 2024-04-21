@@ -5,12 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using ZuydFit.ZuydFit;
 
-namespace ZuydFit
+namespace ZuydFit.Models
 {
     public class Trainer : User
     {
         public int Id { get; set; }
-        public string Specialization { get; set; } 
+        public string Specialization { get; set; }
         public List<Advice> Advices { get; set; }
         public List<Training> Trainings { get; set; }
 

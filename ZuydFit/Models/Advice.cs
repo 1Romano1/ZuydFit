@@ -5,7 +5,7 @@ using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ZuydFit
+namespace ZuydFit.Models
 {
     public class Advice
     {
@@ -39,7 +39,7 @@ namespace ZuydFit
         public void Create()
         {
             DAL = new DAL();
-            DAL.CreateAdvice(this); 
+            DAL.CreateAdvice(this);
         }
         public List<Advice> Read()
         {
@@ -53,18 +53,18 @@ namespace ZuydFit
             List<Advice> advices = DAL.GetAdviceByTitle(title);
             for (int i = 0; i < advices.Count; i++)
             {
-                this.Id = advices[i].Id;
-                this.Title = advices[i].Title;
-                this.Description = advices[i].Description;
+                Id = advices[i].Id;
+                Title = advices[i].Title;
+                Description = advices[i].Description;
             }
-            
+
         }
         public void Update()
         {
             DAL = new DAL();
             DAL.UpdateAdvice(this);
         }
-        public void Delete() 
+        public void Delete()
         {
             DAL = new DAL();
             DAL.DeleteAdvice(this);

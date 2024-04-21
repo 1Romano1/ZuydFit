@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using ZuydFit;
+using ZuydFit.Models;
 using ZuydFit.ZuydFit;
 
 public class Program

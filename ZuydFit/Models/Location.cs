@@ -10,7 +10,7 @@ using System.Threading.Channels;
 using System.Threading.Tasks;
 using static System.Collections.Specialized.BitVector32;
 
-namespace ZuydFit
+namespace ZuydFit.Models
 {
     public class Location
     {
