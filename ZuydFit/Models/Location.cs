@@ -10,7 +10,7 @@ using System.Threading.Channels;
 using System.Threading.Tasks;
 using static System.Collections.Specialized.BitVector32;
 
-namespace ZuydFit
+namespace ZuydFit.Models
 {
     public class Location
     {
@@ -22,7 +22,9 @@ namespace ZuydFit
         public List<Training> Trainings { get; set; }
         public DAL DAL { get; set; }
 
+
         List<Location> locations = new List<Location>();
+
 
         public Location(string classroom, string address, string zipcode, string city)//List<Training> trainings)
         {
@@ -32,12 +34,11 @@ namespace ZuydFit
             City = city;
             //Trainings = trainings;
         }
-
         public Location() { }
 
 
         //Onderstaande functies geven de ingevoerde data door aan de DAL.
-        public void Add()
+        public void Create()
         {
             DAL = new DAL();
             DAL.CreateLocation(this);
@@ -48,16 +49,15 @@ namespace ZuydFit
             DAL.ReadLocation(locations);
             return locations;
         }
-        public void Delete()
-        {
-            DAL = new DAL();
-            DAL.DeleteLocation(Id);
-        }
         public void Update()
         {
             DAL = new DAL();
             DAL.UpdateLocation(this);
         }
+        public void Delete()
+        {
+            DAL = new DAL();
+            DAL.DeleteLocation(Id);
+        }
     }
 }
-

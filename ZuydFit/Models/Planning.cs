@@ -5,10 +5,9 @@ using System.Text;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using ZuydFit;
 
-    namespace ZuydFit
-    {
+namespace ZuydFit.Models
+{
     public class Planning
     {
         public int Id { get; set; }
@@ -16,28 +15,29 @@ using ZuydFit;
         public int ActivityId { get; set; }
         public DAL DAL { get; set; }
 
-        List <Planning> plannings = new List<Planning>();
+
+        List<Planning> plannings = new List<Planning>();
         public Planning(int id, DateTime datetime, int activityId)
         {
-            this.Id = id;
-            this.DateTime = datetime;
-            this.ActivityId = activityId;
+            Id = id;
+            DateTime = datetime;
+            ActivityId = activityId;
 
         }
         public Planning(DateTime datetime, int activityId)
         {
-            this.DateTime = datetime;
-            this.ActivityId = activityId;
+            DateTime = datetime;
+            ActivityId = activityId;
         }
-        public Planning() 
+        public Planning()
         {
-        
-        
+
+
         }
 
 
         //Onderstaande functies geven de data uit de program door aan de DAL.
-        public void Add()
+        public void Create()
         {
             DAL = new DAL();
             DAL.CreatePlanning(this);
@@ -60,4 +60,3 @@ using ZuydFit;
         }
     }
 }
-

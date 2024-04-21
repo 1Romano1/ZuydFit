@@ -5,7 +5,7 @@ using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ZuydFit
+namespace ZuydFit.Models
 {
     public class Advice
     {
@@ -16,12 +16,12 @@ namespace ZuydFit
         public string Athlete { get; set; }
         public DAL DAL { get; set; }
 
+
         public Advice()
         {
             Title = "";
             Description = "";
         }
-
         public Advice(string title, string description)
         {
             Title = title;
@@ -36,39 +36,38 @@ namespace ZuydFit
 
 
         //Onderstaande functies geven de ingevoerde data door aan de DAL.
-        public void AddAdvice()
+        public void Create()
         {
             DAL = new DAL();
-            DAL.CreateAdvice(this); 
+            DAL.CreateAdvice(this);
         }
-        public List<Advice> ReadAdvice()
+        public List<Advice> Read()
         {
             DAL = new DAL();
             DAL.ReadAdvice();
             return DAL.Advices;
         }
-        public void GetAdviceByTitle(string title)
+        public void ReadByTitle(string title)
         {
             DAL = new DAL();
             List<Advice> advices = DAL.GetAdviceByTitle(title);
             for (int i = 0; i < advices.Count; i++)
             {
-                this.Id = advices[i].Id;
-                this.Title = advices[i].Title;
-                this.Description = advices[i].Description;
+                Id = advices[i].Id;
+                Title = advices[i].Title;
+                Description = advices[i].Description;
             }
-            
+
         }
-        public void UpdateAdvice()
+        public void Update()
         {
             DAL = new DAL();
             DAL.UpdateAdvice(this);
         }
-        public void DeleteAdvice() 
+        public void Delete()
         {
             DAL = new DAL();
             DAL.DeleteAdvice(this);
         }
-
     }
 }

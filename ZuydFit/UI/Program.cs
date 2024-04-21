@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using ZuydFit;
+using ZuydFit.Models;
 using ZuydFit.ZuydFit;
 
 public class Program
@@ -94,7 +94,7 @@ public class Program
         int sets = int.Parse(Console.ReadLine());
 
         Activity activity = new Activity(name, description, duration, sets);
-        activity.Add();
+        activity.Create();
 
         Console.Clear();
         Console.WriteLine("De volgende activiteit is toegevoegd:");
@@ -103,7 +103,21 @@ public class Program
         Console.WriteLine("Duur per set (in minuten): " + activity.Duration);
         Console.WriteLine("Aantal sets: " + activity.Sets);
     }
-    static void AskForAdjustActivity()
+    static List<Activity> AskForListActivity()
+    {
+        Console.WriteLine("Activiteit:");
+        Console.WriteLine("Naam:\t Beschrijving:\tTijdsduur:\tSet:");
+        Activity activity = new Activity();
+        List<Activity> activities = activity.Read();
+        foreach (Activity act in activities)
+        {
+            Console.WriteLine(act.Name + "\t" + act.Description + "\t" + act.Duration + "\t" + act.Sets + "\t");
+        }
+        Console.WriteLine();
+
+        return activities;
+    }
+    static void AskToAdjustActivity()
     {
         Console.WriteLine("Voer de id van de activiteit in die u wilt gaan bijwerken:");
         int id;
@@ -143,21 +157,7 @@ public class Program
         activity.Update();
         Console.WriteLine("De activiteit met id '" + id + "' is succesvol bijgewerkt.");
     }
-    static List<Activity> AskForListActivity()
-    {
-        Console.WriteLine("Activiteit:");
-        Console.WriteLine("Naam:\t Beschrijving:\tTijdsduur:\tSet:");
-        Activity activity = new Activity();
-        List<Activity> activities = activity.Read();
-        foreach (Activity act in activities)
-        {
-            Console.WriteLine(act.Name + "\t" + act.Description + "\t" + act.Duration + "\t" + act.Sets + "\t");
-        }
-        Console.WriteLine();
-
-        return activities;
-    }
-    static void AskForDeleteActivity()
+    static void AskToDeleteActivity()
     {
         Console.WriteLine("Voer de naam in van de oefening dat u wilt verwijderen:");
         string Name = Console.ReadLine();
@@ -193,12 +193,12 @@ public class Program
             else if (userInput == "3")
             {
                 Console.Clear();
-                AskForAdjustActivity();
+                AskToAdjustActivity();
             }
             else if (userInput == "4")
             {
                 Console.Clear();
-                AskForDeleteActivity();
+                AskToDeleteActivity();
             }
             else if (userInput == "5")
                 exit = true;
@@ -224,7 +224,7 @@ public class Program
 
     
     //Hieronder staan de functies van goal.
-    static void AskForGoal()
+    static void AskForNewGoal()
     {
         Console.WriteLine("Schrijf de titel van je Goal");
         string name = Console.ReadLine();
@@ -236,12 +236,22 @@ public class Program
         string progression = Console.ReadLine();
 
         Goal goaladd = new Goal(name, descriptionadd, progression);
-        goaladd.AddGoal();
+        goaladd.Create();
+    }
+    static void AskForListGoal()
+    {
+        Goal goalRead = new Goal();
+        foreach (var goal in goalRead.Read())
+        {
+            Console.WriteLine(goal.Id);
+            Console.WriteLine(goal.Name);
+            Console.WriteLine(goal.Description);
+        }
     }
     static void AskToAdjustGoal()
     {
         Goal goalUpdate = new Goal();
-        foreach (var goal in goalUpdate.GetGoals())
+        foreach (var goal in goalUpdate.Read())
         {
             Console.WriteLine(goal.Name);
         }
@@ -261,22 +271,12 @@ public class Program
         Console.WriteLine("Wat is het progressieid");
         goalUp.Progression = Console.ReadLine();
 
-        goalUp.UpdateGoals();
-    }
-    static void AskForListGoal()
-    {
-        Goal goalRead = new Goal();
-        foreach (var goal in goalRead.GetGoals())
-        {
-            Console.WriteLine(goal.Id);
-            Console.WriteLine(goal.Name);
-            Console.WriteLine(goal.Description);
-        }
+        goalUp.Update();
     }
     static void AskToRemoveGoalFromList()
     {
         Goal goalDelete = new Goal();
-        foreach (var goal in goalDelete.GetGoals())
+        foreach (var goal in goalDelete.Read())
         {
             Console.WriteLine(goal.Name);
         }
@@ -286,9 +286,9 @@ public class Program
 
         Goal goalDel = new Goal();
         goalDel.GetGoalByName(nameDelete);
-        goalDel.DeleteGoal();
+        goalDel.Delete();
         Goal goalDele = new Goal();
-        foreach (var go in goalDele.GetGoals())
+        foreach (var go in goalDele.Read())
         {
             Console.WriteLine(go.Name);
         }
@@ -308,7 +308,7 @@ public class Program
             string userInput = Console.ReadLine();
 
             if (userInput == "1")
-                AskForGoal();
+                AskForNewGoal();
             else if (userInput == "2")
                 AskForListGoal();
             else if (userInput == "3")
@@ -343,10 +343,10 @@ public class Program
         string description = Console.ReadLine();
 
         Advice adviceAdd = new Advice(title, description);
-        adviceAdd.AddAdvice();
+        adviceAdd.Create();
 
         Advice adviceAd = new Advice();
-        foreach (var adv in adviceAd.ReadAdvice())
+        foreach (var adv in adviceAd.Read())
         {
             Console.WriteLine(adv.Title);
             Console.WriteLine(adv.Description);
@@ -357,7 +357,7 @@ public class Program
         Console.WriteLine("Dit is de lijst met advices");
 
         Advice adviceList = new Advice();
-        foreach (var adv in adviceList.ReadAdvice())
+        foreach (var adv in adviceList.Read())
         {
             Console.WriteLine(adv.Title);
             Console.WriteLine(adv.Description);
@@ -366,7 +366,7 @@ public class Program
     static void AskToAdjustAdvice()
     {
         Advice adviceUpdate = new Advice();
-        foreach (var adv in adviceUpdate.ReadAdvice())
+        foreach (var adv in adviceUpdate.Read())
         {
             Console.WriteLine(adv.Title);
         }
@@ -375,7 +375,7 @@ public class Program
         string titleUpdate = Console.ReadLine();
 
         Console.WriteLine(titleUpdate);
-        adviceUpdate.GetAdviceByTitle(titleUpdate);
+        adviceUpdate.ReadByTitle(titleUpdate);
 
         Console.WriteLine("wat is de nieuwe titel van je advies.");
         adviceUpdate.Title = Console.ReadLine();
@@ -383,7 +383,7 @@ public class Program
         Console.WriteLine("Wat is het nieuwe advies dat je wilt geven?");
         adviceUpdate.Description = Console.ReadLine();
 
-        adviceUpdate.UpdateAdvice();
+        adviceUpdate.Update();
     }
     static void AskToRemoveAdvice()
     {
@@ -391,12 +391,12 @@ public class Program
         string title = Console.ReadLine();
 
         Advice advice = new Advice();
-        advice.GetAdviceByTitle(title);
-        advice.DeleteAdvice();
+        advice.ReadByTitle(title);
+        advice.Delete();
 
 
         Advice adviceDelete = new Advice();
-        List<Advice> Advices = adviceDelete.ReadAdvice();
+        List<Advice> Advices = adviceDelete.Read();
         foreach (var ad in Advices)
         {
             Console.WriteLine(ad.Title);
@@ -467,7 +467,7 @@ public class Program
 
 
         Location location = new Location(classroom, address, zipcode, city);
-        location.Add();
+        location.Create();
     }
     static void AskForListLocation()
     {
@@ -571,12 +571,24 @@ public class Program
         int activityId = int.Parse(Console.ReadLine());
 
         Planning planning = new Planning(datetime, activityId);
-        planning.Add();
+        planning.Create();
 
         Console.Clear();
         Console.WriteLine("Dit volgende planning is gelogd.");
         Console.WriteLine("Datum en Tijd:" + planning.DateTime);
         Console.WriteLine("Uitgevoerde activiteit:" + planning.ActivityId);
+    }
+    static void AskForListPlanning()
+    {
+        Console.WriteLine("Planning");
+        Console.WriteLine("Datum en tijd:\t ActiviteitId:");
+        Planning planning = new Planning();
+        List<Planning> plannings = planning.Read();
+        foreach (Planning act in plannings)
+        {
+            Console.WriteLine(act.DateTime + "\t" + act.ActivityId + "\t");
+        }
+        Console.WriteLine();
     }
     static void AskForAdjustPlanning()
     {
@@ -623,18 +635,6 @@ public class Program
         Console.WriteLine("De planning met id" + id + "is succesvol bijgewerkt.");
 
 
-    }
-    static void AskForListPlanning()
-    {
-        Console.WriteLine("Planning");
-        Console.WriteLine("Datum en tijd:\t ActiviteitId:");
-        Planning planning = new Planning();
-        List<Planning> plannings = planning.Read();
-        foreach (Planning act in plannings)
-        {
-            Console.WriteLine(act.DateTime + "\t" + act.ActivityId + "\t");
-        }
-        Console.WriteLine();
     }
     static void AskForDeletePlanning()
     {
@@ -701,10 +701,10 @@ public class Program
         int percentage = Int32.Parse(Console.ReadLine());
 
         Progression progression = new Progression(description, percentage);
-        progression.AddProgression();
+        progression.Create();
 
         Progression progressionAdd = new Progression();
-        foreach (var prog in progressionAdd.ReadProgression())
+        foreach (var prog in progressionAdd.Read())
         {
             Console.WriteLine(prog.Description);
             Console.WriteLine(prog.Percentage);
@@ -715,7 +715,7 @@ public class Program
         Console.WriteLine("Dit is de lijst met Progressions");
 
         Progression ProgressionList = new Progression();
-        foreach (var pro in ProgressionList.ReadProgression())
+        foreach (var pro in ProgressionList.Read())
         {
             Console.WriteLine(pro.Description);
             Console.WriteLine(pro.Percentage);
@@ -724,7 +724,7 @@ public class Program
     static void AskToAdjustProgression()
     {
         Progression progressionAdjsut = new Progression();
-        foreach (var progr in progressionAdjsut.ReadProgression())
+        foreach (var progr in progressionAdjsut.Read())
         {
             Console.WriteLine(progr.Id);
             Console.WriteLine(progr.Description);
@@ -735,7 +735,7 @@ public class Program
         int id = Int32.Parse(Console.ReadLine());
 
         Console.WriteLine(id);
-        progressionAdjsut.GetProgressionById(id);
+        progressionAdjsut.ReadById(id);
 
         Console.WriteLine("wat is de nieuwe beschrijving van je progressie.");
         progressionAdjsut.Description = Console.ReadLine();
@@ -743,7 +743,7 @@ public class Program
         Console.WriteLine("Wat is het nieuwe percentage wat je wilt geven voor de progressie?");
         progressionAdjsut.Percentage = Int32.Parse(Console.ReadLine());
 
-        progressionAdjsut.UpdateProgression();
+        progressionAdjsut.Update();
     }
     static void AskToRemoveProgression()
     {
@@ -751,12 +751,12 @@ public class Program
         int Id = Int32.Parse(Console.ReadLine());
 
         Progression progressiondelete = new Progression();
-        progressiondelete.GetProgressionById(Id);
-        progressiondelete.DeleteProgression();
+        progressiondelete.ReadById(Id);
+        progressiondelete.Delete();
 
 
         Progression progression = new Progression();
-        List<Progression> progressions = progression.ReadProgression();
+        List<Progression> progressions = progression.Read();
         foreach (var progre in progressions)
         {
             Console.WriteLine(progre.Id);
@@ -811,7 +811,7 @@ public class Program
 
         Training training = new Training(name);
         AddExistingActivityToTraining(training);
-        training.Add();
+        training.Create();
     }
     static void AskForListTraining()
     {
@@ -930,6 +930,7 @@ public class Program
             Console.Clear();
         }
     }
+
 
     //Functies voor de Login.
     static bool PerformLogin(int personalNumber, string password)

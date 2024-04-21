@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using ZuydFit.ZuydFit;
 
-namespace ZuydFit
+namespace ZuydFit.Models
 {
     public class Athlete : User
-    { 
+    {
         public string FavoriteMuscleGroup { get; set; }
         public List<Goal> Goals { get; set; }
         public List<Advice> Advices { get; set; }
@@ -20,18 +20,17 @@ namespace ZuydFit
             Goals = goals;
             Advices = advices;
         }*/
-
         public Athlete(int personalNumber, string password) : base(personalNumber, password)
         {
-         
+
 
         }
+
+
         public override bool Login()
         {
             DAL = new DAL();
             return DAL.ValidateAthlete(PersonalNumber, Password);
         }
-
-
     }
 }
