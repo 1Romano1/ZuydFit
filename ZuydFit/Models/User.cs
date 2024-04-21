@@ -22,13 +22,6 @@ namespace ZuydFit
             public DAL DAL { get; set; }
 
 
-            /*public User(string firstName, string lastName, int personalNumber, string password)
-            {
-                FirstName = firstName;
-                LastName = lastName;
-                PersonalNumber = personalNumber;
-                Password = password;
-            }*/
             public User(int personalNumber,string password )
             {
                 PersonalNumber = personalNumber;

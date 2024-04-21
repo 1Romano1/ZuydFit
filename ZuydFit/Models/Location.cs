@@ -19,20 +19,23 @@ namespace ZuydFit.Models
         public string Address { get; set; }
         public string Zipcode { get; set; }
         public string City { get; set; }
-        public List<Training> Trainings { get; set; }
         public DAL DAL { get; set; }
 
 
         List<Location> locations = new List<Location>();
 
 
-        public Location(string classroom, string address, string zipcode, string city)//List<Training> trainings)
+        public Location(string classroom, string address, string zipcode, string city)
         {
             Classroom = classroom;
             Address = address;
             Zipcode = zipcode;
             City = city;
-            //Trainings = trainings;
+        }
+
+        public Location(string classroom)
+        {
+            Classroom = classroom;
         }
         public Location() { }
 
@@ -57,7 +60,7 @@ namespace ZuydFit.Models
         public void Delete()
         {
             DAL = new DAL();
-            DAL.DeleteLocation(Id);
+            DAL.DeleteLocation(Classroom);
         }
     }
 }

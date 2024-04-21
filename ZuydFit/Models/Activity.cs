@@ -10,8 +10,8 @@ namespace ZuydFit.Models
     public class Activity
     {
         public int Id { get; set; }
-        public string Description { get; set; }
         public string Name { get; set; }
+        public string Description { get; set; }
         public decimal Duration { get; set; }
         public int Sets { get; set; }
         public DAL DAL { get; set; }
@@ -20,12 +20,17 @@ namespace ZuydFit.Models
         List<Activity> activities = new List<Activity>();
 
 
-        public Activity(string description, string name, decimal duration, int sets)
+        public Activity(string name, string description, decimal duration, int sets)
         {
             Name = name;
             Description = description;
             Duration = duration;
             Sets = sets;
+        }
+
+        public Activity(string name)
+        {
+            Name = name;  
         }
         public Activity() { }
 
