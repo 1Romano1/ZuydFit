@@ -17,12 +17,6 @@ namespace ZuydFit.Models
         public DAL DAL { get; set; }
 
 
-        public Goal()
-        {
-            Name = "";
-            Description = "";
-            Progression = "";
-        }
         public Goal(int id, string name, string description)
         {
             Id = id;
@@ -43,6 +37,7 @@ namespace ZuydFit.Models
             Progression = progression;
         }
 
+        public Goal() { }
 
         //Onderstaande functies geven de functies door aan de DAL.
         public void Create()
@@ -54,7 +49,7 @@ namespace ZuydFit.Models
         {
             DAL = new DAL();
             DAL.ReadGoal();
-            return DAL.Goals;
+            return DAL.goals;
         }
         public void Update()
         {

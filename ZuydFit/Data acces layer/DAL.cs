@@ -13,14 +13,14 @@ namespace ZuydFit
     public class DAL
     {
         public List<Activity> activities = new List<Activity>();
-        public List<Advice> Advices { get; set; } = new List<Advice>();
-        public List<Goal> Goals { get; set; } = new List<Goal>();
-        List<Planning> plannings = new List<Planning>();
-        public List<Progression> Progressions = new List<Progression>();
+        public List<Advice> advices { get; set; } = new List<Advice>();
+        public List<Goal> goals { get; set; } = new List<Goal>();
+        public List<Planning> plannings { get; set; } = new List<Planning>();
+        public List<Progression> progressions { get; set; } = new List<Progression>();
+        public List <Location> locations { get; set; } = new List<Location>();
 
-
-        //private string connectionString = "Data Source=LAPPIEMELLIE;Initial Catalog=ZuydFit;Integrated Security=True";
-        private string connectionString = "Data Source=.;Initial Catalog=ZuydFit;Integrated Security=True";
+        private string connectionString = "Data Source=LAPPIEMELLIE;Initial Catalog=ZuydFit;Integrated Security=True";
+        //private string connectionString = "Data Source=.;Initial Catalog=ZuydFit;Integrated Security=True";
 
 
         //DAL van Location.
@@ -72,15 +72,15 @@ namespace ZuydFit
                 }
             }
         }
-        public void DeleteLocation(int Id)
+        public void DeleteLocation(string Classroom)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                string sql = "DELETE FROM Location WHERE Id = @Id";
+                string sql = "DELETE FROM Location WHERE Classroom = @Classroom";
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
-                    command.Parameters.AddWithValue("@Id", Id);
+                    command.Parameters.AddWithValue("@Classroom", Classroom);
                     command.ExecuteNonQuery();
                 }
             }
@@ -262,7 +262,7 @@ namespace ZuydFit
                         {
                             while (reader.Read())
                             {
-                                Goals.Add(new(Int32.Parse(reader[0].ToString()), reader[1].ToString(), reader[2].ToString(), reader[3].ToString()));
+                                goals.Add(new(Int32.Parse(reader[0].ToString()), reader[1].ToString(), reader[2].ToString(), reader[3].ToString()));
                             }
                         }
                     }
@@ -346,7 +346,7 @@ namespace ZuydFit
                         {
                             while (reader.Read())
                             {
-                                Advices.Add(new Advice(Int32.Parse(reader[0].ToString()), reader[1].ToString(), reader[2].ToString()));
+                                advices.Add(new Advice(Int32.Parse(reader[0].ToString()), reader[1].ToString(), reader[2].ToString()));
                             }
                         }
                     }
@@ -358,7 +358,7 @@ namespace ZuydFit
         {
             try
             {
-                Advices.Clear();
+                advices.Clear();
                 using (SqlConnection connection = new SqlConnection())
                 {
                     using (SqlCommand command = new SqlCommand())
@@ -373,10 +373,10 @@ namespace ZuydFit
                         {
                             while (reader.Read())
                             {
-                                Advices.Add(new Advice(Int32.Parse(reader[0].ToString()), reader[1].ToString(), reader[2].ToString()));
+                                advices.Add(new Advice(Int32.Parse(reader[0].ToString()), reader[1].ToString(), reader[2].ToString()));
                                 //return (new Advice(Int32.Parse(reader[0].ToString()), reader[1].ToString(), reader[2].ToString()));
                             }
-                            return Advices;
+                            return advices;
                         }
                     }
                 }
@@ -536,7 +536,7 @@ namespace ZuydFit
                         {
                             while (reader.Read())
                             {
-                                Progressions.Add(new Progression(Int32.Parse(reader[0].ToString()), reader[1].ToString(), Int32.Parse(reader[2].ToString())));
+                                progressions.Add(new Progression(Int32.Parse(reader[0].ToString()), reader[1].ToString(), Int32.Parse(reader[2].ToString())));
                             }
                         }
                     }

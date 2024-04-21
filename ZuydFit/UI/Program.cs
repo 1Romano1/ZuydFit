@@ -7,7 +7,7 @@ public class Program
 {
     static void Main(string[] args)
     {
-        ShowMenu();
+        MainMenu();
     }
 
 
@@ -111,6 +111,7 @@ public class Program
             }
             else if (userInput == "7")
             {
+                Console.Clear();
                 TrainingMenu();
             }
             else if (userInput == "8")
@@ -124,7 +125,7 @@ public class Program
             }
         }
     }
-
+    
     
     //Hieronder staan de functies van Activity
     static void AskForNewActivity()
@@ -208,10 +209,12 @@ public class Program
     }
     static void AskToDeleteActivity()
     {
+        AskForListActivity();
         Console.WriteLine("Voer de naam in van de oefening dat u wilt verwijderen:");
         string Name = Console.ReadLine();
-        Activity activity = new Activity();
+        Activity activity = new Activity(Name);
         activity.Delete();
+        Console.WriteLine("De activiteit" + Name + "is succes vol verwijderd");
     }
     static void ActivityMenu()
     {
@@ -316,7 +319,7 @@ public class Program
 
         goalUp.Update();
     }
-    static void AskToRemoveGoalFromList()
+    static void AskToDeleteGoal()
     {
         Goal goalDelete = new Goal();
         foreach (var goal in goalDelete.Read())
@@ -358,7 +361,7 @@ public class Program
             else if (userInput == "3")
                 AskToAdjustGoal();
             else if (userInput == "4")
-                AskToRemoveGoalFromList();
+                AskToDeleteGoal();
             else if (userInput == "5")
                 exit = true;
             else
@@ -431,7 +434,7 @@ public class Program
 
         adviceUpdate.Update();
     }
-    static void AskToRemoveAdvice()
+    static void AskToDeleteAdvice()
     {
         Console.WriteLine("Welk advies wil je verwijderen? voer het Id in.");
         string title = Console.ReadLine();
@@ -478,7 +481,7 @@ public class Program
             }
             else if (userInput == "4")
             {
-                AskToRemoveAdvice();
+                AskToDeleteAdvice();
             }
             else if (userInput == "5")
             {
@@ -528,7 +531,7 @@ public class Program
             Console.WriteLine($"Classroom: {loc.Classroom} \tAddress: {loc.Address} \tZipcode: {loc.Zipcode} \tCity: {loc.City}");
         }
     }
-    static void AskForUpdateLocation()
+    static void AskToAdjustLocation()
     {
         Console.WriteLine("Voer het Id in die u wilt bijwerken:");
         int id;
@@ -561,16 +564,13 @@ public class Program
         location.Update();
         Console.WriteLine("De Locatie met id '" + id + "' is succesvol bijgewerkt.");
     }
-    static void AskForDeleteLocation()
+    static void AskToDeleteLocation()
     {
-        Console.WriteLine("Voer het ID in van de locatie die u wilt verwijderen?");
-        int id;
-        if (!int.TryParse(Console.ReadLine(), out id))
-        {
-            return;
-        }
+        AskForListLocation();
+        Console.WriteLine("Voer het klaslokaal in van de locatie die u wilt verwijderen?");
+        string Classroom = Console.ReadLine();
         
-        Location location = new Location();
+        Location location = new Location(Classroom);
         location.Delete();
     }
     static void LocationMenu()
@@ -592,9 +592,9 @@ public class Program
             else if (userInput == "2")
                 AskForListLocation();
             else if (userInput == "3")
-                AskForUpdateLocation();
+                AskToAdjustLocation();
             else if (userInput == "4")
-                AskForDeleteLocation();
+                AskToDeleteLocation();
             else if (userInput == "5")
                 exit = true;
             else
@@ -642,7 +642,7 @@ public class Program
         }
         Console.WriteLine();
     }
-    static void AskForAdjustPlanning()
+    static void AskToAdjustPlanning()
     {
         Console.WriteLine("Voer de Id in van de planning die u wilt bewerken.");
         int id;
@@ -686,7 +686,7 @@ public class Program
         planning.Update();
         Console.WriteLine("De planning met id" + id + "is succesvol bijgewerkt.");
     }
-    static void AskForDeletePlanning()
+    static void AskToDeletePlanning()
     {
         Console.WriteLine("Voer het ID in van de planning die u wilt verwijderen.");
 
@@ -721,9 +721,9 @@ public class Program
             else if (userInput == "2")
                 AskForListPlanning();
             else if (userInput == "3")
-                AskForAdjustPlanning();
+                AskToAdjustPlanning();
             else if (userInput == "4")
-                AskForDeletePlanning();
+                AskToDeletePlanning();
             else if (userInput == "5")
                 exit = true;
             else
@@ -795,7 +795,7 @@ public class Program
 
         progressionAdjsut.Update();
     }
-    static void AskToRemoveProgression()
+    static void AskToDeleteProgression()
     {
         Console.WriteLine("Welke progressie wil je verwijderen? voer het Id in.");
         int Id = Int32.Parse(Console.ReadLine());
@@ -836,7 +836,7 @@ public class Program
             else if (userInput == "3")
                 AskToAdjustProgression();
             else if (userInput == "4")
-                AskToRemoveProgression();
+                AskToDeleteProgression();
             else if (userInput == "5")
                 exit = true;
             else
@@ -875,7 +875,7 @@ public class Program
             Console.WriteLine($"Name: {tra.Name}");
         }
     }
-    static void AskForUpdateTraining()
+    static void AskToAdjustTraining()
     {
         Console.WriteLine("Voer de id van de activiteit in die u wilt gaan bijwerken:");
         int id;
@@ -896,7 +896,7 @@ public class Program
         training.Update();
         Console.WriteLine("De activiteit met id '" + id + "' is succesvol bijgewerkt.");
     }
-    static void AskForDeleteTraining()
+    static void AskToDeleteTraining()
     {
         Console.WriteLine("Voer de naam in van de training die je wilt verwijderen:");
         string trainingName = Console.ReadLine();
@@ -961,9 +961,9 @@ public class Program
             else if (userInput == "2")
                 AskForListTraining();
             else if (userInput == "3")
-                AskForUpdateTraining();
+                AskToAdjustTraining();
             else if (userInput == "4")
-                AskForDeleteTraining();
+                AskToDeleteTraining();
             else if (userInput == "5")
                 exit = true;
             else

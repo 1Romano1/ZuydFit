@@ -50,7 +50,7 @@ namespace ZuydFit.Models
         {
             DAL = new DAL();
             DAL.ReadProgression();
-            return DAL.Progressions;
+            return DAL.progressions;
         }
         public void ReadById(int id)
         {

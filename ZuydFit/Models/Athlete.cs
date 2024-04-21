@@ -23,9 +23,7 @@ namespace ZuydFit.Models
         public Athlete(int personalNumber, string password) : base(personalNumber, password)
         {
 
-
         }
-
 
         public override bool Login()
         {

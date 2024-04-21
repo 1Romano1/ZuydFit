@@ -45,7 +45,7 @@ namespace ZuydFit.Models
         {
             DAL = new DAL();
             DAL.ReadAdvice();
-            return DAL.Advices;
+            return DAL.advices;
         }
         public void ReadByTitle(string title)
         {
