@@ -7,10 +7,59 @@ public class Program
 {
     static void Main(string[] args)
     {
-        MainMenu();
+        ShowMenu();
     }
 
+
+    static void AtletheMenu() 
+    {
+        bool exit = false;
+
+        while (!exit)
+        {
+            Console.WriteLine("Hoofdmenu:");
+            Console.WriteLine("1. Goalmenu");
+            Console.WriteLine("2. Progressionmenu");
+            Console.WriteLine("3. Locationmenu");
+            Console.WriteLine("4. Trainingmenu");
+            Console.WriteLine("5. Exit");
+
+            string userInput = Console.ReadLine();
+            if (userInput == "1")
+            {
+                Console.Clear();
+                GoalMenu();
+            }
+            else if (userInput == "2")
+            {
+                Console.Clear();
+                ProgressionMenu();
+            }
+            else if (userInput == "3")
+            {
+                Console.Clear();
+                LocationMenu();
+            }
+            else if (userInput == "4")
+            {
+                Console.Clear();
+                TrainingMenu();
+            }
+            else if (userInput == "5")
+            {
+                exit = true;
+            }
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("Ongeldige keuze. Probeer opnieuw.");
+            }
+
+        }
     
+    
+    
+    }
     //Overkoepelende functie voor alle menu's.
     static void MainMenu()
     {
@@ -996,6 +1045,7 @@ public class Program
             if (isLoggedIn)
             {
                 Console.WriteLine("Welkom, atleet!");
+                AtletheMenu();
             }
             else
             {
@@ -1021,6 +1071,7 @@ public class Program
             if (isLoggedIn)
             {
                 Console.WriteLine("Welkom, trainer!");
+                MainMenu();
             }
             else
             {
